@@ -1,0 +1,115 @@
+T2BAC 067:189.347   SEGGER J-Link V6.90a Log File
+T2BAC 067:189.455   DLL Compiled: Dec 14 2020 17:14:31
+T2BAC 067:189.470   Logging started @ 2025-09-15 19:34
+T2BAC 067:189.481 - 14.054ms
+T2BAC 067:189.500 JLINK_SetWarnOutHandler(...)
+T2BAC 067:189.511 - 0.016ms
+T2BAC 067:189.524 JLINK_OpenEx(...)
+T2BAC 067:191.386   Firmware: J-Link ARM V8 compiled Nov 28 2014 13:44:46
+T2BAC 067:194.918   Hardware: V8.00
+T2BAC 067:194.965   S/N: 308622870
+T2BAC 067:194.983   OEM: SEGGER
+T2BAC 067:194.999   Feature(s): RDI,FlashDL,FlashBP,JFlash,GDBFull
+T2BAC 067:198.738   TELNET listener socket opened on port 19021
+T2BAC 067:205.331   Device "STM32G431RB" selected.
+T2BAC 067:206.637   WEBSRV Starting webserver
+T2BAC 067:206.925   WEBSRV Webserver running on local port 19080
+T2BAC 067:206.957 - 17.438ms returns "O.K."
+T2BAC 067:206.994 JLINK_GetEmuCaps()
+T2BAC 067:207.012 - 0.024ms returns 0xB9FF7BBF
+T2BAC 067:207.037 JLINK_TIF_GetAvailable(...)
+T2BAC 067:207.309 - 0.287ms
+T2BAC 067:207.351 JLINK_SetErrorOutHandler(...)
+T2BAC 067:207.365 - 0.020ms
+T2BAC 067:207.392 JLINK_ExecCommand("ProjectFile = "D:\LPP\ARM_PROJECT\LPP_STM32G431Cx\MDK-ARM\JLinkSettings.ini"", ...). 
+T2BAC 067:208.658   Device "STM32G431RB" selected.
+T2BAC 067:209.112 - 1.729ms returns 0x00
+T2BAC 067:209.161 JLINK_ExecCommand("Device = STM32G431CBTx", ...). 
+T2BAC 067:209.972   Device "STM32G431RB" selected.
+T2BAC 067:210.544 - 1.374ms returns 0x00
+T2BAC 067:211.228 JLINK_GetHardwareVersion()
+T2BAC 067:211.262 - 0.042ms returns 80000
+T2BAC 067:211.281 JLINK_GetDLLVersion()
+T2BAC 067:211.293 - 0.018ms returns 69001
+T2BAC 067:211.308 JLINK_GetOEMString(...)
+T2BAC 067:211.322 JLINK_GetFirmwareString(...)
+T2BAC 067:211.333 - 0.016ms
+T2BAC 067:211.357 JLINK_GetDLLVersion()
+T2BAC 067:211.369 - 0.018ms returns 69001
+T2BAC 067:211.383 JLINK_GetCompileDateTime()
+T2BAC 067:211.393 - 0.016ms
+T2BAC 067:211.412 JLINK_GetFirmwareString(...)
+T2BAC 067:211.424 - 0.017ms
+T2BAC 067:211.440 JLINK_GetHardwareVersion()
+T2BAC 067:211.452 - 0.016ms returns 80000
+T2BAC 067:211.467 JLINK_GetSN()
+T2BAC 067:211.479 - 0.017ms returns 308622870
+T2BAC 067:211.495 JLINK_GetOEMString(...)
+T2BAC 067:211.514 JLINK_TIF_Select(JLINKARM_TIF_SWD)
+T2BAC 067:212.305 - 0.814ms returns 0x00
+T2BAC 067:212.344 JLINK_HasError()
+T2BAC 067:212.363 JLINK_SetSpeed(5000)
+T2BAC 067:212.478 - 0.127ms
+T2BAC 067:213.184 JLINK_HasError()
+T2BAC 067:213.220 JLINK_SetResetType(JLINKARM_RESET_TYPE_NORMAL)
+T2BAC 067:213.235 - 0.021ms returns JLINKARM_RESET_TYPE_NORMAL
+T2BAC 067:213.251 JLINK_Reset()
+T2BAC 067:214.487   Found SW-DP with ID 0x1BA01477
+T2BAC 067:235.900   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:237.145   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T2BAC 067:288.824   Found SW-DP with ID 0x1BA01477
+T2BAC 067:359.919   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:362.923   
+  ***** Error: 
+T2BAC 067:363.029   STM32: Connecting to CPU via connect under reset failed.
+T2BAC 067:472.894   Found SW-DP with ID 0x1BA01477
+T2BAC 067:487.005   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:487.045   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T2BAC 067:538.229   Found SW-DP with ID 0x1BA01477
+T2BAC 067:606.029   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:606.055   
+  ***** Error: 
+T2BAC 067:606.064   STM32: Connecting to CPU via connect under reset failed.
+T2BAC 067:658.136 - 444.905ms
+T2BAC 067:658.285 JLINK_GetId()
+T2BAC 067:659.260   Found SW-DP with ID 0x1BA01477
+T2BAC 067:674.168   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:674.199   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T2BAC 067:725.411   Found SW-DP with ID 0x1BA01477
+T2BAC 067:797.437   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:797.478   
+  ***** Error: 
+T2BAC 067:797.488   STM32: Connecting to CPU via connect under reset failed.
+T2BAC 067:907.133   Found SW-DP with ID 0x1BA01477
+T2BAC 067:918.853   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 067:918.890   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T2BAC 067:970.908   Found SW-DP with ID 0x1BA01477
+T2BAC 068:037.189   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 068:037.229   
+  ***** Error: 
+T2BAC 068:037.244   STM32: Connecting to CPU via connect under reset failed.
+T2BAC 068:089.985 - 431.727ms returns 0x00000000
+T2BAC 068:090.053 JLINK_GetId()
+T2BAC 068:091.148   Found SW-DP with ID 0x1BA01477
+T2BAC 068:102.362   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 068:102.402   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T2BAC 068:154.522   Found SW-DP with ID 0x1BA01477
+T2BAC 068:222.295   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 068:222.328   
+  ***** Error: 
+T2BAC 068:222.340   STM32: Connecting to CPU via connect under reset failed.
+T2BAC 068:332.127   Found SW-DP with ID 0x1BA01477
+T2BAC 068:343.989   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 068:344.023   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T2BAC 068:395.140   Found SW-DP with ID 0x1BA01477
+T2BAC 068:461.292   STM32 (Protection Detection): Unexpected IDCODE DEV_ID 0x 410 found. Only checking the 1st flash bank for write protection.
+T2BAC 068:461.334   
+  ***** Error: 
+T2BAC 068:461.350   STM32: Connecting to CPU via connect under reset failed.
+T2BAC 068:513.343 - 423.311ms returns 0x00000000
+T2BAC 068:516.499 JLINK_GetFirmwareString(...)
+T2BAC 068:516.536 - 0.043ms
+T2BAC 070:270.288 JLINK_Close()
+T2BAC 070:280.822 - 10.574ms
+T2BAC 070:280.871   
+T2BAC 070:280.881   Closed
