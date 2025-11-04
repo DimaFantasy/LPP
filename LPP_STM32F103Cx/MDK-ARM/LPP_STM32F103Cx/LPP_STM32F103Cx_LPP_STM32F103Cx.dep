@@ -42,9 +42,9 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x637B24FC)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x637B24FC)
 I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x637B24FA)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x637B24FC)
-I (..\My_Libraries\counter.h)(0x690771BD)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69070556)
-I (..\..\LPP_SDK\configs\lpp_config_f103.h)(0x68EC5E0A)
+I (..\My_Libraries\counter.h)(0x690A1413)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6907DBAE)
+I (..\..\LPP_SDK\configs\lpp_config_f103.h)(0x6907DC2F)
 F (../Core/Src/stm32f1xx_it.c)(0x68BFE438)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32F103Cx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o lpp_stm32f103cx/stm32f1xx_it.o -MD)
 I (..\Core\Inc\main.h)(0x68EFB912)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x67E4F47E)
@@ -242,8 +242,8 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h)(0x67E4F47E)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h)(0x67E4F47E)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h)(0x67E4F470)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h)(0x67E4F470)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69070556)
-I (..\..\LPP_SDK\configs\lpp_config_f103.h)(0x68EC5E0A)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6907DBAE)
+I (..\..\LPP_SDK\configs\lpp_config_f103.h)(0x6907DC2F)
 F (../USB_DEVICE/Target/usbd_conf.c)(0x640401AA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32F103Cx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o lpp_stm32f103cx/usbd_conf.o -MD)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x67E4F47E)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xb.h)(0x67E4F47E)
@@ -995,12 +995,12 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h)(0x67E4F47E)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h)(0x67E4F47E)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h)(0x67E4F470)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h)(0x67E4F470)
-F (..\My_Libraries\counter.h)(0x690771BD)()
-F (..\..\LPP_SDK\lpp_sdk.c)(0x690771B1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32F103Cx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o lpp_stm32f103cx/lpp_sdk.o -MD)
+F (..\My_Libraries\counter.h)(0x690A1413)()
+F (..\..\LPP_SDK\lpp_sdk.c)(0x690A13E8)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32F103Cx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o lpp_stm32f103cx/lpp_sdk.o -MD)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x637B24FC)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69070556)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6907DBAE)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x637B24FC)
-I (..\..\LPP_SDK\configs\lpp_config_f103.h)(0x68EC5E0A)
+I (..\..\LPP_SDK\configs\lpp_config_f103.h)(0x6907DC2F)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x67E4F47E)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xb.h)(0x67E4F47E)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x67E4F46F)
@@ -1031,4 +1031,4 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h)(0x67E4F47E)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h)(0x67E4F47E)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h)(0x67E4F47E)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h)(0x67E4F47E)
-F (..\..\LPP_SDK\lpp_sdk.h)(0x69070556)()
+F (..\..\LPP_SDK\lpp_sdk.h)(0x6907DBAE)()

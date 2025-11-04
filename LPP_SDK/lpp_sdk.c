@@ -552,7 +552,12 @@ void XStartTracking(int32_t left_pos, int32_t right_pos) {
 // БЕЗОПАСНАЯ ОСТАНОВКА ТРЕКИНГА
 // ============================================================================
 void XStopTracking(void) {	
-		X_STOPPING = 1;		
+		X_STOPPING = 1;	
+    // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
+    if (motorXMode != MOTORX_MODE_STEP) {
+        X_TRACKING_ACTIVE    = 0;
+        X_TRACKING_STARTED   = 0;
+    }
 }
 
 // ============================================================================
@@ -1483,6 +1488,7 @@ void XTimerCallback(void) {
         // Режим циклического бега (трекинг)
         // ========================================================
         if (X_TRACKING_STARTED == 1) {
+							
             // --- 1. Фильтрация скорости энкодера ---
             if (W_X_SPEED == 0 || W_X_SPEED == 0xFFFF) {
                 W_X_SPEED_FILTERED = 0;
