@@ -683,23 +683,27 @@ void MotorX_Init(MotorXMode_t mode)
     motorXMode = mode;
 }
 
-
-
 // ============================================================================
 // Функции управления осью Y
 // ============================================================================
-
-// Установка направления вращения (DIR)
-void YTimerSetDir(uint8_t dir_pin_state)
+/**
+ * @brief  Устанавливает направление DIR для оси Y.
+ * @param  dir_state: 0 — одно направление, 1 — противоположное.
+ */
+void YTimerSetDir(uint8_t dir_state)
 {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, dir_pin_state);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, dir_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
-// Импульс STEP (высокий или низкий уровень)
-void YTimerStep(uint8_t step_pin_state)
+/**
+ * @brief  Устанавливает уровень STEP для оси Y.
+ * @param  step_state: 0 — низкий уровень, 1 — высокий уровень.
+ */
+void YTimerStep(uint8_t step_state)
 {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, step_pin_state);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, step_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
+
 
 
 // установка периода и запуск таймера YTimer
@@ -712,19 +716,24 @@ void YTimerSet(uint16_t period)
 // ============================================================================
 // Управление шаговым двигателем X (в режиме MOTORX_MODE_STEP)
 // ============================================================================
-// Установка направления DIR для оси X
-// @param dir_pin_state: состояние пина (0 или 1)
-void XTimerSetDir(uint8_t dir_pin_state)
+/**
+ * @brief  Устанавливает направление DIR для оси X.
+ * @param  dir_state: 0 — одно направление, 1 — противоположное.
+ */
+void XTimerSetDir(uint8_t dir_state)
 {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, dir_pin_state);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, dir_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
-// Установка состояния STEP для оси X
-// step_pin_state: состояние пина (0 или 1)
-void XTimerStep(uint8_t step_pin_state)
+/**
+ * @brief  Устанавливает уровень STEP для оси X.
+ * @param  step_state: 0 — низкий уровень, 1 — высокий уровень.
+ */
+void XTimerStep(uint8_t step_state)
 {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, (step_pin_state) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, step_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
+
 
 // @brief Установка периода и запуск TIM1 для шагов X
 // @param period: период в тактах таймера (микросекунды при Prescaler=71)
@@ -747,7 +756,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     // TIM1 - Управление мотором X и PID регулятор
     if (htim->Instance == TIM1) {
 			XTimerCallback();
-
     }
 
     // TIM3 - Интерполяция печати
@@ -919,29 +927,26 @@ void XferCpltCallback(DMA_HandleTypeDef* hdma) {
 }
 
 // ============================================================================
-// Управление сигналом ENABLE для оси Y
+// Управление сигналом ENABLE для оси X и Y
 // ============================================================================
+
+/**
+ * @brief  Управляет сигналом ENABLE для оси Y.
+ * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
+ */
 void YSetEnablePin(uint8_t enabled)
 {
-    // ENA_Y → GPIOA PIN7
-    if (enabled)
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-    else
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
-// ============================================================================
-// Управление сигналом ENABLE для оси X
-// ============================================================================
+/**
+ * @brief  Управляет сигналом ENABLE для оси X.
+ * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
+ */
 void XSetEnablePin(uint8_t enabled)
 {
-    // ENA_X → GPIOB PIN15
-    if (enabled)
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET);
-    else
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
-
 
 /* USER CODE END 4 */
 
