@@ -809,10 +809,11 @@ void PacketReceive(uint8_t* buffer) {
         __enable_irq();
         // Обновление параметров управления
         PRINT_CONFIG.DAT.W_SET_LAZER = PRINT_DAT->DAT.W_SET_LAZER;
-        W_X_SPEED_SET = PRINT_DAT->DAT.W_X_SPEED;
 				
-            // Параметры разгона/торможения для степпера
-            X_MIN_POW = PRINT_DAT->DAT.W_X_SPEED;  // Минимальный период (максимальная скорость)
+				// Параметры скорости для колектрного
+        W_X_SPEED_SET = PRINT_DAT->DAT.W_X_SPEED;			
+				// Параметры скорости для степпера
+				X_MIN_POW = PRINT_DAT->DAT.W_X_SPEED;  // Минимальный период (максимальная скорость)
             										
         // Обратная связь
         PRINT_DAT->DAT.W_X_SPEED = W_X_SPEED;
