@@ -963,7 +963,6 @@ void PacketReceive(uint8_t* buffer) {
     // ============================================================================		
 		else if (event_idx == IDX_LAZER) {
 				memcpy(LAZER.BIN + 1, buffer, 63);
-				SetLaserLightPWMFrequency(LAZER.DAT.W_SET_L_FREQ);
 				SetLaserPWM(LAZER.DAT.W_SET_L);
 		}		
     // ============================================================================

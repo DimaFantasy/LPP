@@ -3,7 +3,7 @@
 <title>Static Call Graph - [LPP_STM32F103Cx\LPP_STM32F103Cx.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image LPP_STM32F103Cx\LPP_STM32F103Cx.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Tue Nov  4 18:56:18 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Wed Nov  5 12:25:03 2025
 <BR><P>
 <H3>Maximum Stack Usage =        220 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -486,7 +486,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStep
 </UL>
 
-<P><STRONG><a name="[d5]"></a>FifoPosY_Push</STRONG> (Thumb, 92 bytes, Stack size 4 bytes, lpp_sdk.o(.text.FifoPosY_Push))
+<P><STRONG><a name="[d4]"></a>FifoPosY_Push</STRONG> (Thumb, 92 bytes, Stack size 4 bytes, lpp_sdk.o(.text.FifoPosY_Push))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = FifoPosY_Push
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
@@ -540,7 +540,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[d4]"></a>HAL_FLASH_Lock</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f1xx_hal_flash.o(.text.HAL_FLASH_Lock))
+<P><STRONG><a name="[d3]"></a>HAL_FLASH_Lock</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f1xx_hal_flash.o(.text.HAL_FLASH_Lock))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
@@ -552,7 +552,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[d3]"></a>HAL_FLASH_Unlock</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, stm32f1xx_hal_flash.o(.text.HAL_FLASH_Unlock))
+<P><STRONG><a name="[d2]"></a>HAL_FLASH_Unlock</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, stm32f1xx_hal_flash.o(.text.HAL_FLASH_Unlock))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
@@ -600,15 +600,15 @@ Global Symbols
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 </UL>
 
-<P><STRONG><a name="[d0]"></a>HAL_GetUIDw0</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(.text.HAL_GetUIDw0))
+<P><STRONG><a name="[cf]"></a>HAL_GetUIDw0</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(.text.HAL_GetUIDw0))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[d1]"></a>HAL_GetUIDw1</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(.text.HAL_GetUIDw1))
+<P><STRONG><a name="[d0]"></a>HAL_GetUIDw1</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(.text.HAL_GetUIDw1))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[d2]"></a>HAL_GetUIDw2</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(.text.HAL_GetUIDw2))
+<P><STRONG><a name="[d1]"></a>HAL_GetUIDw2</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(.text.HAL_GetUIDw2))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
@@ -865,7 +865,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[df]"></a>HAL_RCC_GetPCLK1Freq</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, stm32f1xx_hal_rcc.o(.text.HAL_RCC_GetPCLK1Freq))
-<BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserLightPWMFrequency
+<BR><BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserLightPWMFrequency
 </UL>
 
 <P><STRONG><a name="[a5]"></a>HAL_RCC_OscConfig</STRONG> (Thumb, 948 bytes, Stack size 32 bytes, stm32f1xx_hal_rcc.o(.text.HAL_RCC_OscConfig))
@@ -1111,28 +1111,28 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1696 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
+<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1692 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASHEx_Erase
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Lock
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Unlock
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Lock
+<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Unlock
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Program
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SystemReset
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw2
-<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw1
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw0
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw2
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw1
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw0
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetEnablePin
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetEnablePin
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FIFO_DATA_StartDma
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketSend
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserLightPWMFrequency
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLightPWM
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserLightPWMFrequency
+<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLightPWM
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Init
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XStartTracking
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FifoPosY_Push
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XStartTracking
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FifoPosY_Push
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CUSTOM_HID_OutEvent_FS
 </UL>
@@ -1154,7 +1154,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadEncoderPins
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InterpTimerStart
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStopJob
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FifoPosY_Pop
 </UL>
@@ -1165,7 +1165,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = PrintStepForStepper &rArr; PrintStopJob
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InterpTimerStart
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStopJob
 </UL>
 <BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XCalculatePower
@@ -1174,7 +1174,7 @@ Global Symbols
 <P><STRONG><a name="[b7]"></a>PrintStepInterp</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, lpp_sdk.o(.text.PrintStepInterp))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PrintStepInterp
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -1182,7 +1182,7 @@ Global Symbols
 <P><STRONG><a name="[dd]"></a>PrintStopJob</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, lpp_sdk.o(.text.PrintStopJob))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = PrintStopJob
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStep
 <LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStepForStepper
@@ -1195,7 +1195,7 @@ Global Symbols
 <P><STRONG><a name="[1a]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[cd]"></a>SetLaserLightPWMFrequency</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, main.o(.text.SetLaserLightPWMFrequency))
+<P><STRONG><a name="[d6]"></a>SetLaserLightPWMFrequency</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, main.o(.text.SetLaserLightPWMFrequency))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SetLaserLightPWMFrequency
 </UL>
 <BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK1Freq
@@ -1203,7 +1203,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[ce]"></a>SetLaserPWM</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.SetLaserPWM))
+<P><STRONG><a name="[cd]"></a>SetLaserPWM</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.SetLaserPWM))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStep
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStepInterp
@@ -1211,7 +1211,7 @@ Global Symbols
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStopJob
 </UL>
 
-<P><STRONG><a name="[cf]"></a>SetLightPWM</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.SetLightPWM))
+<P><STRONG><a name="[ce]"></a>SetLightPWM</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.SetLightPWM))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
@@ -1715,7 +1715,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[d6]"></a>XStartTracking</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, lpp_sdk.o(.text.XStartTracking))
+<P><STRONG><a name="[d5]"></a>XStartTracking</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, lpp_sdk.o(.text.XStartTracking))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = XStartTracking
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive

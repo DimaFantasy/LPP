@@ -786,47 +786,76 @@ void SetLightPWM(uint16_t pwm_value)
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, pwm_value);
 }
 
-// Установка делителя частоты PWM (общий PSC для лазера и подсветки)
-//void SetPwmPrescaler(uint16_t prescaler)
-//{
-//    htim2.Instance->PSC = prescaler;
-//    __HAL_TIM_SET_COUNTER(&htim2, 0);
-//}
-
 /**
- * @brief  Настраивает частоту PWM по значению в герцах (универсально для разных MCU).
+ * @brief  Настраивает частоту PWM по значению в герцах (универсально для всех STM32).
  * @param  freq_hz  Желаемая частота PWM, Гц (например 1000, 5000, 100000).
  * 
  * Функция автоматически вычисляет нужный делитель (PSC) на основе частоты шины таймера.
- * Работает одинаково для разных частот системного тактирования (STM32F1, F4, G4, S3 и т.д.).
+ * Работает одинаково для разных частот системного тактирования и серий MCU 
+ * (STM32F0, F1, F2, F3, F4, G0, G4, H7, L0, L1, L4, L5, WB, WL и др.).
  * 
- * Пример: если tim_clk = 72 MHz, freq_hz = 20 kHz, ARR = 999, 
- *         PSC = (72_000_000 / (1000 * 20_000)) = 3,6 → PSC = 3.
+ * Учитывает важную особенность тактирования таймеров STM32:
+ * - Если прескалер APBx = 1, то частота таймера = частота шины APBx
+ * - Если прескалер APBx > 1, то частота таймера = частота шины APBx × 2
+ * 
+ * Пример: если SYSCLK = 72 MHz, APB1 prescaler = /2, freq_hz = 20 kHz, ARR = 99:
+ *         PCLK1 = 36 MHz, но TIM_CLK = 72 MHz (удвоение!)
+ *         PSC = (72_000_000 / (100 × 20_000)) - 1 = 35
  */
 void SetLaserLightPWMFrequency(uint32_t freq_hz)
 {
-    // Получаем частоту шины таймера.
-    // Для TIM1/TIM8 это обычно PCLK2, для TIM2–TIM7 — PCLK1.
-    uint32_t tim_clk = HAL_RCC_GetPCLK1Freq(); 
-
-    // Устанавливаем значение ARR — диапазон счётчика.
-    // Здесь выбран 1000 шагов ШИМ, что удобно для 0.1% точности.
-    // Можно сделать параметром, если нужно динамически менять разрешение PWM.
-    uint32_t arr = 1000 - 1;                   
-
-    // Вычисляем делитель (PSC) по формуле:
-    // f_PWM = tim_clk / ((PSC + 1) * (ARR + 1))
-    // → PSC = (tim_clk / ((ARR + 1) * freq_hz)) - 1
+    // Получаем базовую частоту шины APB1
+    uint32_t pclk1 = HAL_RCC_GetPCLK1Freq();
+    
+    // Извлекаем биты прескалера APB1 из регистра конфигурации тактирования
+    // Расположение битов PPRE1 зависит от серии MCU
+    uint32_t ppre1_bits;
+    
+		// STM32F0/F1/F2/F3/F4/G0/G4/L0/L1/L4/L5/WB/WL: биты PPRE1 в RCC->CFGR
+		ppre1_bits = (RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos;
+    
+    // Определяем реальную частоту тактирования таймера
+    // Кодировка битов PPRE1[2:0]:
+    // 0xx (0-3): нет деления (APB prescaler = 1)    → TIM_CLK = PCLK1
+    // 100 (4):   деление на 2 (APB prescaler = 2)   → TIM_CLK = PCLK1 × 2
+    // 101 (5):   деление на 4 (APB prescaler = 4)   → TIM_CLK = PCLK1 × 2
+    // 110 (6):   деление на 8 (APB prescaler = 8)   → TIM_CLK = PCLK1 × 2
+    // 111 (7):   деление на 16 (APB prescaler = 16) → TIM_CLK = PCLK1 × 2
+    uint32_t tim_clk;
+    if (ppre1_bits >= 4)
+    {
+        // APB1 prescaler >= 2: таймер получает удвоенную частоту шины
+        tim_clk = pclk1 * 2;
+    }
+    else
+    {
+        // APB1 prescaler = 1: таймер тактируется напрямую от шины
+        tim_clk = pclk1;
+    }
+    
+    // Устанавливаем значение ARR (Auto-Reload Register) — определяет период счёта.
+    // ARR = 99 даёт 100 шагов ШИМ (0-99), что удобно для процентного управления (1% = 1 шаг).
+    uint32_t arr = 100 - 1;
+    
+    // Вычисляем делитель частоты (Prescaler) по формуле:
+    // f_PWM = TIM_CLK / ((PSC + 1) × (ARR + 1))
+    // Отсюда: PSC = (TIM_CLK / ((ARR + 1) × f_PWM)) - 1
     uint32_t prescaler = (tim_clk / (arr + 1)) / freq_hz;
-
-    // Защита от выхода за диапазон 16-битного регистра PSC
+    
+    // Защита от выхода за допустимые значения 16-битного регистра PSC (0-65535)
     if (prescaler < 1) prescaler = 1;
     if (prescaler > 65535) prescaler = 65535;
-
-    // Применяем настройки в таймер
-    htim2.Instance->PSC = prescaler - 1;   // Устанавливаем делитель
-    htim2.Instance->ARR = arr;             // Задаём диапазон счётчика
-    __HAL_TIM_SET_COUNTER(&htim2, 0);      // Сбрасываем счётчик для стабильного старта
+    
+    // Применяем вычисленные параметры к таймеру через макросы HAL
+    __HAL_TIM_SET_PRESCALER(&htim2, prescaler - 1);  // PSC (вычитаем 1, т.к. регистр работает как (PSC+1))
+    __HAL_TIM_SET_AUTORELOAD(&htim2, arr);           // ARR (период счёта)
+    
+    // Генерируем событие обновления (Update Event) для немедленного применения новых значений PSC и ARR.
+    // Без этого изменения вступят в силу только после переполнения счётчика.
+    htim2.Instance->EGR = TIM_EGR_UG;
+    
+    // Сбрасываем счётчик таймера в 0 для стабильного старта с новыми параметрами
+    __HAL_TIM_SET_COUNTER(&htim2, 0);
 }
 
 void InterpTimerStart(uint32_t period) {
