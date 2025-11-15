@@ -92,7 +92,7 @@
 29 | REZERV        | PA4  | PA3  | PA4  | REZERV              | REZERV            |
 
 14 | X_ENC_A       | PB6  | PB6  | PB6  | Совпадает 1:1       | Совпадает 1:1     | 5 V tolerant
-16 | X_ENC_B       | PB8  | PB8  | PB5  | Совпадает 1:1       | Перекл на PB5     |  ⚠ На 431 BOOT0 PB8. 5 V tolerant
+16 | X_ENC_B       | PB8  | PB8  | PB5  | Совпадает 1:1       | Перекл на X_ENC_B |  ⚠ На 431 BOOT0 PB8. 5 V tolerant
 
  2 | X2_STEP       | PB13 | PB13 | PB13 | Совпадает 1:1       | Совпадает 1:1     |
  3 | X2_DIR        | PB14 | PB14 | PB14 | Совпадает 1:1       | Совпадает 1:1     |
