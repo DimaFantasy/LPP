@@ -17,7 +17,7 @@
 ---
 ## 📦 Печатные платы и схемы
 Все PCB-файлы проекта доступны в репозитории:
-https://github.com/DimaFantasy/LPP/tree/main/PCB
+👉 [https://github.com/DimaFantasy/LPP/tree/main/PCB] (https://github.com/DimaFantasy/LPP/tree/main/PCB)
 
 ---
 
