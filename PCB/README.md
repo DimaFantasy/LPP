@@ -57,7 +57,7 @@
 
 ---
 
-# 📤 Экспорт в Eagle / KiCad / Altium
+# 📤 Импорт в Eagle / KiCad / Altium
 
 - **LPP_MainBoard_Gen_1_Ver_1.sch** — экспорт схемы.  
 - **LPP_MainBoard_Gen_1_Ver_1.brd** — экспорт платы.
