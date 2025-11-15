@@ -78,5 +78,5 @@ LPP (Laser Printer Platform) — открытый исходный код SDK и
 Скачать новые версии: https://t.me/LPP_Printer  
 Обсудить и задать вопросы: https://t.me/LPP_Printer_Chat  
 Исходники SDK и прошивки: https://github.com/DimaFantasy/LPP  
-Все файлы печатных плат и схем проекта https://github.com/DimaFantasy/LPP/tree/main/PCB
+Все файлы печатных плат и схем проекта: https://github.com/DimaFantasy/LPP/tree/main/PCB   
 Исходники DLL Excellon Gerber → Image: https://github.com/DimaFantasy/gerb2img
