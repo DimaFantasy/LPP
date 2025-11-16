@@ -1914,6 +1914,8 @@ mail: dvi534538@mail/ru</description>
 <part name="XP2" library="common" deviceset="PLS_2" device="" value="BKL SEL"/>
 <part name="XP3" library="common" deviceset="PLS_2" device="" value="BKL  SEL"/>
 <part name="Z" library="common" deviceset="Q_1" device=""/>
+<part name="R13" library="common" deviceset="R_0805_1206" device=""/>
+<part name="R14" library="common" deviceset="R_0805_1206" device=""/>
 </parts>
 <modules/>
 <sheets>
@@ -2157,6 +2159,8 @@ GND</text>
 <text x="135.539" y="-204.47" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BKL SEL</text>
 <text x="134.798" y="-214.63" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BKL  SEL</text>
 <text x="-81.045" y="-206.502" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-39.135" y="-314.96" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-39.135" y="-320.04" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 </plain>
 <moduleinsts/>
 <instances>
@@ -2228,6 +2232,8 @@ GND</text>
 <instance part="XP2" gate="PART_1" x="140.335" y="-207.01" smashed="yes"/>
 <instance part="XP3" gate="PART_1" x="140.335" y="-217.17" smashed="yes"/>
 <instance part="Z" gate="PART_1" x="-81.28" y="-208.28" smashed="yes"/>
+<instance part="R13" gate="PART_1" x="-39.37" y="-316.23" smashed="yes"/>
+<instance part="R14" gate="PART_1" x="-39.37" y="-321.31" smashed="yes"/>
 </instances>
 <busses/>
 <nets>
@@ -2557,9 +2563,14 @@ GND</text>
 <wire layer="91" width="0.1" x1="-22.86" y1="-346.71" x2="-82.55" y2="-346.71"/>
 <pinref part="FPC" gate="PART_1" pin="13"/>
 <junction x="-22.86" y="-346.71"/>
-<wire layer="91" width="0.1" x1="-35.56" y1="-367.03" x2="-22.86" y2="-367.03"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-367.03" x2="-22.86" y2="-367.03"/>
+<wire layer="91" width="0.1" x1="-35.56" y1="-367.03" x2="-29.21" y2="-367.03"/>
 <pinref part="ENCKP" gate="PART_1" pin="2"/>
 <junction x="-22.86" y="-367.03"/>
+<wire layer="91" width="0.1" x1="-33.02" y1="-321.31" x2="-29.21" y2="-321.31"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-321.31" x2="-29.21" y2="-367.03"/>
+<pinref part="R14" gate="PART_1" pin="2"/>
+<junction x="-29.21" y="-367.03"/>
 </segment>
 </net>
 <net name="Сеть_7" class="0">
@@ -2627,6 +2638,15 @@ GND</text>
 <wire layer="91" width="0.1" x1="-66.04" y1="-331.47" x2="-66.04" y2="-327.66"/>
 <pinref part="NetPort12" gate="PART_1" pin="+5V"/>
 <junction x="-77.47" y="-331.47"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-46.99" y2="-331.47"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-331.47" x2="-66.04" y2="-331.47"/>
+<junction x="-46.99" y="-321.31"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-45.72" y2="-321.31"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-316.23" x2="-45.72" y2="-316.23"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-46.99" y2="-316.23"/>
+<pinref part="R14" gate="PART_1" pin="1"/>
+<pinref part="R13" gate="PART_1" pin="1"/>
+<junction x="-66.04" y="-331.47"/>
 </segment>
 <segment>
 <wire layer="91" width="0.1" x1="55.88" y1="-308.61" x2="57.15" y2="-308.61"/>
@@ -2691,9 +2711,14 @@ GND</text>
 <wire layer="91" width="0.1" x1="-24.13" y1="-381" x2="-35.56" y2="-381"/>
 <pinref part="ENCSW" gate="PART_1" pin="2"/>
 <junction x="-24.13" y="-341.63"/>
-<wire layer="91" width="0.1" x1="-35.56" y1="-364.49" x2="-24.13" y2="-364.49"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-364.49" x2="-24.13" y2="-364.49"/>
+<wire layer="91" width="0.1" x1="-35.56" y1="-364.49" x2="-27.94" y2="-364.49"/>
 <pinref part="ENCKP" gate="PART_1" pin="3"/>
 <junction x="-24.13" y="-364.49"/>
+<wire layer="91" width="0.1" x1="-33.02" y1="-316.23" x2="-27.94" y2="-316.23"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-316.23" x2="-27.94" y2="-364.49"/>
+<pinref part="R13" gate="PART_1" pin="2"/>
+<junction x="-27.94" y="-364.49"/>
 </segment>
 </net>
 <net name="Сеть_11" class="0">

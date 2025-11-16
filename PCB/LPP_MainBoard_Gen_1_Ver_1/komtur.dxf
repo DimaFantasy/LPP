@@ -1,0 +1,140 @@
+  0
+SECTION
+  2
+HEADER
+  9
+$ACADVER
+  1
+AC1009
+  9
+$ANGDIR
+  70
+0
+  9
+$CECOLOR
+  62
+256
+  9
+$CELTYPE
+  6
+BYLAYER
+  9
+$EXTMIN
+  10
+0.0
+  20
+0.0
+  9
+$EXTMAX
+  10
+50.0
+  20
+108.0
+  9
+$FILLMODE
+  70
+1
+  9
+$MIRRTEXT
+  70
+0
+  0
+ENDSEC
+  0
+SECTION
+  2
+TABLES
+  0
+TABLE
+  2
+LAYER
+  70
+23
+  0
+LAYER
+  2
+Границы_платы
+  70
+64
+  62
+21
+  6
+CONTINUOUS
+  0
+ENDTAB
+  0
+ENDSEC
+  0
+SECTION
+  2
+ENTITIES
+  0
+POLYLINE
+  8
+Границы_платы
+  6
+CONTINUOUS
+  66
+1
+  70
+0
+  40
+0.0254
+  41
+0.0254
+  0
+VERTEX
+  8
+Границы_платы
+  10
+0.0
+  20
+108.0
+  42
+0
+  0
+VERTEX
+  8
+Границы_платы
+  10
+0.0
+  20
+0.0
+  42
+0
+  0
+VERTEX
+  8
+Границы_платы
+  10
+50.0
+  20
+0.0
+  42
+0
+  0
+VERTEX
+  8
+Границы_платы
+  10
+50.0
+  20
+108.0
+  42
+0
+  0
+VERTEX
+  8
+Границы_платы
+  10
+0.0
+  20
+108.0
+  42
+0
+  0
+SEQEND
+  0
+ENDSEC
+  0
+EOF

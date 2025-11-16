@@ -84,10 +84,10 @@
 <text x="2.73" y="11.762" size="0.987" layer="22" font="proportional" ratio="10" rot="MR270" align="bottom-left" distance="76">C5</text>
 <text x="18.537" y="24.8" size="0.987" layer="21" font="proportional" ratio="10" rot="SR180" align="bottom-left" distance="76">C6</text>
 <text x="8.659" y="88.03" size="0.987" layer="21" font="proportional" ratio="10" rot="R0" align="top-left" distance="76">C7</text>
-<text x="2.43" y="89.361" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="top-left" distance="76">C8</text>
+<text x="2.43" y="88.161" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="top-left" distance="76">C8</text>
 <text x="15.937" y="28.1" size="0.987" layer="21" font="proportional" ratio="10" rot="SR180" align="bottom-left" distance="76">C9</text>
 <text x="2.96" y="28.6" size="0.987" layer="21" font="proportional" ratio="10" rot="R0" align="bottom-left" distance="76">C10</text>
-<text x="15.278" y="88.1" size="0.987" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="bottom-left" distance="76">C11</text>
+<text x="15.578" y="88.1" size="0.987" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="bottom-left" distance="76">C11</text>
 <text x="50.377" y="10.379" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="40.598" y="10.379" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="50.377" y="10.379" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
@@ -95,11 +95,11 @@
 <text x="47.319" y="10.379" size="0.987" layer="21" font="proportional" ratio="10" rot="SR180" align="bottom-left" distance="76">DB25</text>
 <text x="46.557" y="86.166" size="0.987" layer="21" font="proportional" ratio="10" rot="SR180" align="bottom-left" distance="76">DC</text>
 <text x="27.3" y="7.184" size="0.987" layer="21" font="proportional" ratio="10" rot="R90" align="bottom-left" distance="76">DCIN</text>
-<text x="4.97" y="77.39" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
-<text x="2.43" y="77.39" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
-<text x="4.97" y="85.01" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
-<text x="4.97" y="77.39" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
-<text x="2.43" y="78.872" size="0.987" layer="21" font="proportional" ratio="10" rot="R90" align="bottom-left" distance="76">ENCKP</text>
+<text x="4.97" y="76.59" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
+<text x="2.43" y="76.59" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
+<text x="4.97" y="84.21" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
+<text x="4.97" y="76.59" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
+<text x="2.43" y="78.072" size="0.987" layer="21" font="proportional" ratio="10" rot="R90" align="bottom-left" distance="76">ENCKP</text>
 <text x="5.97" y="39.69" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="3.43" y="39.69" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="5.97" y="47.31" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
@@ -112,20 +112,20 @@
 <hole x="46.7" y="104.7" drill="3.15"/>
 <text x="16.175" y="19.625" size="0.987" layer="22" font="proportional" ratio="10" rot="MSR179.998737245479" align="bottom-left" distance="76">IC1</text>
 <text x="24.6" y="26.552" size="1.48" layer="21" font="proportional" ratio="10" rot="R270.002315050649" align="bottom-left" distance="76">J1</text>
-<text x="4.29" y="96.43" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
-<text x="4.29" y="98.97" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
-<text x="11.91" y="96.43" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
-<text x="4.29" y="96.43" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
-<text x="7.701" y="98.87" size="0.987" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="bottom-left" distance="76">LAZERKP</text>
+<text x="3.69" y="96.53" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
+<text x="3.69" y="99.07" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
+<text x="11.31" y="96.53" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
+<text x="3.69" y="96.53" size="0" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="center-left" distance="92"></text>
+<text x="4.202" y="99.07" size="0.987" layer="21" font="proportional" ratio="10" rot="R0.00168367297225553" align="bottom-left" distance="76">LAZERKP</text>
 <text x="27.23" y="47.41" size="0" layer="21" font="proportional" ratio="10" rot="SR270" align="center-left" distance="92"></text>
 <text x="29.77" y="47.41" size="0" layer="21" font="proportional" ratio="10" rot="SR270" align="center-left" distance="92"></text>
 <text x="27.23" y="39.79" size="0" layer="21" font="proportional" ratio="10" rot="SR270" align="center-left" distance="92"></text>
 <text x="27.23" y="47.41" size="0" layer="21" font="proportional" ratio="10" rot="SR270" align="center-left" distance="92"></text>
 <text x="29.77" y="47.045" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">LAZERSW</text>
 <text x="24.67" y="19.081" size="0.987" layer="22" font="proportional" ratio="10" rot="MR89.9976849493505" align="bottom-left" distance="76">R1</text>
-<text x="12.87" y="86.137" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">R2</text>
+<text x="13.07" y="86.237" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">R2</text>
 <text x="39.2" y="69.037" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">R3</text>
-<text x="3.73" y="92.438" size="0.987" layer="22" font="proportional" ratio="10" rot="MSR90" align="top-left" distance="76">R4</text>
+<text x="4.03" y="92.438" size="0.987" layer="22" font="proportional" ratio="10" rot="MSR90" align="top-left" distance="76">R4</text>
 <text x="39.2" y="72.637" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">R5</text>
 <text x="39.2" y="79.613" size="0.987" layer="21" font="proportional" ratio="10" rot="R270.001262754521" align="bottom-left" distance="76">R6</text>
 <text x="8.57" y="86.237" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">R7</text>
@@ -134,6 +134,8 @@
 <text x="3.33" y="64.084" size="0.987" layer="22" font="proportional" ratio="10" rot="MSR90" align="top-left" distance="76">R10</text>
 <text x="4.97" y="34.202" size="0.987" layer="22" font="proportional" ratio="10" rot="MSR90" align="bottom-left" distance="76">R11</text>
 <text x="4.97" y="31.216" size="0.987" layer="22" font="proportional" ratio="10" rot="MR270" align="top-left" distance="76">R12</text>
+<text x="2.13" y="90.005" size="1.48" layer="21" font="proportional" ratio="10" rot="R90" align="bottom-left" distance="76">R13</text>
+<text x="2.13" y="94.075" size="1.48" layer="21" font="proportional" ratio="10" rot="R90" align="bottom-left" distance="76">R14</text>
 <text x="39.87" y="57.42" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="37.33" y="18.69" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="37.33" y="16.78" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
@@ -152,16 +154,16 @@
 <text x="5.97" y="57.86" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="3.43" y="57.86" size="0" layer="21" font="proportional" ratio="10" rot="R90" align="center-left" distance="92"></text>
 <text x="3.43" y="56.18" size="0.987" layer="21" font="proportional" ratio="10" rot="R90" align="bottom-left" distance="76">USBPULLUP</text>
-<text x="11.94" y="90.73" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="6.86" y="90.73" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="6.86" y="90.73" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="6.86" y="93.27" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="4.74" y="92.635" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">XP2</text>
-<text x="11.94" y="93.23" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="6.86" y="93.23" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="6.86" y="93.23" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="6.86" y="95.77" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
-<text x="4.74" y="95.978" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">XP3</text>
+<text x="12.34" y="90.73" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="7.26" y="90.73" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="7.26" y="90.73" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="7.26" y="93.27" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="12.44" y="90.835" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">XP2</text>
+<text x="12.34" y="93.23" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="7.26" y="93.23" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="7.26" y="93.23" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="7.26" y="95.77" size="0" layer="21" font="proportional" ratio="10" rot="R0" align="center-left" distance="92"></text>
+<text x="11.54" y="98.978" size="0.987" layer="21" font="proportional" ratio="10" rot="SR270" align="bottom-left" distance="76">XP3</text>
 <text x="13.589" y="29.98" size="0.987" layer="21" font="proportional" ratio="10" rot="SR180" align="bottom-left" distance="76">Z</text>
 <wire layer="20" width="0.14" x1="0" y1="108" x2="0" y2="0"/>
 <wire layer="20" width="0.14" x1="0" y1="0" x2="50" y2="0"/>
@@ -325,9 +327,9 @@ mail: dvi534538@mail/ru</description>
 <circle layer="21" x="2.54" y="3.048" radius="0.635" width="0"/>
 </package>
 <package name="J-1">
-<pad name="1" x="7" y="0" drill="2" diameter="4" rot="R0" stop="yes" thermals="no"/>
-<pad name="2" x="0" y="0" drill="2" diameter="4" rot="R0" stop="yes" thermals="no"/>
-<pad name="3" x="4" y="-4.5" drill="2" diameter="4" rot="R270" stop="yes" thermals="no"/>
+<pad name="1" x="7" y="0" drill="2.3" diameter="4" rot="R0" stop="yes" thermals="no"/>
+<pad name="2" x="0" y="0" drill="2.3" diameter="4" rot="R0" stop="yes" thermals="no"/>
+<pad name="3" x="4" y="-4.5" drill="2.3" diameter="4" rot="R270" stop="yes" thermals="no"/>
 <wire layer="21" width="0.12" x1="-7" y1="-4.5" x2="7" y2="-4.5"/>
 <wire layer="21" width="0.12" x1="7" y1="-4.5" x2="7" y2="4.5"/>
 <wire layer="21" width="0.12" x1="7" y1="4.5" x2="-7" y2="4.5"/>
@@ -511,18 +513,6 @@ Unique Name: TE_1734366-4</description>
 <wire layer="51" width="0.12" x1="5.55" y1="-0.01" x2="-5.55" y2="-0.01"/>
 <wire layer="51" width="0.12" x1="-5.55" y1="-0.01" x2="-5.55" y2="1.89"/>
 </package>
-<package name="PLS_3_LAZERKP">
-<description>web: &lt;a href="http://vinratel.at.ua/"&gt;http://vinratel.at.ua/&lt;/a&gt;
-author: &#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;.
-mail: dvi534538@mail/ru</description>
-<pad name="1" x="-2.54" y="0" drill="0.9" shape="square" diameter="2" rot="R0" stop="yes" thermals="no"/>
-<pad name="2" x="0" y="0" drill="0.9" diameter="2" rot="R0" stop="yes" thermals="no"/>
-<pad name="3" x="2.54" y="0" drill="0.9" diameter="2" rot="R0" stop="yes" thermals="no"/>
-<wire layer="21" width="0.25" x1="-3.81" y1="-1.27" x2="-3.81" y2="1.27"/>
-<wire layer="21" width="0.25" x1="-3.81" y1="1.27" x2="3.81" y2="1.27"/>
-<wire layer="21" width="0.25" x1="3.81" y1="-1.27" x2="3.81" y2="1.27"/>
-<wire layer="21" width="0.25" x1="-3.81" y1="-1.27" x2="3.81" y2="-1.27"/>
-</package>
 <package name="R_0805_1206">
 <smd name="1@_1" x="-0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R0" stop="yes" cream="yes" thermals="no"/>
 <smd name="2@_1" x="0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R180" stop="yes" cream="yes" thermals="no"/>
@@ -560,6 +550,30 @@ mail: dvi534538@mail/ru</description>
 <wire layer="21" width="0.15" x1="-0.67" y1="-1.005" x2="0.67" y2="-1.005"/>
 </package>
 <package name="R_0805_1206_R4">
+<smd name="1@_1" x="-0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="2@_1" x="0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R180" stop="yes" cream="yes" thermals="no"/>
+<smd name="1@" x="-1.525" y="0" layer="1" dx="1.26" dy="1.92" roundness="40" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="2@" x="1.525" y="0" layer="1" dx="1.26" dy="1.92" roundness="40" rot="R180" stop="yes" cream="yes" thermals="no"/>
+<wire layer="51" width="0.12" x1="-2.5" y1="1.27" x2="2.5" y2="1.27"/>
+<wire layer="51" width="0.12" x1="2.5" y1="1.27" x2="2.5" y2="-1.27"/>
+<wire layer="51" width="0.12" x1="2.5" y1="-1.27" x2="-2.5" y2="-1.27"/>
+<wire layer="51" width="0.12" x1="-2.5" y1="-1.27" x2="-2.5" y2="1.27"/>
+<wire layer="21" width="0.15" x1="-0.67" y1="1.059" x2="0.67" y2="1.059"/>
+<wire layer="21" width="0.15" x1="-0.67" y1="-1.005" x2="0.67" y2="-1.005"/>
+</package>
+<package name="R_0805_1206_R13">
+<smd name="1@_1" x="-0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="2@_1" x="0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R180" stop="yes" cream="yes" thermals="no"/>
+<smd name="1@" x="-1.525" y="0" layer="1" dx="1.26" dy="1.92" roundness="40" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="2@" x="1.525" y="0" layer="1" dx="1.26" dy="1.92" roundness="40" rot="R180" stop="yes" cream="yes" thermals="no"/>
+<wire layer="51" width="0.12" x1="-2.5" y1="1.27" x2="2.5" y2="1.27"/>
+<wire layer="51" width="0.12" x1="2.5" y1="1.27" x2="2.5" y2="-1.27"/>
+<wire layer="51" width="0.12" x1="2.5" y1="-1.27" x2="-2.5" y2="-1.27"/>
+<wire layer="51" width="0.12" x1="-2.5" y1="-1.27" x2="-2.5" y2="1.27"/>
+<wire layer="21" width="0.15" x1="-0.67" y1="1.059" x2="0.67" y2="1.059"/>
+<wire layer="21" width="0.15" x1="-0.67" y1="-1.005" x2="0.67" y2="-1.005"/>
+</package>
+<package name="R_0805_1206_R14">
 <smd name="1@_1" x="-0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R0" stop="yes" cream="yes" thermals="no"/>
 <smd name="2@_1" x="0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R180" stop="yes" cream="yes" thermals="no"/>
 <smd name="1@" x="-1.525" y="0" layer="1" dx="1.26" dy="1.92" roundness="40" rot="R0" stop="yes" cream="yes" thermals="no"/>
@@ -889,19 +903,19 @@ mail: dvi534538@mail/ru</description>
 <element name="C5" library="common" package="&#1057;AP_0805_1206_C5" value="CAP_0805_1206" x="4" y="10.9" rot="MR-90"/>
 <element name="C6" library="common" package="&#1057;AP_P_SMD_5mm" value="CAP_SMD_P_5MM" x="17.7" y="23.7" rot="R90"/>
 <element name="C7" library="common" package="&#1057;AP_P_SMD_5mm_C7" value="CAP_SMD_P_5MM" x="9.6" y="89.3" rot="R0"/>
-<element name="C8" library="common" package="&#1057;AP_0805_1206_C8" value="CAP_0805_1206" x="3.7" y="88.5" rot="R270"/>
+<element name="C8" library="common" package="&#1057;AP_0805_1206_C8" value="CAP_0805_1206" x="3.7" y="87.3" rot="R270"/>
 <element name="C9" library="common" package="&#1057;AP_0805_1206_C9" value="CAP_0805_1206" x="15.1" y="23.7" rot="R90"/>
 <element name="C10" library="common" package="CAP_P_5mm_C10" value="CAP_P_5MM" x="4.1" y="24.5" rot="R0"/>
-<element name="C11" library="common" package="CAP_P_5mm_C11" value="CAP_P_5MM" x="16.2" y="94.1" rot="R720.001683672972"/>
+<element name="C11" library="common" package="CAP_P_5mm_C11" value="CAP_P_5MM" x="16.5" y="94.1" rot="R720.001683672972"/>
 <element name="DB25" library="common" package="DB25M" value="DB25M" x="43.9" y="37.1" rot="R90">
 <attribute name="UNIQUE_NAME" value="TE_DB25M" x="43.9" y="37.1" size="1.778" layer="27" display="off"/>
 </element>
 <element name="DC" library="common" package="2_Screw_Term._Blk." value="DC" x="46.0002" y="91.5" rot="R90"/>
 <element name="DCIN" library="common" package="J-1" value="DC IN" x="31.8" y="7.7" rot="R90"/>
-<element name="ENCKP" library="common" package="PLS_3" value="ENCKP" x="3.7" y="81.2" rot="R90">
-<attribute name="WEB" value="http://vinratel.at.ua/" x="3.7" y="81.2" size="1.778" layer="27" display="off"/>
-<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="3.7" y="81.2" size="1.778" layer="27" display="off"/>
-<attribute name="MAIL" value="dvi534538@mail/ru" x="3.7" y="81.2" size="1.778" layer="27" display="off"/>
+<element name="ENCKP" library="common" package="PLS_3" value="ENCKP" x="3.7" y="80.4" rot="R90">
+<attribute name="WEB" value="http://vinratel.at.ua/" x="3.7" y="80.4" size="1.778" layer="27" display="off"/>
+<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="3.7" y="80.4" size="1.778" layer="27" display="off"/>
+<attribute name="MAIL" value="dvi534538@mail/ru" x="3.7" y="80.4" size="1.778" layer="27" display="off"/>
 </element>
 <element name="ENCSW" library="common" package="PLS_3" value="ENC SW" x="4.7" y="43.5" rot="R90">
 <attribute name="WEB" value="http://vinratel.at.ua/" x="4.7" y="43.5" size="1.778" layer="27" display="off"/>
@@ -930,10 +944,10 @@ mail: dvi534538@mail/ru</description>
 <attribute name="PART_NUMBER_(DIGI-KEY)" value="A123109-ND" x="30.899998" y="25.899986" size="1.778" layer="27" display="off"/>
 <attribute name="UNIQUE_NAME" value="TE_1734366-4" x="30.899998" y="25.899986" size="1.778" layer="27" display="off"/>
 </element>
-<element name="LAZERKP" library="common" package="PLS_3_LAZERKP" value="LAZER" x="8.1" y="97.7" rot="R720.001683672972">
-<attribute name="WEB" value="http://vinratel.at.ua/" x="8.1" y="97.7" size="1.778" layer="27" display="off"/>
-<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="8.1" y="97.7" size="1.778" layer="27" display="off"/>
-<attribute name="MAIL" value="dvi534538@mail/ru" x="8.1" y="97.7" size="1.778" layer="27" display="off"/>
+<element name="LAZERKP" library="common" package="PLS_3" value="LAZER" x="7.5" y="97.8" rot="R720.001683672972">
+<attribute name="WEB" value="http://vinratel.at.ua/" x="7.5" y="97.8" size="1.778" layer="27" display="off"/>
+<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="7.5" y="97.8" size="1.778" layer="27" display="off"/>
+<attribute name="MAIL" value="dvi534538@mail/ru" x="7.5" y="97.8" size="1.778" layer="27" display="off"/>
 </element>
 <element name="LAZERSW" library="common" package="PLS_3" value="LAZER SW" x="28.5" y="43.6" rot="R270">
 <attribute name="WEB" value="http://vinratel.at.ua/" x="28.5" y="43.6" size="1.778" layer="27" display="off"/>
@@ -941,9 +955,9 @@ mail: dvi534538@mail/ru</description>
 <attribute name="MAIL" value="dvi534538@mail/ru" x="28.5" y="43.6" size="1.778" layer="27" display="off"/>
 </element>
 <element name="R1" library="common" package="R_0805_1206" value="R_0805_1206" x="23.4" y="19.7" rot="MR-990.002315050649"/>
-<element name="R2" library="common" package="R_0805_1206_R2" value="R_0805_1206" x="11.6" y="85.3" rot="R270"/>
+<element name="R2" library="common" package="R_0805_1206_R2" value="R_0805_1206" x="11.8" y="85.4" rot="R270"/>
 <element name="R3" library="common" package="R_0805_1206_R3" value="R_0805_1206" x="36.7" y="68.2" rot="R180"/>
-<element name="R4" library="common" package="R_0805_1206_R4" value="R_0805_1206" x="5" y="93.3" rot="MR-270"/>
+<element name="R4" library="common" package="R_0805_1206_R4" value="R_0805_1206" x="5.3" y="93.3" rot="MR-270"/>
 <element name="R5" library="common" package="R_0805_1206_R3" value="R_0805_1206" x="36.7" y="71.8" rot="R180"/>
 <element name="R6" library="common" package="R_0805_1206_R3" value="R_0805_1206" x="36.7" y="78.8" rot="R540.001262754521"/>
 <element name="R7" library="common" package="R_0805_1206_R2" value="R_0805_1206" x="7.3" y="85.4" rot="R270"/>
@@ -952,6 +966,8 @@ mail: dvi534538@mail/ru</description>
 <element name="R10" library="common" package="R_0805_1206_R4" value="R_0805_1206" x="4.6" y="65.2" rot="MR-270"/>
 <element name="R11" library="common" package="R_0805_1206" value="R_0805_1206" x="3.7" y="35.1" rot="MR-270"/>
 <element name="R12" library="common" package="R_0805_1206_R4" value="R_0805_1206" x="3.7" y="30.1" rot="MR-90"/>
+<element name="R13" library="common" package="R_0805_1206_R13" value="R_0805_1206" x="5.5" y="92.7" rot="R810"/>
+<element name="R14" library="common" package="R_0805_1206_R14" value="R_0805_1206" x="3" y="92.7" rot="R450"/>
 <element name="STEPPERSHIELD" library="common" package="PLS_16" value="STEPPER SHIELD" x="38.6" y="37.1" rot="R90">
 <attribute name="WEB" value="http://vinratel.at.ua/" x="38.6" y="37.1" size="1.778" layer="27" display="off"/>
 <attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="38.6" y="37.1" size="1.778" layer="27" display="off"/>
@@ -1024,15 +1040,15 @@ mail: dvi534538@mail/ru</description>
 <attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="4.7" y="60.4" size="1.778" layer="27" display="off"/>
 <attribute name="MAIL" value="dvi534538@mail/ru" x="4.7" y="60.4" size="1.778" layer="27" display="off"/>
 </element>
-<element name="XP2" library="common" package="PLS_2_XP2" value="BKL SEL" x="9.4" y="92" rot="R0">
-<attribute name="WEB" value="http://vinratel.at.ua/" x="9.4" y="92" size="1.778" layer="27" display="off"/>
-<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="9.4" y="92" size="1.778" layer="27" display="off"/>
-<attribute name="MAIL" value="dvi534538@mail/ru" x="9.4" y="92" size="1.778" layer="27" display="off"/>
+<element name="XP2" library="common" package="PLS_2_XP2" value="BKL SEL" x="9.8" y="92" rot="R0">
+<attribute name="WEB" value="http://vinratel.at.ua/" x="9.8" y="92" size="1.778" layer="27" display="off"/>
+<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="9.8" y="92" size="1.778" layer="27" display="off"/>
+<attribute name="MAIL" value="dvi534538@mail/ru" x="9.8" y="92" size="1.778" layer="27" display="off"/>
 </element>
-<element name="XP3" library="common" package="PLS_2_XP3" value="BKL  SEL" x="9.4" y="94.5" rot="R0">
-<attribute name="WEB" value="http://vinratel.at.ua/" x="9.4" y="94.5" size="1.778" layer="27" display="off"/>
-<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="9.4" y="94.5" size="1.778" layer="27" display="off"/>
-<attribute name="MAIL" value="dvi534538@mail/ru" x="9.4" y="94.5" size="1.778" layer="27" display="off"/>
+<element name="XP3" library="common" package="PLS_2_XP3" value="BKL  SEL" x="9.8" y="94.5" rot="R0">
+<attribute name="WEB" value="http://vinratel.at.ua/" x="9.8" y="94.5" size="1.778" layer="27" display="off"/>
+<attribute name="AUTHOR" value="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;." x="9.8" y="94.5" size="1.778" layer="27" display="off"/>
+<attribute name="MAIL" value="dvi534538@mail/ru" x="9.8" y="94.5" size="1.778" layer="27" display="off"/>
 </element>
 <element name="Z" library="common" package="Q_1" value="Q_1" x="10.9" y="22.9" rot="R270"/>
 </elements>
@@ -1103,7 +1119,7 @@ mail: dvi534538@mail/ru</description>
 <via x="36.5" y="62.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="36.3" y="56.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="35.7" y="86.4" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="12.6" y="97.3" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="12.8" y="97.4" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
 <via x="20.2" y="97" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="18" y="53.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="18" y="40.6" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
@@ -1147,13 +1163,12 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.79" x1="37.2" y1="66.5" x2="36.49" y2="65.79"/>
 <wire layer="16" width="0.79" x1="36.49" y1="65.79" x2="33.73" y2="65.79"/>
 <wire layer="16" width="0.8" x1="28.9" y1="91" x2="26.8" y2="91"/>
-<wire layer="16" width="0.8" x1="26.8" y1="91" x2="26.8" y2="97.368633"/>
-<wire layer="16" width="0.8" x1="26.8" y1="97.368633" x2="27.931367" y2="98.5"/>
-<wire layer="16" width="0.8" x1="27.931367" y1="98.5" x2="40.3" y2="98.5"/>
+<wire layer="16" width="0.8" x1="26.8" y1="91" x2="26.8" y2="98.5"/>
+<wire layer="16" width="0.8" x1="26.8" y1="98.5" x2="40.3" y2="98.5"/>
 <wire layer="16" width="0.8" x1="40.3" y1="98.5" x2="40.3" y2="86.42"/>
 <wire layer="16" width="0.8" x1="40.3" y1="86.42" x2="38" y2="86.42"/>
-<wire layer="16" width="0.8" x1="19.200033" y1="102.599867" x2="17.9" y2="101.299867"/>
-<wire layer="16" width="0.8" x1="17.9" y1="101.299867" x2="17.9" y2="94.100067"/>
+<wire layer="16" width="0.8" x1="19.200027" y1="102.599882" x2="17.9" y2="101.299855"/>
+<wire layer="16" width="0.8" x1="17.9" y1="101.299855" x2="17.9" y2="94.100067"/>
 <wire layer="16" width="0.8" x1="17.9" y1="94.100067" x2="17.9" y2="88.8"/>
 <wire layer="16" width="0.8" x1="17.9" y1="88.8" x2="17.9" y2="82.2"/>
 <wire layer="16" width="0.8" x1="17.9" y1="82.2" x2="17.9" y2="77.4"/>
@@ -1170,25 +1185,27 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="7.171233" y1="84.665" x2="7.171233" y2="84.665"/>
 <wire layer="16" width="0.33" x1="12.6" y1="30.8" x2="12.6" y2="28.3"/>
 <wire layer="16" width="0.33" x1="12.6" y1="28.3" x2="13" y2="27.9"/>
-<wire layer="16" width="0.3" x1="13" y1="27.9" x2="13" y2="25.851867"/>
-<wire layer="16" width="0.3" x1="13" y1="25.851867" x2="13.039933" y2="25.8119"/>
-<wire layer="16" width="0.8" x1="26.199967" y1="104.600067" x2="27.2" y2="104.600067"/>
-<wire layer="16" width="0.8" x1="27.2" y1="104.600067" x2="27.2" y2="104.6001"/>
-<wire layer="16" width="0.8" x1="27.2" y1="104.6001" x2="28.199967" y2="104.6001"/>
-<wire layer="16" width="0.8" x1="25.200033" y1="102.600033" x2="27.199967" y2="102.600033"/>
-<wire layer="16" width="0.8" x1="27.199967" y1="102.600033" x2="27.200033" y2="102.6001"/>
-<wire layer="16" width="0.8" x1="27.200033" y1="102.6001" x2="29.200033" y2="102.6001"/>
-<wire layer="16" width="0.8" x1="29.200033" y1="102.6001" x2="29.200033" y2="102.600133"/>
-<wire layer="16" width="0.8" x1="29.200033" y1="102.600133" x2="31.199967" y2="102.600133"/>
-<wire layer="16" width="0.8" x1="31.199967" y1="102.600133" x2="31.200033" y2="102.6002"/>
-<wire layer="16" width="0.8" x1="33.200033" y1="102.600233" x2="31.200067" y2="102.600233"/>
-<wire layer="16" width="0.8" x1="31.200067" y1="102.600233" x2="31.200033" y2="102.6002"/>
-<wire layer="16" width="0.8" x1="32.199967" y1="104.6002" x2="32.199967" y2="102.600233"/>
-<wire layer="16" width="0.8" x1="32.199967" y1="102.600233" x2="33.200033" y2="102.600233"/>
-<wire layer="16" width="0.8" x1="27.2" y1="104.6001" x2="27.2" y2="102.6001"/>
-<wire layer="16" width="0.8" x1="27.2" y1="102.6001" x2="27.200033" y2="102.6001"/>
-<wire layer="16" width="0.8" x1="29.200033" y1="102.600133" x2="29.200033" y2="99.768667"/>
-<wire layer="16" width="0.8" x1="29.200033" y1="99.768667" x2="27.931367" y2="98.5"/>
+<wire layer="16" width="0.3" x1="13" y1="27.9" x2="13" y2="25.851854"/>
+<wire layer="16" width="0.3" x1="13" y1="25.851854" x2="13.03994" y2="25.811913"/>
+<wire layer="16" width="0.8" x1="26.199975" y1="104.600062" x2="27.2" y2="104.600062"/>
+<wire layer="16" width="0.8" x1="27.2" y1="104.600062" x2="27.2" y2="104.600114"/>
+<wire layer="16" width="0.8" x1="27.2" y1="104.600114" x2="28.199975" y2="104.600114"/>
+<wire layer="16" width="0.8" x1="25.200027" y1="102.600037" x2="27.199975" y2="102.600037"/>
+<wire layer="16" width="0.8" x1="27.199975" y1="102.600037" x2="27.200027" y2="102.600088"/>
+<wire layer="16" width="0.8" x1="27.200027" y1="102.600088" x2="29.200027" y2="102.600088"/>
+<wire layer="16" width="0.8" x1="29.200027" y1="102.600088" x2="29.200027" y2="102.600139"/>
+<wire layer="16" width="0.8" x1="29.200027" y1="102.600139" x2="31.199975" y2="102.600139"/>
+<wire layer="16" width="0.8" x1="31.199975" y1="102.600139" x2="31.200027" y2="102.600191"/>
+<wire layer="16" width="0.8" x1="33.200027" y1="102.600242" x2="31.200078" y2="102.600242"/>
+<wire layer="16" width="0.8" x1="31.200078" y1="102.600242" x2="31.200027" y2="102.600191"/>
+<wire layer="16" width="0.8" x1="32.199975" y1="104.600217" x2="32.199975" y2="102.600242"/>
+<wire layer="16" width="0.8" x1="32.199975" y1="102.600242" x2="33.200027" y2="102.600242"/>
+<wire layer="16" width="0.8" x1="27.2" y1="104.600114" x2="27.2" y2="102.600088"/>
+<wire layer="16" width="0.8" x1="27.2" y1="102.600088" x2="27.200027" y2="102.600088"/>
+<wire layer="16" width="0.8" x1="29.200027" y1="102.600139" x2="25.2" y2="102.600139"/>
+<wire layer="16" width="0.8" x1="25.2" y1="102.600139" x2="25.2" y2="99.631371"/>
+<wire layer="16" width="0.8" x1="25.2" y1="99.631371" x2="26.331371" y2="98.5"/>
+<wire layer="16" width="0.8" x1="26.331371" y1="98.5" x2="26.8" y2="98.5"/>
 <wire layer="16" width="0.8" x1="7.784967" y1="33.908067" x2="10.484967" y2="33.908067"/>
 <wire layer="16" width="0.8" x1="10.484967" y1="33.908067" x2="10.484967" y2="33.908067"/>
 <wire layer="16" width="0.8" x1="10.484967" y1="33.908067" x2="10.591933" y2="33.908067"/>
@@ -1213,8 +1230,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="6.2" y1="27.3" x2="4.6" y2="25.7"/>
 <wire layer="16" width="0.8" x1="4.6" y1="25.7" x2="4.6" y2="17.4"/>
 <wire layer="16" width="0.8" x1="4.6" y1="17.4" x2="4" y2="17.4"/>
-<wire layer="16" width="0.8" x1="4" y1="18.025" x2="6.574967" y2="18.025"/>
-<wire layer="16" width="0.8" x1="6.574967" y1="18.025" x2="6.599967" y2="18"/>
+<wire layer="16" width="0.8" x1="4" y1="18.025" x2="6.57495" y2="18.025"/>
+<wire layer="16" width="0.8" x1="6.57495" y1="18.025" x2="6.59995" y2="18"/>
 <wire layer="16" width="0.8" x1="4" y1="9.375" x2="6.525" y2="9.375"/>
 <wire layer="16" width="0.8" x1="6.525" y1="9.375" x2="6.6" y2="9.3"/>
 <wire layer="16" width="0.8" x1="4" y1="18.025" x2="2.325" y2="18.025"/>
@@ -1223,33 +1240,29 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="1.8" y1="10.2" x2="2.5" y2="9.5"/>
 <wire layer="16" width="0.8" x1="2.5" y1="9.5" x2="3.875" y2="9.5"/>
 <wire layer="16" width="0.8" x1="3.875" y1="9.5" x2="4" y2="9.375"/>
-<wire layer="16" width="0.8" x1="6.6" y1="9.3" x2="7.4" y2="9.3"/>
-<wire layer="16" width="0.8" x1="7.4" y1="9.3" x2="8.3" y2="8.4"/>
-<wire layer="16" width="0.8" x1="8.3" y1="8.4" x2="9.3" y2="8.4"/>
-<wire layer="16" width="0.8" x1="9.3" y1="8.4" x2="14.609967" y2="8.4"/>
-<wire layer="16" width="0.8" x1="14.609967" y1="8.4" x2="17.1601" y2="10.950133"/>
-<wire layer="16" width="0.8" x1="17.1601" y1="10.950133" x2="18.250133" y2="10.950133"/>
+<wire layer="16" width="0.8" x1="6.6" y1="9.3" x2="8.6" y2="9.3"/>
+<wire layer="16" width="0.8" x1="8.6" y1="9.3" x2="10.9" y2="7"/>
+<wire layer="16" width="0.8" x1="10.9" y1="7" x2="18.250133" y2="7"/>
+<wire layer="16" width="0.8" x1="18.250133" y1="7" x2="18.250133" y2="10.950133"/>
 <wire layer="16" width="0.8" x1="18.250133" y1="10.950133" x2="18.641267" y2="11.341267"/>
 <wire layer="16" width="0.8" x1="18.641267" y1="11.341267" x2="18.641267" y2="13.660133"/>
-<wire layer="16" width="0.8" x1="29.490267" y1="19.329933" x2="26.3" y2="19.329933"/>
-<wire layer="16" width="0.8" x1="26.3" y1="19.329933" x2="26.3" y2="17"/>
+<wire layer="16" width="0.8" x1="29.490263" y1="19.329929" x2="26.3" y2="19.329929"/>
+<wire layer="16" width="0.8" x1="26.3" y1="19.329929" x2="26.3" y2="17"/>
 <wire layer="16" width="0.8" x1="26.3" y1="17" x2="26.6" y2="17"/>
-<wire layer="16" width="0.8" x1="26.6" y1="17" x2="26.6" y2="13.9"/>
-<wire layer="16" width="0.8" x1="26.6" y1="13.9" x2="27.2" y2="13.3"/>
-<wire layer="16" width="0.8" x1="27.2" y1="13.3" x2="27.2" y2="8.5393"/>
-<wire layer="16" width="0.8" x1="27.2" y1="8.5393" x2="28.0393" y2="7.7"/>
-<wire layer="16" width="0.8" x1="28.0393" y1="7.7" x2="31.8" y2="7.7"/>
-<wire layer="16" width="0.8" x1="23.400067" y1="18.175" x2="25.125" y2="18.175"/>
+<wire layer="16" width="0.8" x1="26.6" y1="17" x2="26.6" y2="13.870533"/>
+<wire layer="16" width="0.8" x1="26.6" y1="13.870533" x2="27.2" y2="13.270533"/>
+<wire layer="16" width="0.8" x1="27.2" y1="13.270533" x2="27.2" y2="8.566533"/>
+<wire layer="16" width="0.8" x1="27.2" y1="8.566533" x2="27.366533" y2="8.4"/>
+<wire layer="16" width="0.8" x1="27.366533" y1="8.4" x2="28.066533" y2="7.7"/>
+<wire layer="16" width="0.8" x1="28.066533" y1="7.7" x2="31.8" y2="7.7"/>
+<wire layer="16" width="0.8" x1="23.400062" y1="18.175" x2="25.125" y2="18.175"/>
 <wire layer="16" width="0.8" x1="25.125" y1="18.175" x2="26.3" y2="17"/>
-<wire layer="16" width="0.8" x1="29.490267" y1="19.329933" x2="29.490267" y2="22.400033"/>
-<wire layer="16" width="0.8" x1="29.490267" y1="22.400033" x2="32.200133" y2="22.400033"/>
+<wire layer="16" width="0.8" x1="29.490263" y1="19.329929" x2="29.490263" y2="22.400038"/>
+<wire layer="16" width="0.8" x1="29.490263" y1="22.400038" x2="32.200139" y2="22.400038"/>
 <wire layer="16" width="0.79" x1="33.73" y1="76.09" x2="36.875567" y2="76.09"/>
 <wire layer="16" width="0.79" x1="36.875567" y1="76.09" x2="37.2" y2="76.414433"/>
 <wire layer="16" width="0.8" x1="38" y1="86.42" x2="35.72" y2="86.42"/>
 <wire layer="16" width="0.8" x1="35.72" y1="86.42" x2="35.7" y2="86.4"/>
-<wire layer="16" width="0.5" x1="18.641267" y1="13.660133" x2="20.860133" y2="13.660133"/>
-<wire layer="16" width="0.5" x1="20.860133" y1="13.660133" x2="21.1" y2="13.9"/>
-<wire layer="16" width="0.5" x1="21.1" y1="13.9" x2="26.6" y2="13.9"/>
 <wire layer="16" width="0.8" x1="18" y1="30.8" x2="17.9" y2="30.8"/>
 <wire layer="16" width="0.8" x1="17.9" y1="30.8" x2="17.9" y2="27.5"/>
 <wire layer="16" width="0.8" x1="31.8" y1="7.7" x2="37.1" y2="7.7"/>
@@ -1261,14 +1274,11 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="48.8" y1="60.6" x2="40.5" y2="60.6"/>
 <wire layer="16" width="0.8" x1="40.5" y1="60.6" x2="38.2" y2="62.9"/>
 <wire layer="16" width="0.8" x1="38.2" y1="62.9" x2="36.5" y2="62.9"/>
-<wire layer="16" width="0.8" x1="18.7" y1="94.100067" x2="17.9" y2="94.100067"/>
+<wire layer="16" width="0.8" x1="19" y1="94.100073" x2="17.9" y2="94.100067"/>
 <wire layer="16" width="0.8" x1="6.6" y1="24.5" x2="6.6" y2="20.4"/>
-<wire layer="16" width="0.8" x1="6.6" y1="20.4" x2="6.599967" y2="20.399967"/>
-<wire layer="16" width="0.8" x1="6.599967" y1="20.399967" x2="6.599967" y2="18"/>
-<wire layer="16" width="0.8" x1="11.371267" y1="10.950133" x2="17.1601" y2="10.950133"/>
-<wire layer="16" width="0.33" x1="10.64" y1="97.700067" x2="11.699933" y2="97.700067"/>
-<wire layer="16" width="0.33" x1="11.699933" y1="97.700067" x2="12.1" y2="97.3"/>
-<wire layer="16" width="0.33" x1="12.1" y1="97.3" x2="12.6" y2="97.3"/>
+<wire layer="16" width="0.8" x1="6.6" y1="20.4" x2="6.59995" y2="20.39995"/>
+<wire layer="16" width="0.8" x1="6.59995" y1="20.39995" x2="6.59995" y2="18"/>
+<wire layer="16" width="0.8" x1="11.371267" y1="10.950133" x2="18.250133" y2="10.950133"/>
 <wire layer="16" width="0.8" x1="43.9" y1="13.6" x2="43.9" y2="13.6"/>
 <wire layer="16" width="0.6" x1="11.6" y1="84.665" x2="10.65" y2="84.665"/>
 <wire layer="16" width="0.6" x1="10.65" y1="84.665" x2="10.65" y2="84.665"/>
@@ -1283,15 +1293,15 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="8.7" y1="81.2" x2="7" y2="81.2"/>
 <wire layer="16" width="0.8" x1="7" y1="81.2" x2="6.674233" y2="81.525767"/>
 <wire layer="16" width="0.8" x1="6.674233" y1="81.525767" x2="6.674233" y2="84.665"/>
-<wire layer="16" width="0.33" x1="3.7" y1="78.66" x2="5.3333" y2="78.66"/>
-<wire layer="16" width="0.33" x1="5.3333" y1="78.66" x2="6" y2="79.3267"/>
+<wire layer="16" width="0.33" x1="3.7" y1="77.86" x2="4.5333" y2="77.86"/>
+<wire layer="16" width="0.33" x1="4.5333" y1="77.86" x2="6" y2="79.3267"/>
 <wire layer="16" width="0.33" x1="6" y1="79.3267" x2="6" y2="80.6"/>
 <wire layer="16" width="0.33" x1="6" y1="80.6" x2="6.6" y2="81.2"/>
 <wire layer="16" width="0.33" x1="6.6" y1="81.2" x2="7" y2="81.2"/>
-<wire layer="16" width="0.8" x1="18.199967" y1="104.599867" x2="19.200033" y2="104.599867"/>
-<wire layer="16" width="0.8" x1="19.200033" y1="104.599867" x2="19.200033" y2="104.5999"/>
-<wire layer="16" width="0.8" x1="19.200033" y1="104.5999" x2="20.199967" y2="104.5999"/>
-<wire layer="16" width="0.8" x1="19.200033" y1="102.599867" x2="19.200033" y2="104.5999"/>
+<wire layer="16" width="0.8" x1="18.199975" y1="104.599857" x2="19.200033" y2="104.599857"/>
+<wire layer="16" width="0.8" x1="19.200033" y1="104.599857" x2="19.200033" y2="104.599908"/>
+<wire layer="16" width="0.8" x1="19.200033" y1="104.599908" x2="20.199975" y2="104.599908"/>
+<wire layer="16" width="0.8" x1="19.200027" y1="102.599882" x2="19.200033" y2="104.599908"/>
 <wire layer="16" width="0.8" x1="18" y1="53.9" x2="17.9" y2="53.9"/>
 <wire layer="16" width="0.8" x1="18" y1="40.6" x2="17.9" y2="40.6"/>
 <wire layer="16" width="0.8" x1="18" y1="69.8" x2="17.9" y2="69.8"/>
@@ -1304,25 +1314,33 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="18" y1="82.2" x2="17.9" y2="82.2"/>
 <wire layer="16" width="0.8" x1="18" y1="60" x2="17.9" y2="60"/>
 <wire layer="16" width="1" x1="20.2" y1="97" x2="18.6" y2="97"/>
-<wire layer="16" width="1" x1="18.6" y1="97" x2="18.6" y2="94.200067"/>
-<wire layer="16" width="1" x1="18.6" y1="94.200067" x2="18.7" y2="94.100067"/>
-<wire layer="16" width="1" x1="18.7" y1="94.100067" x2="18.7" y2="91.9"/>
+<wire layer="16" width="1" x1="18.6" y1="97" x2="18.6" y2="94.500073"/>
+<wire layer="16" width="1" x1="18.6" y1="94.500073" x2="19" y2="94.100073"/>
+<wire layer="16" width="1" x1="19" y1="94.100073" x2="18.7" y2="94.100073"/>
+<wire layer="16" width="1" x1="18.7" y1="94.100073" x2="18.7" y2="91.9"/>
 <wire layer="16" width="0.8" x1="40.3" y1="98.5" x2="43.7" y2="98.5"/>
 <wire layer="16" width="0.8" x1="43.7" y1="98.5" x2="46" y2="98.5"/>
 <wire layer="16" width="0.8" x1="46" y1="98.5" x2="48.2" y2="98.5"/>
-<wire layer="16" width="0.33" x1="6.9" y1="5.8" x2="7" y2="5.8"/>
-<wire layer="16" width="0.33" x1="7" y1="5.8" x2="8.2" y2="7"/>
-<wire layer="16" width="0.33" x1="8.2" y1="7" x2="9.3" y2="7"/>
-<wire layer="16" width="0.33" x1="9.3" y1="7" x2="9.3" y2="8.4"/>
-<wire layer="16" width="0.33" x1="25.6" y1="8.4" x2="25.6" y2="7"/>
-<wire layer="16" width="0.33" x1="25.6" y1="7" x2="25.6" y2="7"/>
-<wire layer="16" width="0.33" x1="25.6" y1="7" x2="25.6" y2="5.7"/>
 <wire layer="16" width="0.33" x1="37.1" y1="5.4" x2="41.1" y2="5.4"/>
 <wire layer="16" width="0.33" x1="41.1" y1="5.4" x2="41.1" y2="5.4"/>
-<wire layer="16" width="0.33" x1="9.3" y1="7" x2="25.6" y2="7"/>
-<wire layer="16" width="0.33" x1="25.6" y1="8.4" x2="27.0607" y2="8.4"/>
-<wire layer="16" width="0.8" x1="27.0607" y1="8.4" x2="27.2" y2="8.5393"/>
-<wire layer="16" width="0.33" x1="37.1" y1="5.4" x2="37.1" y2="7.7"/>
+<wire layer="16" width="0.33" x1="25.6" y1="8.4" x2="27.033467" y2="8.4"/>
+<wire layer="16" width="0.8" x1="27.033467" y1="8.4" x2="27.2" y2="8.566533"/>
+<wire layer="16" width="0.8" x1="9.3" y1="7" x2="25.6" y2="7"/>
+<wire layer="16" width="0.33" x1="25.6" y1="7" x2="25.6" y2="5.7"/>
+<wire layer="16" width="0.8" x1="6.9" y1="5.8" x2="6.9" y2="5.9"/>
+<wire layer="16" width="0.8" x1="6.9" y1="5.9" x2="7.9" y2="6.9"/>
+<wire layer="16" width="0.8" x1="7.9" y1="6.9" x2="9.2" y2="6.9"/>
+<wire layer="16" width="0.8" x1="9.2" y1="6.9" x2="9.3" y2="7"/>
+<wire layer="16" width="0.8" x1="25.6" y1="8.4" x2="25.6" y2="5.7"/>
+<wire layer="16" width="0.8" x1="25.6" y1="8.4" x2="27.366533" y2="8.4"/>
+<wire layer="16" width="0.8" x1="37.1" y1="7.7" x2="37.1" y2="5.4"/>
+<wire layer="16" width="0.8" x1="37.1" y1="5.4" x2="41.1" y2="5.4"/>
+<wire layer="16" width="0.8" x1="18.641267" y1="13.660133" x2="20.660133" y2="13.660133"/>
+<wire layer="16" width="0.8" x1="20.660133" y1="13.660133" x2="21" y2="14"/>
+<wire layer="16" width="0.8" x1="21" y1="14" x2="26.470533" y2="14"/>
+<wire layer="16" width="0.8" x1="26.470533" y1="14" x2="26.6" y2="13.870533"/>
+<wire layer="16" width="0.33" x1="10.04" y1="97.800075" x2="12.399925" y2="97.800075"/>
+<wire layer="16" width="0.33" x1="12.399925" y1="97.800075" x2="12.8" y2="97.4"/>
 <wire layer="1" width="0.8" x1="37.6" y1="68.2" x2="38.1" y2="68.2"/>
 <wire layer="1" width="0.8" x1="38.1" y1="68.2" x2="38.1" y2="67.331367"/>
 <wire layer="1" width="0.8" x1="38.1" y1="67.331367" x2="36.968633" y2="66.2"/>
@@ -1334,8 +1352,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.8" x1="36.5" y1="62.9" x2="36.5" y2="62.9"/>
 <wire layer="1" width="0.8" x1="36.5" y1="62.9" x2="36.5" y2="56.1"/>
 <wire layer="1" width="0.8" x1="36.5" y1="56.1" x2="36.3" y2="56.1"/>
-<wire layer="1" width="0.8" x1="38.225" y1="82.2" x2="38.225" y2="78.800033"/>
-<wire layer="1" width="0.8" x1="38.225" y1="78.800033" x2="38.225" y2="75.3"/>
+<wire layer="1" width="0.8" x1="38.225" y1="82.2" x2="38.225" y2="78.800034"/>
+<wire layer="1" width="0.8" x1="38.225" y1="78.800034" x2="38.225" y2="75.3"/>
 <wire layer="1" width="0.8" x1="38.225" y1="75.3" x2="38.225" y2="71.8"/>
 <wire layer="1" width="0.8" x1="38.225" y1="71.8" x2="38.225" y2="68.2"/>
 <wire layer="1" width="0.8" x1="35.7" y1="86.4" x2="35.7" y2="84.9"/>
@@ -1349,36 +1367,22 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.8" x1="15.1" y1="25.225" x2="15.1" y2="28.3"/>
 <wire layer="1" width="0.8" x1="15.1" y1="28.3" x2="12.6" y2="30.8"/>
 <wire layer="1" width="0.8" x1="12.6" y1="30.8" x2="12.6" y2="30.8"/>
-<wire layer="1" width="0.33" x1="12.6" y1="97.3" x2="19.9" y2="97.3"/>
-<wire layer="1" width="0.33" x1="19.9" y1="97.3" x2="20.2" y2="97"/>
-<wire layer="1" width="0.8" x1="11.6" y1="86.825" x2="15.668633" y2="86.825"/>
-<wire layer="1" width="0.8" x1="15.668633" y1="86.825" x2="16.8" y2="87.956367"/>
-<wire layer="1" width="0.8" x1="16.8" y1="87.956367" x2="16.8" y2="97"/>
+<wire layer="1" width="0.8" x1="11.8" y1="86.925" x2="15.768633" y2="86.925"/>
+<wire layer="1" width="0.8" x1="15.768633" y1="86.925" x2="16.8" y2="87.956367"/>
+<wire layer="1" width="0.8" x1="16.8" y1="87.956367" x2="16.8" y2="96.9"/>
+<wire layer="1" width="0.8" x1="16.8" y1="96.9" x2="16.8" y2="97"/>
 <wire layer="1" width="0.8" x1="16.8" y1="97" x2="20.2" y2="97"/>
 <wire layer="1" width="0.8" x1="7.3" y1="86.925" x2="9.6" y2="86.925"/>
-<wire layer="1" width="0.8" x1="9.6" y1="86.925" x2="11.5" y2="86.925"/>
-<wire layer="1" width="0.8" x1="11.5" y1="86.925" x2="11.6" y2="86.825"/>
+<wire layer="1" width="0.8" x1="9.6" y1="86.925" x2="11.8" y2="86.925"/>
+<wire layer="1" width="0.8" x1="11.8" y1="86.925" x2="11.8" y2="86.925"/>
 <wire layer="1" width="0.8" x1="10.3" y1="82" x2="10.3" y2="82"/>
 <wire layer="1" width="0.8" x1="10.3" y1="82" x2="9.6" y2="82.7"/>
 <wire layer="1" width="0.8" x1="9.6" y1="82.7" x2="9.6" y2="86.925"/>
-<wire layer="1" width="0.8" x1="3.7" y1="86.975" x2="7.25" y2="86.975"/>
-<wire layer="1" width="0.8" x1="7.25" y1="86.975" x2="7.3" y2="86.925"/>
-<wire layer="1" width="0.8" x1="11.6" y1="89.3" x2="11.6" y2="86.825"/>
-<wire layer="1" width="0.33" x1="6.6" y1="9.3" x2="8.7" y2="9.3"/>
-<wire layer="1" width="0.33" x1="8.7" y1="9.3" x2="9.3" y2="8.7"/>
-<wire layer="1" width="0.33" x1="9.3" y1="8.7" x2="9.3" y2="7"/>
-<wire layer="1" width="0.33" x1="9.3" y1="7" x2="8.1" y2="7"/>
-<wire layer="1" width="0.33" x1="8.1" y1="7" x2="6.9" y2="5.8"/>
-<wire layer="1" width="0.33" x1="9.3" y1="7" x2="25.6" y2="7"/>
-<wire layer="1" width="0.33" x1="25.6" y1="7" x2="25.6" y2="8.4"/>
-<wire layer="1" width="0.33" x1="25.6" y1="8.4" x2="25.6" y2="5.7"/>
-<wire layer="1" width="0.33" x1="25.6" y1="5.7" x2="25.6" y2="5.7"/>
-<wire layer="1" width="0.33" x1="25.6" y1="5.7" x2="25.6" y2="4.5"/>
-<wire layer="1" width="0.33" x1="25.6" y1="4.5" x2="31.8" y2="4.5"/>
-<wire layer="1" width="0.33" x1="31.8" y1="4.5" x2="36.2" y2="4.5"/>
-<wire layer="1" width="0.33" x1="36.2" y1="4.5" x2="37.1" y2="5.4"/>
-<wire layer="1" width="0.33" x1="37.1" y1="5.4" x2="37.1" y2="5.4"/>
-<wire layer="1" width="0.33" x1="37.1" y1="5.4" x2="41.1" y2="5.4"/>
+<wire layer="1" width="0.8" x1="3.7" y1="85.775" x2="4.875" y2="85.775"/>
+<wire layer="1" width="0.8" x1="4.875" y1="85.775" x2="6.025" y2="86.925"/>
+<wire layer="1" width="0.8" x1="6.025" y1="86.925" x2="7.3" y2="86.925"/>
+<wire layer="1" width="0.8" x1="11.6" y1="89.3" x2="11.6" y2="86.925"/>
+<wire layer="1" width="0.8" x1="11.6" y1="86.925" x2="11.8" y2="86.925"/>
 <wire layer="1" width="1" x1="43.9" y1="60.6" x2="40.7" y2="60.6"/>
 <wire layer="1" width="1" x1="40.7" y1="60.6" x2="38.4" y2="62.9"/>
 <wire layer="1" width="1" x1="38.4" y1="62.9" x2="36.5" y2="62.9"/>
@@ -1390,12 +1394,33 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.8" x1="46" y1="98.5" x2="46" y2="98.5"/>
 <wire layer="1" width="0.8" x1="46" y1="98.5" x2="43.7" y2="98.5"/>
 <wire layer="1" width="0.8" x1="43.7" y1="98.5" x2="43.7" y2="98.5"/>
-<wire layer="1" width="0.33" x1="31.8" y1="7.7" x2="31.8" y2="4.5"/>
+<wire layer="1" width="0.8" x1="6.6" y1="9.3" x2="8.6" y2="9.3"/>
+<wire layer="1" width="0.8" x1="8.6" y1="9.3" x2="9.3" y2="8.6"/>
+<wire layer="1" width="0.8" x1="9.3" y1="8.6" x2="9.3" y2="7"/>
+<wire layer="1" width="0.8" x1="6.9" y1="5.8" x2="8" y2="6.9"/>
+<wire layer="1" width="0.8" x1="8" y1="6.9" x2="9.3" y2="6.9"/>
+<wire layer="1" width="0.8" x1="9.3" y1="6.9" x2="9.3" y2="7"/>
+<wire layer="1" width="0.8" x1="9.3" y1="7" x2="9.3" y2="6.9"/>
+<wire layer="1" width="0.8" x1="9.3" y1="6.9" x2="25.6" y2="6.9"/>
+<wire layer="1" width="0.8" x1="25.6" y1="6.9" x2="25.6" y2="5.7"/>
+<wire layer="1" width="0.8" x1="25.6" y1="5.7" x2="25.6" y2="7.7"/>
+<wire layer="1" width="0.8" x1="25.6" y1="7.7" x2="31.8" y2="7.7"/>
+<wire layer="1" width="0.8" x1="31.8" y1="7.7" x2="37.1" y2="7.7"/>
+<wire layer="1" width="0.8" x1="37.1" y1="7.7" x2="37.1" y2="5.4"/>
+<wire layer="1" width="0.8" x1="37.1" y1="5.4" x2="41.1" y2="5.4"/>
+<wire layer="1" width="0.8" x1="31.8" y1="7.7" x2="31.8" y2="7.7"/>
+<wire layer="1" width="0.8" x1="25.6" y1="8.4" x2="25.6" y2="6.9"/>
+<wire layer="1" width="0.33" x1="16.8" y1="96.9" x2="13.3" y2="96.9"/>
+<wire layer="1" width="0.33" x1="13.3" y1="96.9" x2="12.8" y2="97.4"/>
 <polygon width="0.635" layer="1" spacing="1.27" isolate="1" rank="2">
 <vertex x="0.3175" y="107.6825"/>
 <vertex x="0.3175" y="0.3175"/>
-<vertex x="20.2825" y="0.3175"/>
-<vertex x="20.2825" y="107.6825"/>
+<vertex x="49.6825" y="0.3175"/>
+<vertex x="49.6825" y="107.6825"/>
+<vertex x="24.3175" y="107.6825"/>
+<vertex x="24.3175" y="29.6825"/>
+<vertex x="22.6825" y="29.6825"/>
+<vertex x="22.6825" y="107.6825"/>
 </polygon>
 <polygon width="0.635" layer="16" spacing="1.27" isolate="1" rank="2">
 <vertex x="0.3175" y="107.6825"/>
@@ -1407,24 +1432,12 @@ mail: dvi534538@mail/ru</description>
 <vertex x="49.6825" y="85.2175"/>
 <vertex x="49.6825" y="107.6825"/>
 </polygon>
-<polygon width="0.635" layer="1" spacing="1.27" isolate="1" orphans="yes" thermals="no" rank="2">
-<vertex x="16.514626" y="0.3175"/>
-<vertex x="16.420399" y="10.6825"/>
-<vertex x="25.079601" y="10.6825"/>
-<vertex x="24.985374" y="0.3175"/>
-</polygon>
-<polygon width="0.635" layer="1" spacing="1.27" isolate="1" rank="2">
-<vertex x="21.9175" y="107.6825"/>
-<vertex x="21.9175" y="0.3175"/>
-<vertex x="49.6825" y="0.3175"/>
-<vertex x="49.6825" y="107.6825"/>
-</polygon>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_1">
 <contactref element="IC1" pad="3"/>
 <contactref element="Z" pad="2"/>
-<wire layer="16" width="0.3" x1="14.319933" y1="25.811933" x2="14.319933" y2="23.919933"/>
-<wire layer="16" width="0.33" x1="14.319933" y1="23.919933" x2="13.9" y2="23.5"/>
+<wire layer="16" width="0.3" x1="14.31994" y1="25.811941" x2="14.31994" y2="23.91994"/>
+<wire layer="16" width="0.33" x1="14.31994" y1="23.91994" x2="13.9" y2="23.5"/>
 <wire layer="16" width="0.33" x1="13.9" y1="23.5" x2="12.7" y2="23.5"/>
 <wire layer="16" width="0.33" x1="12.7" y1="23.5" x2="10.9" y2="21.7"/>
 <wire layer="16" width="0.33" x1="10.9" y1="21.7" x2="10.9" y2="20.46"/>
@@ -1432,8 +1445,8 @@ mail: dvi534538@mail/ru</description>
 <signal name="&#1057;&#1077;&#1090;&#1100;_2">
 <contactref element="IC1" pad="2"/>
 <contactref element="Z" pad="1"/>
-<wire layer="16" width="0.3" x1="13.679933" y1="25.811933" x2="13.679933" y2="24.2"/>
-<wire layer="16" width="0.33" x1="13.679933" y1="24.2" x2="12.04" y2="24.2"/>
+<wire layer="16" width="0.3" x1="13.67994" y1="25.811927" x2="13.67994" y2="24.2"/>
+<wire layer="16" width="0.33" x1="13.67994" y1="24.2" x2="12.04" y2="24.2"/>
 <wire layer="16" width="0.33" x1="12.04" y1="24.2" x2="10.9" y2="25.34"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_3">
@@ -1465,7 +1478,10 @@ mail: dvi534538@mail/ru</description>
 <signal name="&#1057;&#1077;&#1090;&#1100;_6">
 <contactref element="ENCKP" pad="2"/>
 <contactref element="FPC" pad="13"/>
+<contactref element="R14" pad="2@_1"/>
+<contactref element="R14" pad="2@"/>
 <via x="5" y="51.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="9.8" y="104.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="U7" pad="5"/>
 <contactref element="U8" pad="14"/>
 <via x="4.6" y="70.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
@@ -1473,18 +1489,22 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="7.784967" y1="69.468033" x2="5.631967" y2="69.468033"/>
 <wire layer="16" width="0.33" x1="5.631967" y1="69.468033" x2="4.6" y2="70.5"/>
 <wire layer="16" width="0.33" x1="2.4" y1="75.4" x2="2.4" y2="75.5"/>
-<wire layer="16" width="0.33" x1="2.4" y1="75.5" x2="1.4" y2="76.5"/>
-<wire layer="16" width="0.33" x1="1.4" y1="76.5" x2="1.4" y2="81.2"/>
-<wire layer="16" width="0.33" x1="1.4" y1="81.2" x2="1.4" y2="101.1"/>
-<wire layer="16" width="0.33" x1="1.4" y1="101.1" x2="6.4" y2="101.1"/>
-<wire layer="16" width="0.33" x1="6.4" y1="101.1" x2="12.6" y2="107.3"/>
-<wire layer="16" width="0.33" x1="12.6" y1="107.3" x2="21.5" y2="107.3"/>
-<wire layer="16" width="0.33" x1="21.5" y1="107.3" x2="24.199967" y2="104.6"/>
+<wire layer="16" width="0.33" x1="2.4" y1="75.5" x2="1.2" y2="76.7"/>
+<wire layer="16" width="0.33" x1="1.2" y1="76.7" x2="1.2" y2="80.4"/>
+<wire layer="16" width="0.33" x1="1.2" y1="80.4" x2="1.2" y2="100.3"/>
+<wire layer="16" width="0.33" x1="1.2" y1="100.3" x2="2.2" y2="101.3"/>
+<wire layer="16" width="0.33" x1="2.2" y1="101.3" x2="6.6" y2="101.3"/>
+<wire layer="16" width="0.33" x1="6.6" y1="101.3" x2="9.8" y2="104.5"/>
+<wire layer="16" width="0.33" x1="9.8" y1="104.5" x2="12.4" y2="107.1"/>
+<wire layer="16" width="0.33" x1="12.4" y1="107.1" x2="21.699986" y2="107.1"/>
+<wire layer="16" width="0.33" x1="21.699986" y1="107.1" x2="24.199975" y2="104.600011"/>
 <wire layer="16" width="0.33" x1="5" y1="51.1" x2="5.7" y2="50.4"/>
-<wire layer="16" width="0.33" x1="5.7" y1="50.4" x2="9.2" y2="50.4"/>
-<wire layer="16" width="0.33" x1="9.2" y1="50.4" x2="9.2" y2="47.893"/>
+<wire layer="16" width="0.33" x1="5.7" y1="50.4" x2="8.7" y2="50.4"/>
+<wire layer="16" width="0.33" x1="8.7" y1="50.4" x2="9.2" y2="49.9"/>
+<wire layer="16" width="0.33" x1="9.2" y1="49.9" x2="9.2" y2="47.893"/>
 <wire layer="16" width="0.33" x1="9.2" y1="47.893" x2="10.484967" y2="46.608033"/>
-<wire layer="16" width="0.33" x1="3.7" y1="81.2" x2="1.4" y2="81.2"/>
+<wire layer="16" width="0.33" x1="3.7" y1="80.4" x2="1.2" y2="80.4"/>
+<wire layer="16" width="0.33" x1="9.8" y1="104.5" x2="9.8" y2="104.5"/>
 <wire layer="1" width="0.33" x1="2.4" y1="75.4" x2="2.4" y2="70.5"/>
 <wire layer="1" width="0.33" x1="2.4" y1="70.5" x2="2.5" y2="70.5"/>
 <wire layer="1" width="0.33" x1="2.5" y1="70.5" x2="2.5" y2="70.5"/>
@@ -1493,6 +1513,13 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.33" x1="2.4" y1="70.5" x2="2" y2="70.1"/>
 <wire layer="1" width="0.33" x1="2" y1="70.1" x2="2" y2="54.1"/>
 <wire layer="1" width="0.33" x1="2" y1="54.1" x2="5" y2="51.1"/>
+<wire layer="1" width="0.33" x1="9.8" y1="104.5" x2="9.5" y2="104.5"/>
+<wire layer="1" width="0.33" x1="9.5" y1="104.5" x2="5.9" y2="100.9"/>
+<wire layer="1" width="0.33" x1="5.9" y1="100.9" x2="2.6" y2="100.9"/>
+<wire layer="1" width="0.33" x1="2.6" y1="100.9" x2="1.7" y2="100"/>
+<wire layer="1" width="0.33" x1="1.7" y1="100" x2="1.7" y2="94.94669"/>
+<wire layer="1" width="0.33" x1="1.7" y1="94.94669" x2="2.42169" y2="94.225"/>
+<wire layer="1" width="0.33" x1="2.42169" y1="94.225" x2="3" y2="94.225"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_7">
 <contactref element="C6" pad="1@"/>
@@ -1513,6 +1540,10 @@ mail: dvi534538@mail/ru</description>
 <contactref element="R11" pad="1@"/>
 <contactref element="R12" pad="1@_1"/>
 <contactref element="R12" pad="1@"/>
+<contactref element="R13" pad="1@_1"/>
+<contactref element="R13" pad="1@"/>
+<contactref element="R14" pad="1@_1"/>
+<contactref element="R14" pad="1@"/>
 <via x="14.7" y="18.3" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="24.5" y="15.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="12.2" y="35.2" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
@@ -1533,10 +1564,10 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="8.8" y1="85.9" x2="12.5" y2="85.9"/>
 <wire layer="16" width="0.33" x1="12.5" y1="85.9" x2="12.5" y2="87.105"/>
 <wire layer="16" width="0.33" x1="12.5" y1="87.105" x2="12.55" y2="87.155"/>
-<wire layer="16" width="0.33" x1="23.200033" y1="102.6" x2="23.200033" y2="99.3"/>
-<wire layer="16" width="0.33" x1="23.200033" y1="99.3" x2="23.2" y2="99.3"/>
-<wire layer="16" width="0.3" x1="18.160067" y1="20.388033" x2="18.160067" y2="18.960067"/>
-<wire layer="16" width="0.3" x1="18.160067" y1="18.960067" x2="18" y2="18.8"/>
+<wire layer="16" width="0.33" x1="23.200027" y1="102.599985" x2="23.200027" y2="99.3"/>
+<wire layer="16" width="0.33" x1="23.200027" y1="99.3" x2="23.2" y2="99.3"/>
+<wire layer="16" width="0.3" x1="18.16006" y1="20.388026" x2="18.16006" y2="18.96006"/>
+<wire layer="16" width="0.3" x1="18.16006" y1="18.96006" x2="18" y2="18.8"/>
 <wire layer="16" width="0.33" x1="18" y1="18.8" x2="15.2" y2="18.8"/>
 <wire layer="16" width="0.33" x1="15.2" y1="18.8" x2="14.7" y2="18.3"/>
 <wire layer="16" width="0.8" x1="18.641267" y1="15.660133" x2="24.460133" y2="15.660133"/>
@@ -1548,10 +1579,10 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="7.784967" y1="36.448033" x2="10.484967" y2="36.448033"/>
 <wire layer="16" width="0.8" x1="10.484967" y1="36.448033" x2="10.484967" y2="36.448033"/>
 <wire layer="16" width="0.8" x1="20.1" y1="30.6" x2="21.2" y2="29.5"/>
-<wire layer="16" width="0.8" x1="21.2" y1="29.5" x2="32.0999" y2="29.5"/>
-<wire layer="16" width="0.8" x1="32.0999" y1="29.5" x2="32.199867" y2="29.400033"/>
-<wire layer="16" width="0.8" x1="32.199867" y1="29.400033" x2="32.899967" y2="29.400033"/>
-<wire layer="16" width="0.8" x1="32.899967" y1="29.400033" x2="34.4" y2="27.9"/>
+<wire layer="16" width="0.8" x1="21.2" y1="29.5" x2="32.099895" y2="29.5"/>
+<wire layer="16" width="0.8" x1="32.099895" y1="29.5" x2="32.199857" y2="29.400038"/>
+<wire layer="16" width="0.8" x1="32.199857" y1="29.400038" x2="32.899962" y2="29.400038"/>
+<wire layer="16" width="0.8" x1="32.899962" y1="29.400038" x2="34.4" y2="27.9"/>
 <wire layer="16" width="0.8" x1="34.4" y1="27.9" x2="34.4" y2="21.8"/>
 <wire layer="16" width="0.8" x1="34.4" y1="21.8" x2="35.6" y2="20.6"/>
 <wire layer="16" width="0.8" x1="35.6" y1="20.6" x2="38.59" y2="20.6"/>
@@ -1562,22 +1593,21 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="12.5" y1="85.9" x2="15.2" y2="85.9"/>
 <wire layer="16" width="0.8" x1="15.2" y1="85.9" x2="15.2" y2="32.9"/>
 <wire layer="16" width="0.8" x1="15.2" y1="32.9" x2="15.2" y2="29.1"/>
-<wire layer="16" width="0.8" x1="15.200033" y1="102.599767" x2="15.200033" y2="99.3"/>
-<wire layer="16" width="0.8" x1="15.200033" y1="99.3" x2="14.5" y2="99.3"/>
-<wire layer="16" width="0.8" x1="15.200033" y1="99.3" x2="15.2" y2="94.099933"/>
+<wire layer="16" width="0.8" x1="15.200027" y1="102.599779" x2="15.200027" y2="99.3"/>
+<wire layer="16" width="0.8" x1="15.200027" y1="99.3" x2="14.5" y2="99.3"/>
+<wire layer="16" width="0.8" x1="15.200027" y1="99.3" x2="15.2" y2="94.099933"/>
 <wire layer="16" width="0.8" x1="15.2" y1="94.099933" x2="15.2" y2="85.9"/>
-<wire layer="16" width="0.8" x1="13.7" y1="94.099933" x2="15.2" y2="94.099933"/>
+<wire layer="16" width="0.8" x1="14" y1="94.099927" x2="15.2" y2="94.099933"/>
 <wire layer="16" width="0.8" x1="1.6" y1="24.5" x2="1.6" y2="19.7"/>
 <wire layer="16" width="0.8" x1="1.6" y1="19.7" x2="2.9" y2="19.7"/>
-<wire layer="16" width="0.8" x1="13.200033" y1="102.599733" x2="14.199967" y2="102.599733"/>
-<wire layer="16" width="0.8" x1="14.199967" y1="102.599733" x2="14.199967" y2="102.599767"/>
-<wire layer="16" width="0.8" x1="14.199967" y1="102.599767" x2="15.200033" y2="102.599767"/>
-<wire layer="16" width="0.8" x1="14.199967" y1="104.599767" x2="14.199967" y2="102.599767"/>
+<wire layer="16" width="0.8" x1="13.200027" y1="102.599728" x2="14.199967" y2="102.599728"/>
+<wire layer="16" width="0.8" x1="14.199967" y1="102.599728" x2="14.199967" y2="102.599779"/>
+<wire layer="16" width="0.8" x1="14.199967" y1="102.599779" x2="15.200027" y2="102.599779"/>
+<wire layer="16" width="0.8" x1="14.199975" y1="104.599754" x2="14.199967" y2="102.599779"/>
 <wire layer="16" width="0.6" x1="8.121233" y1="87.155" x2="8.121233" y2="88.978767"/>
 <wire layer="16" width="0.6" x1="8.121233" y1="88.978767" x2="7.7" y2="89.4"/>
 <wire layer="16" width="0.8" x1="7.7" y1="89.4" x2="5.9" y2="89.4"/>
 <wire layer="1" width="0.33" x1="23.2" y1="99.3" x2="14.5" y2="99.3"/>
-<wire layer="1" width="0.33" x1="14.5" y1="99.3" x2="14.5" y2="99.3"/>
 <wire layer="1" width="0.8" x1="20.1" y1="30.6" x2="20.1" y2="19.168633"/>
 <wire layer="1" width="0.8" x1="20.1" y1="19.168633" x2="23.268633" y2="16"/>
 <wire layer="1" width="0.8" x1="23.268633" y1="16" x2="23.368633" y2="16"/>
@@ -1604,21 +1634,24 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.8" x1="15.5" y1="11.5" x2="19.3" y2="11.5"/>
 <wire layer="1" width="0.8" x1="19.3" y1="11.5" x2="23.5" y2="15.7"/>
 <wire layer="1" width="0.8" x1="23.5" y1="15.7" x2="24.5" y2="15.7"/>
-<wire layer="1" width="0.8" x1="7.6" y1="89.3" x2="6" y2="89.3"/>
-<wire layer="1" width="0.8" x1="6" y1="89.3" x2="5.9" y2="89.4"/>
-<wire layer="1" width="0.8" x1="3.7" y1="90.025" x2="5.275" y2="90.025"/>
-<wire layer="1" width="0.8" x1="5.275" y1="90.025" x2="5.9" y2="89.4"/>
+<wire layer="1" width="0.8" x1="7.6" y1="89.3" x2="7.6" y2="89.4"/>
+<wire layer="1" width="0.8" x1="7.6" y1="89.4" x2="5.9" y2="89.4"/>
+<wire layer="1" width="0.8" x1="3.7" y1="88.825" x2="5.325" y2="88.825"/>
+<wire layer="1" width="0.8" x1="5.325" y1="88.825" x2="5.9" y2="89.4"/>
+<wire layer="1" width="0.33" x1="3" y1="91.175" x2="5.5" y2="91.175"/>
+<wire layer="1" width="0.33" x1="5.5" y1="91.175" x2="5.5" y2="89.8"/>
+<wire layer="1" width="0.33" x1="5.5" y1="89.8" x2="5.9" y2="89.4"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_8">
 <contactref element="IC1" pad="11"/>
 <contactref element="J1" pad="3"/>
-<wire layer="16" width="0.33" x1="32.200033" y1="24.900033" x2="30.8" y2="24.900033"/>
-<wire layer="16" width="0.33" x1="30.8" y1="24.900033" x2="30.8" y2="26.2"/>
+<wire layer="16" width="0.33" x1="32.200038" y1="24.900038" x2="30.8" y2="24.900038"/>
+<wire layer="16" width="0.33" x1="30.8" y1="24.900038" x2="30.8" y2="26.2"/>
 <wire layer="16" width="0.33" x1="30.8" y1="26.2" x2="24.3" y2="26.2"/>
 <wire layer="16" width="0.33" x1="24.3" y1="26.2" x2="23.2" y2="27.3"/>
 <wire layer="16" width="0.33" x1="23.2" y1="27.3" x2="19.4" y2="27.3"/>
-<wire layer="16" width="0.33" x1="19.4" y1="27.3" x2="19.4" y2="25.852"/>
-<wire layer="16" width="0.33" x1="19.4" y1="25.852" x2="19.439933" y2="25.812067"/>
+<wire layer="16" width="0.33" x1="19.4" y1="27.3" x2="19.4" y2="25.851995"/>
+<wire layer="16" width="0.33" x1="19.4" y1="25.851995" x2="19.43994" y2="25.812054"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_9">
 <contactref element="R10" pad="1@_1"/>
@@ -1631,28 +1664,35 @@ mail: dvi534538@mail/ru</description>
 <contactref element="ENCKP" pad="3"/>
 <contactref element="ENCSW" pad="2"/>
 <contactref element="FPC" pad="15"/>
+<contactref element="R13" pad="2@_1"/>
+<contactref element="R13" pad="2@"/>
 <via x="12.4" y="65.6" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="20.3" y="63.6" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="3.1" y="43.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="9.8" y="102.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="U7" pad="6"/>
 <wire layer="16" width="0.33" x1="7.784967" y1="66.928033" x2="7.984967" y2="66.928033"/>
 <wire layer="16" width="0.33" x1="7.984967" y1="66.928033" x2="9.213" y2="65.7"/>
 <wire layer="16" width="0.33" x1="9.213" y1="65.7" x2="12.3" y2="65.7"/>
 <wire layer="16" width="0.33" x1="12.3" y1="65.7" x2="12.4" y2="65.6"/>
-<wire layer="16" width="0.33" x1="22.199967" y1="104.599967" x2="22.199967" y2="95.599967"/>
-<wire layer="16" width="0.33" x1="22.199967" y1="95.599967" x2="21.1" y2="94.5"/>
+<wire layer="16" width="0.33" x1="22.199975" y1="104.599959" x2="22.199975" y2="95.599975"/>
+<wire layer="16" width="0.33" x1="22.199975" y1="95.599975" x2="21.1" y2="94.5"/>
 <wire layer="16" width="0.33" x1="21.1" y1="94.5" x2="21.1" y2="64.7"/>
 <wire layer="16" width="0.33" x1="21.1" y1="64.7" x2="20.3" y2="63.9"/>
 <wire layer="16" width="0.33" x1="20.3" y1="63.9" x2="20.3" y2="63.6"/>
 <wire layer="16" width="0.33" x1="4.7" y1="43.5" x2="3.1" y2="43.5"/>
 <wire layer="16" width="0.33" x1="3.1" y1="43.5" x2="3.1" y2="43.5"/>
-<wire layer="16" width="0.33" x1="22.199967" y1="104.599967" x2="22.199967" y2="104.900033"/>
-<wire layer="16" width="0.33" x1="22.199967" y1="104.900033" x2="20.5" y2="106.6"/>
-<wire layer="16" width="0.33" x1="20.5" y1="106.6" x2="13" y2="106.6"/>
-<wire layer="16" width="0.33" x1="13" y1="106.6" x2="6.6" y2="100.2"/>
-<wire layer="16" width="0.33" x1="6.6" y1="100.2" x2="2.4" y2="100.2"/>
-<wire layer="16" width="0.33" x1="2.4" y1="100.2" x2="2.4" y2="85.04"/>
-<wire layer="16" width="0.33" x1="2.4" y1="85.04" x2="3.7" y2="83.74"/>
+<wire layer="16" width="0.33" x1="22.199975" y1="104.599959" x2="22.199975" y2="104.900025"/>
+<wire layer="16" width="0.33" x1="22.199975" y1="104.900025" x2="21" y2="106.1"/>
+<wire layer="16" width="0.33" x1="21" y1="106.1" x2="13.4" y2="106.1"/>
+<wire layer="16" width="0.33" x1="13.4" y1="106.1" x2="9.8" y2="102.5"/>
+<wire layer="16" width="0.33" x1="9.8" y1="102.5" x2="9.6" y2="102.5"/>
+<wire layer="16" width="0.33" x1="9.6" y1="102.5" x2="7.4" y2="100.3"/>
+<wire layer="16" width="0.33" x1="7.4" y1="100.3" x2="2.8" y2="100.3"/>
+<wire layer="16" width="0.33" x1="2.8" y1="100.3" x2="2.2" y2="99.7"/>
+<wire layer="16" width="0.33" x1="2.2" y1="99.7" x2="2.2" y2="84.44"/>
+<wire layer="16" width="0.33" x1="2.2" y1="84.44" x2="3.7" y2="82.94"/>
+<wire layer="16" width="0.33" x1="9.8" y1="102.5" x2="9.8" y2="102.5"/>
 <wire layer="1" width="0.33" x1="12.4" y1="65.6" x2="12.4" y2="65.5"/>
 <wire layer="1" width="0.33" x1="12.4" y1="65.5" x2="14.3" y2="63.6"/>
 <wire layer="1" width="0.33" x1="14.3" y1="63.6" x2="20.3" y2="63.6"/>
@@ -1666,21 +1706,31 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.33" x1="3.8" y1="49.7" x2="2.9" y2="48.8"/>
 <wire layer="1" width="0.33" x1="2.9" y1="48.8" x2="2.9" y2="43.5"/>
 <wire layer="1" width="0.33" x1="2.9" y1="43.5" x2="3.1" y2="43.5"/>
+<wire layer="1" width="0.33" x1="5.5" y1="93.6" x2="5.4" y2="93.6"/>
+<wire layer="1" width="0.33" x1="5.4" y1="93.6" x2="5.4" y2="95.1"/>
+<wire layer="1" width="0.33" x1="5.4" y1="95.1" x2="4.597827" y2="95.902173"/>
+<wire layer="1" width="0.33" x1="4.597827" y1="95.902173" x2="2.7" y2="95.902173"/>
+<wire layer="1" width="0.33" x1="2.7" y1="95.902173" x2="2.7" y2="99.53331"/>
+<wire layer="1" width="0.33" x1="2.7" y1="99.53331" x2="3.16669" y2="100"/>
+<wire layer="1" width="0.33" x1="3.16669" y1="100" x2="7" y2="100"/>
+<wire layer="1" width="0.33" x1="7" y1="100" x2="9.4" y2="102.4"/>
+<wire layer="1" width="0.33" x1="9.4" y1="102.4" x2="9.7" y2="102.4"/>
+<wire layer="1" width="0.33" x1="9.7" y1="102.4" x2="9.8" y2="102.5"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_11">
 <contactref element="IC1" pad="10"/>
 <contactref element="J1" pad="2"/>
-<wire layer="16" width="0.33" x1="18.799933" y1="25.812033" x2="18.799933" y2="28"/>
-<wire layer="16" width="0.33" x1="18.799933" y1="28" x2="23.7" y2="28"/>
+<wire layer="16" width="0.33" x1="18.79994" y1="25.81204" x2="18.79994" y2="28"/>
+<wire layer="16" width="0.33" x1="18.79994" y1="28" x2="23.7" y2="28"/>
 <wire layer="16" width="0.33" x1="23.7" y1="28" x2="24.7" y2="27"/>
-<wire layer="16" width="0.33" x1="24.7" y1="27" x2="32.199967" y2="27"/>
-<wire layer="16" width="0.33" x1="32.199967" y1="27" x2="32.199967" y2="26.900033"/>
+<wire layer="16" width="0.33" x1="24.7" y1="27" x2="32.199958" y2="27"/>
+<wire layer="16" width="0.33" x1="32.199958" y1="27" x2="32.199958" y2="26.900038"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_12">
 <contactref element="FPC" pad="20"/>
 <contactref element="IC1" pad="7"/>
-<wire layer="16" width="0.33" x1="17.200033" y1="102.599833" x2="16.879933" y2="102.279733"/>
-<wire layer="16" width="0.33" x1="16.879933" y1="102.279733" x2="16.879933" y2="25.812"/>
+<wire layer="16" width="0.33" x1="17.200027" y1="102.599831" x2="16.87994" y2="102.279744"/>
+<wire layer="16" width="0.33" x1="16.87994" y1="102.279744" x2="16.87994" y2="25.811998"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_13">
 <contactref element="DB25" pad="3"/>
@@ -1709,15 +1759,15 @@ mail: dvi534538@mail/ru</description>
 <signal name="&#1057;&#1077;&#1090;&#1100;_14">
 <contactref element="FPC" pad="21"/>
 <contactref element="IC1" pad="6"/>
-<wire layer="16" width="0.33" x1="16.199967" y1="104.5998" x2="16.199967" y2="28"/>
-<wire layer="16" width="0.3" x1="16.199967" y1="28" x2="16.199967" y2="25.851967"/>
-<wire layer="16" width="0.3" x1="16.199967" y1="25.851967" x2="16.239933" y2="25.812"/>
+<wire layer="16" width="0.33" x1="16.199975" y1="104.599805" x2="16.199967" y2="28"/>
+<wire layer="16" width="0.3" x1="16.199967" y1="28" x2="16.199967" y2="25.851957"/>
+<wire layer="16" width="0.3" x1="16.199967" y1="25.851957" x2="16.23994" y2="25.811984"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_15">
 <contactref element="IC1" pad="16"/>
 <contactref element="USB_IN" pad="3"/>
-<wire layer="16" width="0.3" x1="20.720067" y1="20.388067" x2="20.720067" y2="19.420067"/>
-<wire layer="16" width="0.3" x1="20.720067" y1="19.420067" x2="19.2" y2="17.9"/>
+<wire layer="16" width="0.3" x1="20.72006" y1="20.388083" x2="20.72006" y2="19.42006"/>
+<wire layer="16" width="0.3" x1="20.72006" y1="19.42006" x2="19.2" y2="17.9"/>
 <wire layer="16" width="0.33" x1="19.2" y1="17.9" x2="16" y2="17.9"/>
 <wire layer="16" width="0.33" x1="16" y1="17.9" x2="14.8" y2="16.7"/>
 <wire layer="16" width="0.33" x1="14.8" y1="16.7" x2="14.8" y2="14.9"/>
@@ -1735,15 +1785,14 @@ mail: dvi534538@mail/ru</description>
 <via x="29.2" y="74" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="31.4" y="83.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="32.4" y="96.6" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="34.5" y="101.2" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="30.4" y="99.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="38.5" y="60.2" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="35.4" y="16.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="STEPPERSHIELD" pad="1"/>
 <contactref element="U3" pad="7"/>
 <contactref element="U5" pad="7"/>
 <via x="28.3" y="72.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<wire layer="16" width="0.79" x1="31.4" y1="83.7" x2="33.73" y2="83.7"/>
-<wire layer="16" width="0.79" x1="33.73" y1="83.7" x2="33.73" y2="83.71"/>
+<wire layer="16" width="0.79" x1="31.4" y1="83.7" x2="33.73" y2="83.71"/>
 <wire layer="16" width="0.79" x1="29.2" y1="74" x2="31.4" y2="74"/>
 <wire layer="16" width="0.79" x1="31.4" y1="74" x2="31.99" y2="73.41"/>
 <wire layer="16" width="0.79" x1="31.99" y1="73.41" x2="33.73" y2="73.41"/>
@@ -1752,11 +1801,12 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="30.88" y1="96.58" x2="30.3" y2="96"/>
 <wire layer="16" width="0.8" x1="30.3" y1="96" x2="28.9" y2="96"/>
 <wire layer="16" width="0.8" x1="32.4" y1="96.6" x2="32.4" y2="96.58"/>
-<wire layer="16" width="0.8" x1="36.199967" y1="104.600333" x2="35.200033" y2="104.600333"/>
-<wire layer="16" width="0.8" x1="35.200033" y1="104.600333" x2="35.200033" y2="104.600267"/>
-<wire layer="16" width="0.8" x1="35.200033" y1="104.600267" x2="34.199967" y2="104.600267"/>
-<wire layer="16" width="0.8" x1="35.200033" y1="102.6003" x2="35.200033" y2="101.900033"/>
-<wire layer="16" width="0.8" x1="35.200033" y1="101.900033" x2="34.5" y2="101.2"/>
+<wire layer="16" width="0.8" x1="36.199975" y1="104.600319" x2="35.200033" y2="104.600319"/>
+<wire layer="16" width="0.8" x1="35.200033" y1="104.600319" x2="35.200033" y2="104.600268"/>
+<wire layer="16" width="0.8" x1="35.200033" y1="104.600268" x2="34.199975" y2="104.600268"/>
+<wire layer="16" width="0.8" x1="35.200027" y1="102.600294" x2="35.200027" y2="101.300027"/>
+<wire layer="16" width="0.8" x1="35.200027" y1="101.300027" x2="33.8" y2="99.9"/>
+<wire layer="16" width="0.8" x1="33.8" y1="99.9" x2="30.4" y2="99.9"/>
 <wire layer="16" width="0.8" x1="31.8" y1="14.7" x2="33.2" y2="14.7"/>
 <wire layer="16" width="0.8" x1="33.2" y1="14.7" x2="35.4" y2="16.9"/>
 <wire layer="16" width="0.8" x1="35.4" y1="16.9" x2="36.55" y2="18.05"/>
@@ -1770,16 +1820,15 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="29" y1="65" x2="29" y2="71.4"/>
 <wire layer="16" width="0.8" x1="29" y1="71.4" x2="28.3" y2="72.1"/>
 <wire layer="16" width="0.8" x1="35.4" y1="16.9" x2="35.4" y2="16.9"/>
-<wire layer="16" width="0.8" x1="35.200033" y1="102.6003" x2="35.200033" y2="104.600267"/>
+<wire layer="16" width="0.8" x1="35.200027" y1="102.600294" x2="35.200033" y2="104.600268"/>
 <wire layer="1" width="0.8" x1="32.4" y1="96.6" x2="32.4" y2="83.7"/>
 <wire layer="1" width="0.8" x1="32.4" y1="83.7" x2="31.4" y2="83.7"/>
 <wire layer="1" width="0.8" x1="29.2" y1="74" x2="29.2" y2="81.7"/>
 <wire layer="1" width="0.8" x1="29.2" y1="81.7" x2="31.2" y2="83.7"/>
 <wire layer="1" width="0.8" x1="31.2" y1="83.7" x2="31.4" y2="83.7"/>
-<wire layer="1" width="0.8" x1="32.4" y1="96.6" x2="32.4" y2="97.2"/>
-<wire layer="1" width="0.8" x1="32.4" y1="97.2" x2="33.6" y2="98.4"/>
-<wire layer="1" width="0.8" x1="33.6" y1="98.4" x2="33.6" y2="100.3"/>
-<wire layer="1" width="0.8" x1="33.6" y1="100.3" x2="34.5" y2="101.2"/>
+<wire layer="1" width="0.8" x1="32.4" y1="96.6" x2="30.45" y2="98.55"/>
+<wire layer="1" width="0.8" x1="30.45" y1="98.55" x2="30.45" y2="99.85"/>
+<wire layer="1" width="0.8" x1="30.45" y1="99.85" x2="30.4" y2="99.9"/>
 <wire layer="1" width="0.8" x1="29.2" y1="74" x2="29.2" y2="73"/>
 <wire layer="1" width="0.8" x1="29.2" y1="73" x2="28.3" y2="72.1"/>
 <wire layer="1" width="0.8" x1="35.4" y1="16.9" x2="35.5" y2="16.9"/>
@@ -1954,8 +2003,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="31.47" y1="68.33" x2="31.4" y2="68.4"/>
 <wire layer="16" width="0.33" x1="10.484967" y1="72.008067" x2="12.308067" y2="72.008067"/>
 <wire layer="16" width="0.33" x1="12.308067" y1="72.008067" x2="12.4" y2="72.1"/>
-<wire layer="1" width="0.33" x1="35.175" y1="78.799967" x2="31.4" y2="78.799967"/>
-<wire layer="1" width="0.33" x1="31.4" y1="78.799967" x2="31.4" y2="78.7"/>
+<wire layer="1" width="0.33" x1="35.175" y1="78.799966" x2="31.4" y2="78.799966"/>
+<wire layer="1" width="0.33" x1="31.4" y1="78.799966" x2="31.4" y2="78.7"/>
 <wire layer="1" width="0.33" x1="31.4" y1="68.4" x2="30.3" y2="68.4"/>
 <wire layer="1" width="0.33" x1="30.3" y1="68.4" x2="30.3" y2="78.1333"/>
 <wire layer="1" width="0.33" x1="30.3" y1="78.1333" x2="30.8667" y2="78.7"/>
@@ -1977,8 +2026,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="19.9" y1="17.1" x2="19.9" y2="17.6"/>
 <wire layer="16" width="0.33" x1="19.9" y1="17.6" x2="20.6" y2="17.6"/>
 <wire layer="16" width="0.33" x1="20.6" y1="17.6" x2="20.6" y2="16.6"/>
-<wire layer="16" width="0.33" x1="20.6" y1="16.6" x2="21.360067" y2="16.6"/>
-<wire layer="16" width="0.33" x1="21.360067" y1="16.6" x2="21.360067" y2="20.3881"/>
+<wire layer="16" width="0.33" x1="20.6" y1="16.6" x2="21.36006" y2="16.6"/>
+<wire layer="16" width="0.33" x1="21.36006" y1="16.6" x2="21.36006" y2="20.388097"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_25">
 <contactref element="DB25" pad="9"/>
@@ -2093,25 +2142,22 @@ mail: dvi534538@mail/ru</description>
 <contactref element="U4" pad="4"/>
 <contactref element="U4" pad="5"/>
 <via x="36.2" y="100" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="31.6" y="100" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="7.171233" y1="87.155" x2="6.221233" y2="87.155"/>
 <wire layer="16" width="0.33" x1="6.221233" y1="87.155" x2="6.221233" y2="87.155"/>
-<wire layer="16" width="0.33" x1="8.1" y1="97.7" x2="8.1" y2="99.4"/>
-<wire layer="16" width="0.33" x1="8.1" y1="99.4" x2="3.2" y2="99.4"/>
+<wire layer="16" width="0.33" x1="7.5" y1="97.8" x2="7.5" y2="99.4"/>
+<wire layer="16" width="0.33" x1="7.5" y1="99.4" x2="8.3" y2="99.4"/>
+<wire layer="16" width="0.33" x1="8.3" y1="99.4" x2="3.2" y2="99.4"/>
 <wire layer="16" width="0.33" x1="3.2" y1="99.4" x2="3.2" y2="88.2"/>
 <wire layer="16" width="0.33" x1="3.2" y1="88.2" x2="4.245" y2="87.155"/>
 <wire layer="16" width="0.33" x1="4.245" y1="87.155" x2="6.221233" y2="87.155"/>
-<wire layer="16" width="0.33" x1="31.6" y1="100" x2="36.2" y2="100"/>
-<wire layer="16" width="0.33" x1="36.2" y1="100" x2="36.2" y2="100"/>
 <wire layer="16" width="0.33" x1="36.2" y1="100" x2="37.9" y2="100"/>
 <wire layer="16" width="0.33" x1="37.9" y1="100" x2="37.9" y2="105.3"/>
 <wire layer="16" width="0.33" x1="37.9" y1="105.3" x2="37.1" y2="106.1"/>
-<wire layer="16" width="0.33" x1="37.1" y1="106.1" x2="31.6998" y2="106.1"/>
-<wire layer="16" width="0.33" x1="31.6998" y1="106.1" x2="30.199967" y2="104.600167"/>
+<wire layer="16" width="0.33" x1="37.1" y1="106.1" x2="31.69981" y2="106.1"/>
+<wire layer="16" width="0.33" x1="31.69981" y1="106.1" x2="30.199975" y2="104.600165"/>
 <wire layer="16" width="0.33" x1="34.2" y1="56.1" x2="36.69" y2="53.61"/>
 <wire layer="16" width="0.33" x1="36.69" y1="53.61" x2="38.6" y2="53.61"/>
 <wire layer="16" width="0.33" x1="9.4" y1="100.5" x2="8.3" y2="99.4"/>
-<wire layer="16" width="0.33" x1="8.3" y1="99.4" x2="8.1" y2="99.4"/>
 <wire layer="1" width="0.33" x1="36.2" y1="100" x2="37.8" y2="100"/>
 <wire layer="1" width="0.33" x1="37.8" y1="100" x2="40.6" y2="97.2"/>
 <wire layer="1" width="0.33" x1="40.6" y1="97.2" x2="40.6" y2="67.2"/>
@@ -2119,12 +2165,15 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.33" x1="38.4" y1="65" x2="35.8" y2="65"/>
 <wire layer="1" width="0.33" x1="35.8" y1="65" x2="34.2" y2="63.4"/>
 <wire layer="1" width="0.33" x1="34.2" y1="63.4" x2="34.2" y2="56.1"/>
-<wire layer="1" width="0.33" x1="9.4" y1="100.5" x2="9.4" y2="100.4"/>
-<wire layer="1" width="0.33" x1="9.4" y1="100.4" x2="10.6" y2="99.2"/>
-<wire layer="1" width="0.33" x1="10.6" y1="99.2" x2="12.5" y2="99.2"/>
-<wire layer="1" width="0.33" x1="12.5" y1="99.2" x2="13.4" y2="98.3"/>
-<wire layer="1" width="0.33" x1="13.4" y1="98.3" x2="29.9" y2="98.3"/>
-<wire layer="1" width="0.33" x1="29.9" y1="98.3" x2="31.6" y2="100"/>
+<wire layer="1" width="0.33" x1="36.2" y1="100" x2="32.5" y2="100"/>
+<wire layer="1" width="0.33" x1="32.5" y1="100" x2="31.4" y2="101.1"/>
+<wire layer="1" width="0.33" x1="31.4" y1="101.1" x2="29.7" y2="101.1"/>
+<wire layer="1" width="0.33" x1="29.7" y1="101.1" x2="26.6" y2="98"/>
+<wire layer="1" width="0.33" x1="26.6" y1="98" x2="14" y2="98"/>
+<wire layer="1" width="0.33" x1="14" y1="98" x2="12.9" y2="99.1"/>
+<wire layer="1" width="0.33" x1="12.9" y1="99.1" x2="10.9" y2="99.1"/>
+<wire layer="1" width="0.33" x1="10.9" y1="99.1" x2="9.5" y2="100.5"/>
+<wire layer="1" width="0.33" x1="9.5" y1="100.5" x2="9.4" y2="100.5"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_31">
 <contactref element="R5" pad="2@_1"/>
@@ -2342,8 +2391,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="20.9" y1="44.4" x2="21.8" y2="45.3"/>
 <wire layer="16" width="0.33" x1="21.8" y1="45.3" x2="24.253" y2="45.3"/>
 <wire layer="16" width="0.33" x1="24.253" y1="45.3" x2="25.484967" y2="44.068033"/>
-<wire layer="1" width="0.33" x1="11.6" y1="84.4" x2="11.6" y2="83.9"/>
-<wire layer="1" width="0.33" x1="11.6" y1="83.9" x2="12.5" y2="83"/>
+<wire layer="1" width="0.33" x1="11.8" y1="84.5" x2="11.8" y2="83.7"/>
+<wire layer="1" width="0.33" x1="11.8" y1="83.7" x2="12.5" y2="83"/>
 <wire layer="1" width="0.33" x1="12.5" y1="83" x2="12.5" y2="82.7"/>
 <wire layer="1" width="0.33" x1="13.8" y1="61.7" x2="14" y2="61.7"/>
 <wire layer="1" width="0.33" x1="14" y1="61.7" x2="14.2" y2="61.9"/>
@@ -2370,10 +2419,9 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="12.6" y1="55.5" x2="13.5" y2="54.6"/>
 <wire layer="16" width="0.33" x1="13.5" y1="54.6" x2="13.5" y2="28.6"/>
 <wire layer="16" width="0.33" x1="13.5" y1="28.6" x2="14.9" y2="27.2"/>
-<wire layer="16" width="0.3" x1="14.9" y1="27.2" x2="14.9" y2="25.8719"/>
-<wire layer="16" width="0.3" x1="14.9" y1="25.8719" x2="14.959933" y2="25.811967"/>
+<wire layer="16" width="0.3" x1="14.9" y1="27.2" x2="14.9" y2="25.871896"/>
+<wire layer="16" width="0.3" x1="14.9" y1="25.871896" x2="14.95994" y2="25.811956"/>
 <wire layer="1" width="0.33" x1="12.4" y1="60.6" x2="12.4" y2="55.5"/>
-<wire layer="1" width="0.33" x1="12.4" y1="55.5" x2="12.4" y2="55.5"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_40">
 <contactref element="IC1" pad="5"/>
@@ -2386,14 +2434,14 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="4.7" y1="59.308033" x2="4.7" y2="59.13"/>
 <wire layer="16" width="0.33" x1="10.484967" y1="59.308033" x2="11.291967" y2="59.308033"/>
 <wire layer="16" width="0.33" x1="11.291967" y1="59.308033" x2="11.9" y2="58.7"/>
-<wire layer="16" width="0.33" x1="11.9" y1="58.7" x2="11.9" y2="57"/>
-<wire layer="16" width="0.33" x1="11.9" y1="57" x2="13.2" y2="57"/>
-<wire layer="16" width="0.33" x1="13.2" y1="57" x2="13.5" y2="57.3"/>
-<wire layer="16" width="0.33" x1="13.5" y1="57.3" x2="14.2" y2="57.3"/>
-<wire layer="16" width="0.33" x1="14.2" y1="57.3" x2="14.2" y2="28.7"/>
+<wire layer="16" width="0.33" x1="11.9" y1="58.7" x2="11.9" y2="58.2"/>
+<wire layer="16" width="0.33" x1="11.9" y1="58.2" x2="13" y2="58.2"/>
+<wire layer="16" width="0.33" x1="13" y1="58.2" x2="13.4" y2="58.6"/>
+<wire layer="16" width="0.33" x1="13.4" y1="58.6" x2="14.2" y2="58.6"/>
+<wire layer="16" width="0.33" x1="14.2" y1="58.6" x2="14.2" y2="28.7"/>
 <wire layer="16" width="0.33" x1="14.2" y1="28.7" x2="15.5" y2="27.4"/>
-<wire layer="16" width="0.3" x1="15.5" y1="27.4" x2="15.5" y2="25.9119"/>
-<wire layer="16" width="0.3" x1="15.5" y1="25.9119" x2="15.599933" y2="25.811967"/>
+<wire layer="16" width="0.3" x1="15.5" y1="27.4" x2="15.5" y2="25.91191"/>
+<wire layer="16" width="0.3" x1="15.5" y1="25.91191" x2="15.59994" y2="25.81197"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_41">
 <contactref element="C4" pad="1"/>
@@ -2405,25 +2453,23 @@ mail: dvi534538@mail/ru</description>
 <contactref element="IC1" pad="19"/>
 <contactref element="IC1" pad="18"/>
 <contactref element="IC1" pad="17"/>
-<wire layer="16" width="0.33" x1="14.320067" y1="20.387933" x2="14.320067" y2="22"/>
-<wire layer="16" width="0.33" x1="14.320067" y1="22" x2="17.520067" y2="22"/>
-<wire layer="16" width="0.33" x1="17.520067" y1="22" x2="17.520067" y2="20.388"/>
-<wire layer="16" width="0.33" x1="20.080067" y1="20.388067" x2="20.080067" y2="22"/>
-<wire layer="16" width="0.33" x1="20.080067" y1="22" x2="19.440067" y2="22"/>
-<wire layer="16" width="0.33" x1="19.440067" y1="22" x2="18.800067" y2="22"/>
-<wire layer="16" width="0.33" x1="18.800067" y1="22" x2="18.800067" y2="20.388033"/>
-<wire layer="16" width="0.33" x1="20.719933" y1="25.812067" x2="20.719933" y2="22.519933"/>
-<wire layer="16" width="0.33" x1="20.719933" y1="22.519933" x2="20.2" y2="22"/>
-<wire layer="16" width="0.33" x1="20.2" y1="22" x2="20.080067" y2="22"/>
-<wire layer="16" width="0.3" x1="19.440067" y1="20.388067" x2="19.440067" y2="22"/>
-<wire layer="16" width="0.33" x1="17.520067" y1="22" x2="18.800067" y2="22"/>
+<wire layer="16" width="0.33" x1="14.32006" y1="20.387941" x2="14.32006" y2="22"/>
+<wire layer="16" width="0.33" x1="14.32006" y1="22" x2="17.52006" y2="22"/>
+<wire layer="16" width="0.33" x1="17.52006" y1="22" x2="17.52006" y2="20.388012"/>
+<wire layer="16" width="0.33" x1="20.08006" y1="20.388068" x2="20.08006" y2="22"/>
+<wire layer="16" width="0.33" x1="20.08006" y1="22" x2="19.440067" y2="22"/>
+<wire layer="16" width="0.33" x1="19.440067" y1="22" x2="18.80006" y2="22"/>
+<wire layer="16" width="0.33" x1="18.80006" y1="22" x2="18.80006" y2="20.38804"/>
+<wire layer="16" width="0.33" x1="20.71994" y1="25.812083" x2="20.71994" y2="22.51994"/>
+<wire layer="16" width="0.33" x1="20.71994" y1="22.51994" x2="20.2" y2="22"/>
+<wire layer="16" width="0.33" x1="20.2" y1="22" x2="20.08006" y2="22"/>
+<wire layer="16" width="0.3" x1="19.44006" y1="20.388054" x2="19.440067" y2="22"/>
+<wire layer="16" width="0.33" x1="17.52006" y1="22" x2="18.80006" y2="22"/>
 <wire layer="16" width="0.33" x1="4" y1="11.8" x2="4" y2="12.3"/>
 <wire layer="16" width="0.33" x1="4" y1="12.3" x2="6.6" y2="12.3"/>
-<wire layer="16" width="0.3" x1="14.320067" y1="20.387933" x2="14.320067" y2="19.320067"/>
-<wire layer="16" width="0.33" x1="14.320067" y1="19.320067" x2="8.6" y2="13.6"/>
-<wire layer="16" width="0.33" x1="8.6" y1="13.6" x2="8.6" y2="13.0667"/>
-<wire layer="16" width="0.33" x1="8.6" y1="13.0667" x2="8.1333" y2="12.6"/>
-<wire layer="16" width="0.33" x1="8.1333" y1="12.6" x2="6.9" y2="12.6"/>
+<wire layer="16" width="0.3" x1="14.32006" y1="20.387941" x2="14.32006" y2="19.32006"/>
+<wire layer="16" width="0.33" x1="14.32006" y1="19.32006" x2="7.6" y2="12.6"/>
+<wire layer="16" width="0.33" x1="7.6" y1="12.6" x2="6.9" y2="12.6"/>
 <wire layer="16" width="0.33" x1="6.9" y1="12.6" x2="6.6" y2="12.3"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_42">
@@ -2432,29 +2478,29 @@ mail: dvi534538@mail/ru</description>
 <contactref element="C3" pad="1"/>
 <contactref element="IC1" pad="12"/>
 <contactref element="IC1" pad="28"/>
-<wire layer="16" width="0.33" x1="13.040067" y1="20.3879" x2="13.040067" y2="21.859933"/>
-<wire layer="16" width="0.33" x1="13.040067" y1="21.859933" x2="13.1" y2="21.919867"/>
+<wire layer="16" width="0.33" x1="13.04006" y1="20.387913" x2="13.04006" y2="21.859926"/>
+<wire layer="16" width="0.33" x1="13.04006" y1="21.859926" x2="13.1" y2="21.919867"/>
 <wire layer="16" width="0.33" x1="13.1" y1="21.919867" x2="13.1" y2="22.3"/>
 <wire layer="16" width="0.33" x1="13.1" y1="22.3" x2="13.6" y2="22.8"/>
 <wire layer="16" width="0.33" x1="13.6" y1="22.8" x2="18.9" y2="22.8"/>
-<wire layer="16" width="0.33" x1="18.9" y1="22.8" x2="20.079933" y2="23.979933"/>
-<wire layer="16" width="0.33" x1="20.079933" y1="23.979933" x2="20.079933" y2="25.812067"/>
+<wire layer="16" width="0.33" x1="18.9" y1="22.8" x2="20.07994" y2="23.97994"/>
+<wire layer="16" width="0.33" x1="20.07994" y1="23.97994" x2="20.07994" y2="25.812068"/>
 <wire layer="16" width="0.33" x1="4" y1="15.6" x2="4" y2="14.7"/>
 <wire layer="16" width="0.33" x1="4" y1="14.7" x2="6.233367" y2="14.7"/>
 <wire layer="16" width="0.33" x1="6.233367" y1="14.7" x2="6.533367" y2="15"/>
-<wire layer="16" width="0.33" x1="6.533367" y1="15" x2="6.600033" y2="15"/>
-<wire layer="16" width="0.3" x1="13.040067" y1="20.3879" x2="13.040067" y2="19.640067"/>
-<wire layer="16" width="0.33" x1="13.040067" y1="19.640067" x2="8.4" y2="15"/>
-<wire layer="16" width="0.33" x1="8.4" y1="15" x2="6.600033" y2="15"/>
+<wire layer="16" width="0.33" x1="6.533367" y1="15" x2="6.60005" y2="15"/>
+<wire layer="16" width="0.3" x1="13.04006" y1="20.387913" x2="13.04006" y2="19.64006"/>
+<wire layer="16" width="0.33" x1="13.04006" y1="19.64006" x2="8.4" y2="15"/>
+<wire layer="16" width="0.33" x1="8.4" y1="15" x2="6.60005" y2="15"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_43">
 <contactref element="IC1" pad="14"/>
 <contactref element="R1" pad="2@_1"/>
 <contactref element="R1" pad="2@"/>
-<wire layer="16" width="0.3" x1="21.359933" y1="25.8121" x2="21.359933" y2="24.840067"/>
-<wire layer="16" width="0.3" x1="21.359933" y1="24.840067" x2="23.4" y2="22.8"/>
-<wire layer="16" width="0.33" x1="23.4" y1="22.8" x2="23.4" y2="20.600033"/>
-<wire layer="16" width="0.33" x1="23.4" y1="20.600033" x2="23.399967" y2="20.6"/>
+<wire layer="16" width="0.3" x1="21.35994" y1="25.812097" x2="21.35994" y2="24.84006"/>
+<wire layer="16" width="0.3" x1="21.35994" y1="24.84006" x2="23.4" y2="22.8"/>
+<wire layer="16" width="0.33" x1="23.4" y1="22.8" x2="23.4" y2="20.600036"/>
+<wire layer="16" width="0.33" x1="23.4" y1="20.600036" x2="23.399964" y2="20.6"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_44">
 <contactref element="LAZERSW" pad="3"/>
@@ -2471,25 +2517,25 @@ mail: dvi534538@mail/ru</description>
 <signal name="&#1057;&#1077;&#1090;&#1100;_46">
 <contactref element="U1" pad="4"/>
 <contactref element="XP2" pad="1"/>
-<wire layer="16" width="0.33" x1="10.65" y1="87.155" x2="10.65" y2="89.48"/>
-<wire layer="16" width="0.33" x1="10.65" y1="89.48" x2="8.13" y2="92"/>
+<wire layer="16" width="0.33" x1="10.65" y1="87.155" x2="10.65" y2="89.88"/>
+<wire layer="16" width="0.33" x1="10.65" y1="89.88" x2="8.53" y2="92"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_47">
 <contactref element="U1" pad="5"/>
 <contactref element="XP2" pad="2"/>
-<wire layer="16" width="0.33" x1="11.6" y1="87.155" x2="11.6" y2="91.07"/>
-<wire layer="16" width="0.33" x1="11.6" y1="91.07" x2="10.67" y2="92"/>
+<wire layer="16" width="0.33" x1="11.6" y1="87.155" x2="11.6" y2="91.47"/>
+<wire layer="16" width="0.33" x1="11.6" y1="91.47" x2="11.07" y2="92"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_48">
 <contactref element="R4" pad="1@_1"/>
 <contactref element="R4" pad="1@"/>
 <contactref element="XP3" pad="1"/>
 <contactref element="XP3" pad="2"/>
-<wire layer="16" width="0.33" x1="5" y1="92.4" x2="5.5" y2="92.4"/>
-<wire layer="16" width="0.33" x1="5.5" y1="92.4" x2="7.6" y2="94.5"/>
-<wire layer="16" width="0.33" x1="7.6" y1="94.5" x2="8.13" y2="94.5"/>
-<wire layer="16" width="0.33" x1="8.13" y1="94.5" x2="10.67" y2="94.5"/>
-<wire layer="16" width="0.33" x1="10.67" y1="94.5" x2="10.67" y2="94.5"/>
+<wire layer="16" width="0.33" x1="5.3" y1="92.4" x2="5.9" y2="92.4"/>
+<wire layer="16" width="0.33" x1="5.9" y1="92.4" x2="8" y2="94.5"/>
+<wire layer="16" width="0.33" x1="8" y1="94.5" x2="8.53" y2="94.5"/>
+<wire layer="16" width="0.33" x1="8.53" y1="94.5" x2="11.07" y2="94.5"/>
+<wire layer="16" width="0.33" x1="11.07" y1="94.5" x2="11.07" y2="94.5"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_49">
 <contactref element="FPC" pad="16"/>
@@ -2500,18 +2546,19 @@ mail: dvi534538@mail/ru</description>
 <via x="36.3" y="51.8" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="STEPPERSHIELD" pad="14"/>
 <via x="11.4" y="100.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<wire layer="16" width="0.33" x1="5.56" y1="97.699933" x2="5.5" y2="97.699933"/>
-<wire layer="16" width="0.33" x1="5.5" y1="97.699933" x2="5.5" y2="94.7"/>
-<wire layer="16" width="0.33" x1="5.5" y1="94.7" x2="5" y2="94.2"/>
-<wire layer="16" width="0.33" x1="5.56" y1="97.699933" x2="5.56" y2="96.54"/>
-<wire layer="16" width="0.33" x1="5.56" y1="96.54" x2="5.9" y2="96.2"/>
-<wire layer="16" width="0.33" x1="5.9" y1="96.2" x2="13.31" y2="96.2"/>
-<wire layer="16" width="0.33" x1="13.31" y1="96.2" x2="13.8" y2="96.69"/>
-<wire layer="16" width="0.33" x1="13.8" y1="96.69" x2="13.8" y2="98.01"/>
-<wire layer="16" width="0.33" x1="13.8" y1="98.01" x2="11.4" y2="100.41"/>
+<wire layer="16" width="0.33" x1="4.96" y1="97.799925" x2="5.2" y2="97.799925"/>
+<wire layer="16" width="0.33" x1="5.2" y1="97.799925" x2="5.2" y2="94.4"/>
+<wire layer="16" width="0.33" x1="5.2" y1="94.4" x2="5.3" y2="94.3"/>
+<wire layer="16" width="0.33" x1="5.3" y1="94.3" x2="5.3" y2="94.2"/>
+<wire layer="16" width="0.33" x1="4.96" y1="97.799925" x2="5.2" y2="97.799925"/>
+<wire layer="16" width="0.33" x1="5.2" y1="97.799925" x2="5.2" y2="96.2"/>
+<wire layer="16" width="0.33" x1="5.2" y1="96.2" x2="13.61" y2="96.2"/>
+<wire layer="16" width="0.33" x1="13.61" y1="96.2" x2="14.1" y2="96.69"/>
+<wire layer="16" width="0.33" x1="14.1" y1="96.69" x2="14.1" y2="97.71"/>
+<wire layer="16" width="0.33" x1="14.1" y1="97.71" x2="11.4" y2="100.41"/>
 <wire layer="16" width="0.33" x1="11.4" y1="100.41" x2="11.4" y2="100.5"/>
-<wire layer="16" width="0.33" x1="21.200033" y1="102.599933" x2="21.200033" y2="101.400033"/>
-<wire layer="16" width="0.33" x1="21.200033" y1="101.400033" x2="20.3" y2="100.5"/>
+<wire layer="16" width="0.33" x1="21.200027" y1="102.599934" x2="21.200027" y2="101.400027"/>
+<wire layer="16" width="0.33" x1="21.200027" y1="101.400027" x2="20.3" y2="100.5"/>
 <wire layer="16" width="0.33" x1="20.3" y1="100.5" x2="19.4" y2="100.5"/>
 <wire layer="16" width="0.33" x1="36.3" y1="51.8" x2="36.5" y2="51.8"/>
 <wire layer="16" width="0.33" x1="36.5" y1="51.8" x2="37.23" y2="51.07"/>
