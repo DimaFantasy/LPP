@@ -1902,6 +1902,8 @@ mail: dvi534538@mail/ru</description>
 <part name="R10" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R11" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R12" library="common" deviceset="R_0805_1206" device=""/>
+<part name="R13" library="common" deviceset="R_0805_1206" device=""/>
+<part name="R14" library="common" deviceset="R_0805_1206" device=""/>
 <part name="STEPPERSHIELD" library="common" deviceset="PLS_16" device="" value="STEPPER SHIELD"/>
 <part name="U1" library="common" deviceset="MAX15070AAUT+T" device="" value="MAX15070"/>
 <part name="U3" library="common" deviceset="IFX007T" device="" value="IFX007T"/>
@@ -1914,8 +1916,6 @@ mail: dvi534538@mail/ru</description>
 <part name="XP2" library="common" deviceset="PLS_2" device="" value="BKL SEL"/>
 <part name="XP3" library="common" deviceset="PLS_2" device="" value="BKL  SEL"/>
 <part name="Z" library="common" deviceset="Q_1" device=""/>
-<part name="R13" library="common" deviceset="R_0805_1206" device=""/>
-<part name="R14" library="common" deviceset="R_0805_1206" device=""/>
 </parts>
 <modules/>
 <sheets>
@@ -2124,7 +2124,7 @@ GND</text>
 <text x="20.955" y="-278.644" size="1.48" layer="97" font="vector" ratio="10" rot="R90" align="bottom-left" distance="76">GND</text>
 <text x="-136.904" y="-374.42" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+19V</text>
 <text x="-136.525" y="-398.024" size="1.48" layer="97" font="vector" ratio="10" rot="R90" align="bottom-left" distance="76">GND</text>
-<text x="-68.26" y="-323.62" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+5V</text>
+<text x="-61.91" y="-323.62" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+5V</text>
 <text x="104.078" y="-343.94" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+19V</text>
 <text x="115.89" y="-343.94" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+5V</text>
 <text x="-70.8" y="-383.31" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+5V</text>
@@ -2147,6 +2147,8 @@ GND</text>
 <text x="-28.975" y="-285.75" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="63.735" y="-302.26" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="63.735" y="-307.34" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-39.135" y="-314.96" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-39.135" y="-320.04" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="95.905" y="-337.82" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">STEPPER SHIELD</text>
 <text x="83.351" y="-198.12" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">MAX15070</text>
 <text x="-0.628" y="-213.36" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">IFX007T</text>
@@ -2159,8 +2161,6 @@ GND</text>
 <text x="135.539" y="-204.47" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BKL SEL</text>
 <text x="134.798" y="-214.63" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BKL  SEL</text>
 <text x="-81.045" y="-206.502" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-39.135" y="-314.96" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-39.135" y="-320.04" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 </plain>
 <moduleinsts/>
 <instances>
@@ -2197,7 +2197,7 @@ GND</text>
 <instance part="NetPort9" gate="PART_1" x="22.86" y="-276.606" smashed="yes"/>
 <instance part="NetPort10" gate="PART_1" x="-134.303" y="-375.92" smashed="yes"/>
 <instance part="NetPort11" gate="PART_1" x="-134.62" y="-395.986" smashed="yes"/>
-<instance part="NetPort12" gate="PART_1" x="-66.04" y="-325.12" smashed="yes"/>
+<instance part="NetPort12" gate="PART_1" x="-59.69" y="-325.12" smashed="yes"/>
 <instance part="NetPort13" gate="PART_1" x="106.68" y="-345.44" smashed="yes"/>
 <instance part="NetPort14" gate="PART_1" x="118.11" y="-345.44" smashed="yes"/>
 <instance part="NetPort15" gate="PART_1" x="-68.58" y="-384.81" smashed="yes"/>
@@ -2220,6 +2220,8 @@ GND</text>
 <instance part="R10" gate="PART_1" x="-29.21" y="-287.02" smashed="yes"/>
 <instance part="R11" gate="PART_1" x="63.5" y="-303.53" smashed="yes"/>
 <instance part="R12" gate="PART_1" x="63.5" y="-308.61" smashed="yes"/>
+<instance part="R13" gate="PART_1" x="-39.37" y="-316.23" smashed="yes"/>
+<instance part="R14" gate="PART_1" x="-39.37" y="-321.31" smashed="yes"/>
 <instance part="STEPPERSHIELD" gate="PART_1" x="105.41" y="-358.14" smashed="yes"/>
 <instance part="U1" gate="PART_1" x="88.9" y="-208.28" smashed="yes"/>
 <instance part="U3" gate="PART_1" x="3.81" y="-223.52" smashed="yes"/>
@@ -2232,8 +2234,6 @@ GND</text>
 <instance part="XP2" gate="PART_1" x="140.335" y="-207.01" smashed="yes"/>
 <instance part="XP3" gate="PART_1" x="140.335" y="-217.17" smashed="yes"/>
 <instance part="Z" gate="PART_1" x="-81.28" y="-208.28" smashed="yes"/>
-<instance part="R13" gate="PART_1" x="-39.37" y="-316.23" smashed="yes"/>
-<instance part="R14" gate="PART_1" x="-39.37" y="-321.31" smashed="yes"/>
 </instances>
 <busses/>
 <nets>
@@ -2634,19 +2634,19 @@ GND</text>
 <wire layer="91" width="0.1" x1="-77.47" y1="-344.17" x2="-82.55" y2="-344.17"/>
 <pinref part="FPC" gate="PART_1" pin="14"/>
 <junction x="-77.47" y="-323.85"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-331.47" x2="-66.04" y2="-331.47"/>
-<wire layer="91" width="0.1" x1="-66.04" y1="-331.47" x2="-66.04" y2="-327.66"/>
+<wire layer="91" width="0.1" x1="-77.47" y1="-331.47" x2="-59.69" y2="-331.47"/>
+<wire layer="91" width="0.1" x1="-59.69" y1="-331.47" x2="-59.69" y2="-327.66"/>
 <pinref part="NetPort12" gate="PART_1" pin="+5V"/>
 <junction x="-77.47" y="-331.47"/>
 <wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-46.99" y2="-331.47"/>
-<wire layer="91" width="0.1" x1="-46.99" y1="-331.47" x2="-66.04" y2="-331.47"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-331.47" x2="-59.69" y2="-331.47"/>
 <junction x="-46.99" y="-321.31"/>
 <wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-45.72" y2="-321.31"/>
 <wire layer="91" width="0.1" x1="-46.99" y1="-316.23" x2="-45.72" y2="-316.23"/>
 <wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-46.99" y2="-316.23"/>
 <pinref part="R14" gate="PART_1" pin="1"/>
 <pinref part="R13" gate="PART_1" pin="1"/>
-<junction x="-66.04" y="-331.47"/>
+<junction x="-59.69" y="-331.47"/>
 </segment>
 <segment>
 <wire layer="91" width="0.1" x1="55.88" y1="-308.61" x2="57.15" y2="-308.61"/>
