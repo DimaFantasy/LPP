@@ -1238,7 +1238,9 @@ mail: dvi534538@mail/ru</description>
 <connect gate="PART_1" pin="1" pad="1@_1"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="VALUE" value="2.7 Kom"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -1895,7 +1897,7 @@ mail: dvi534538@mail/ru</description>
 <part name="NetPort20" library="common" deviceset="+5V" device=""/>
 <part name="NetPort21" library="common" deviceset="+5V" device=""/>
 <part name="NetPort22" library="common" deviceset="GND" device=""/>
-<part name="R1" library="common" deviceset="R_0805_1206" device=""/>
+<part name="R1" library="common" deviceset="R_0805_1206" device="" value="2.7 Kom"/>
 <part name="R2" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R3" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R4" library="common" deviceset="R_0805_1206" device=""/>
@@ -2140,7 +2142,7 @@ GND</text>
 <text x="53.66" y="-289.33" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+5V</text>
 <text x="-152.08" y="-322.35" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">+5V</text>
 <text x="-136.525" y="-365.004" size="1.48" layer="97" font="vector" ratio="10" rot="R90" align="bottom-left" distance="76">GND</text>
-<text x="-131.845" y="-196.85" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-136.879" y="-196.85" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">2.7 Kom</text>
 <text x="54.845" y="-204.47" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-27.705" y="-219.71" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="125.73" y="-225.825" size="1.48" layer="97" font="vector" ratio="10" rot="R90" align="bottom-left" distance="76"></text>
