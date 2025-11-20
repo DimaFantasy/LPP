@@ -1994,7 +1994,7 @@ GND</text>
 P OUT</text>
 <text x="135.414" y="-214.659" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">OUT
 OUT</text>
-<text x="-56.039" y="-377.219" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">PB5
+<text x="-56.039" y="-374.679" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">PB5
 X_ENC_B
 PВ8</text>
 <text x="-1.746" y="-344.199" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">X2_EN
@@ -2115,7 +2115,7 @@ GND</text>
 <text x="30.458" y="-224.79" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">DC</text>
 <text x="-150.029" y="-378.46" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">J-1</text>
 <text x="-48.084" y="-363.22" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">ENC CP</text>
-<text x="-48.267" y="-377.19" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">ENC SW</text>
+<text x="-48.267" y="-374.65" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">ENC SW</text>
 <text x="-96.405" y="-346.71" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">FPC 24 1mm</text>
 <text x="-107.213" y="-198.12" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">FE1.1S</text>
 <text x="130.613" y="-238.76" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">LAZER_CP</text>
@@ -2154,8 +2154,8 @@ GND</text>
 <text x="-28.975" y="-285.75" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="63.735" y="-302.26" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="63.735" y="-307.34" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-39.135" y="-314.96" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-39.135" y="-320.04" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-39.135" y="-323.85" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-39.135" y="-330.2" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="95.905" y="-337.82" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">STEPPER SHIELD</text>
 <text x="83.351" y="-198.12" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">MAX15070</text>
 <text x="-0.628" y="-213.36" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">IFX007T</text>
@@ -2188,7 +2188,7 @@ GND</text>
 <instance part="DC" gate="PART_1" x="31.75" y="-228.6" smashed="yes"/>
 <instance part="DC_IN" gate="PART_1" x="-148.59" y="-384.81" smashed="yes"/>
 <instance part="ENC_CP" gate="PART_1" x="-43.815" y="-367.03" rot="R180.000420918452" smashed="yes"/>
-<instance part="ENC_SW" gate="PART_1" x="-43.815" y="-381" rot="R180.000420918452" smashed="yes"/>
+<instance part="ENC_SW" gate="PART_1" x="-43.815" y="-378.46" rot="R180.000420918452" smashed="yes"/>
 <instance part="FPC" gate="PART_1" x="-88.9" y="-377.19" rot="R180.000420918452" smashed="yes"/>
 <instance part="IC1" gate="PART_1" x="-104.14" y="-231.14" rot="R180.000420918452" smashed="yes"/>
 <instance part="LAZER_CP" gate="PART_1" x="136.525" y="-242.57" smashed="yes"/>
@@ -2227,8 +2227,8 @@ GND</text>
 <instance part="R10" gate="PART_1" x="-29.21" y="-287.02" smashed="yes"/>
 <instance part="R11" gate="PART_1" x="63.5" y="-303.53" smashed="yes"/>
 <instance part="R12" gate="PART_1" x="63.5" y="-308.61" smashed="yes"/>
-<instance part="R13" gate="PART_1" x="-39.37" y="-316.23" smashed="yes"/>
-<instance part="R14" gate="PART_1" x="-39.37" y="-321.31" smashed="yes"/>
+<instance part="R13" gate="PART_1" x="-39.37" y="-325.12" smashed="yes"/>
+<instance part="R14" gate="PART_1" x="-39.37" y="-331.47" smashed="yes"/>
 <instance part="STEPPER_SHIELD" gate="PART_1" x="105.41" y="-358.14" smashed="yes"/>
 <instance part="U1" gate="PART_1" x="88.9" y="-208.28" smashed="yes"/>
 <instance part="U3" gate="PART_1" x="3.81" y="-223.52" smashed="yes"/>
@@ -2563,24 +2563,11 @@ GND</text>
 </net>
 <net name="Сеть_6" class="0">
 <segment>
-<wire layer="91" width="0.1" x1="-10.16" y1="-297.162" x2="-22.86" y2="-297.162"/>
-<wire layer="91" width="0.1" x1="-22.86" y1="-367.03" x2="-22.86" y2="-378.46"/>
-<wire layer="91" width="0.1" x1="-22.86" y1="-346.71" x2="-22.86" y2="-367.03"/>
-<wire layer="91" width="0.1" x1="-22.86" y1="-297.162" x2="-22.86" y2="-346.71"/>
-<wire layer="91" width="0.1" x1="-22.86" y1="-378.46" x2="-10.16" y2="-378.46"/>
-<pinref part="U7" gate="PART_1" pin="A8"/>
+<wire layer="91" width="0.1" x1="-35.56" y1="-364.49" x2="-27.94" y2="-364.49"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-364.49" x2="-27.94" y2="-378.46"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-378.46" x2="-10.16" y2="-378.46"/>
+<pinref part="ENC_CP" gate="PART_1" pin="3"/>
 <pinref part="U8" gate="PART_1" pin="B6"/>
-<wire layer="91" width="0.1" x1="-22.86" y1="-346.71" x2="-82.55" y2="-346.71"/>
-<pinref part="FPC" gate="PART_1" pin="13"/>
-<junction x="-22.86" y="-346.71"/>
-<wire layer="91" width="0.1" x1="-29.21" y1="-367.03" x2="-22.86" y2="-367.03"/>
-<wire layer="91" width="0.1" x1="-35.56" y1="-367.03" x2="-29.21" y2="-367.03"/>
-<pinref part="ENC_CP" gate="PART_1" pin="2"/>
-<junction x="-22.86" y="-367.03"/>
-<wire layer="91" width="0.1" x1="-33.02" y1="-321.31" x2="-29.21" y2="-321.31"/>
-<wire layer="91" width="0.1" x1="-29.21" y1="-321.31" x2="-29.21" y2="-367.03"/>
-<pinref part="R14" gate="PART_1" pin="2"/>
-<junction x="-29.21" y="-367.03"/>
 </segment>
 </net>
 <net name="Сеть_7" class="0">
@@ -2642,12 +2629,11 @@ GND</text>
 <wire layer="91" width="0.1" x1="-59.69" y1="-331.47" x2="-59.69" y2="-327.66"/>
 <pinref part="NetPort12" gate="PART_1" pin="+5V"/>
 <junction x="-77.47" y="-331.47"/>
-<wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-46.99" y2="-331.47"/>
 <wire layer="91" width="0.1" x1="-46.99" y1="-331.47" x2="-59.69" y2="-331.47"/>
-<junction x="-46.99" y="-321.31"/>
-<wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-45.72" y2="-321.31"/>
-<wire layer="91" width="0.1" x1="-46.99" y1="-316.23" x2="-45.72" y2="-316.23"/>
-<wire layer="91" width="0.1" x1="-46.99" y1="-321.31" x2="-46.99" y2="-316.23"/>
+<junction x="-46.99" y="-331.47"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-331.47" x2="-45.72" y2="-331.47"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-325.12" x2="-45.72" y2="-325.12"/>
+<wire layer="91" width="0.1" x1="-46.99" y1="-331.47" x2="-46.99" y2="-325.12"/>
 <pinref part="R14" gate="PART_1" pin="1"/>
 <pinref part="R13" gate="PART_1" pin="1"/>
 <junction x="-59.69" y="-331.47"/>
@@ -2711,24 +2697,17 @@ GND</text>
 </net>
 <net name="Сеть_10" class="0">
 <segment>
-<wire layer="91" width="0.1" x1="-10.16" y1="-299.72" x2="-24.13" y2="-299.72"/>
-<wire layer="91" width="0.1" x1="-24.13" y1="-299.72" x2="-24.13" y2="-341.63"/>
-<wire layer="91" width="0.1" x1="-24.13" y1="-341.63" x2="-82.55" y2="-341.63"/>
-<pinref part="U7" gate="PART_1" pin="A9"/>
-<pinref part="FPC" gate="PART_1" pin="15"/>
-<wire layer="91" width="0.1" x1="-24.13" y1="-364.49" x2="-24.13" y2="-381"/>
-<wire layer="91" width="0.1" x1="-24.13" y1="-341.63" x2="-24.13" y2="-364.49"/>
-<wire layer="91" width="0.1" x1="-24.13" y1="-381" x2="-35.56" y2="-381"/>
-<pinref part="ENC_SW" gate="PART_1" pin="2"/>
-<junction x="-24.13" y="-341.63"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-364.49" x2="-24.13" y2="-364.49"/>
-<wire layer="91" width="0.1" x1="-35.56" y1="-364.49" x2="-27.94" y2="-364.49"/>
-<pinref part="ENC_CP" gate="PART_1" pin="3"/>
-<junction x="-24.13" y="-364.49"/>
-<wire layer="91" width="0.1" x1="-33.02" y1="-316.23" x2="-27.94" y2="-316.23"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-316.23" x2="-27.94" y2="-364.49"/>
+<wire layer="91" width="0.1" x1="-33.02" y1="-325.12" x2="-27.94" y2="-325.12"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-346.71" x2="-27.94" y2="-364.49"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-325.12" x2="-27.94" y2="-346.71"/>
 <pinref part="R13" gate="PART_1" pin="2"/>
-<junction x="-27.94" y="-364.49"/>
+<wire layer="91" width="0.1" x1="-82.55" y1="-346.71" x2="-27.94" y2="-346.71"/>
+<pinref part="FPC" gate="PART_1" pin="13"/>
+<junction x="-27.94" y="-346.71"/>
+<wire layer="91" width="0.1" x1="-10.16" y1="-297.162" x2="-27.94" y2="-297.162"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-297.162" x2="-27.94" y2="-325.12"/>
+<pinref part="U7" gate="PART_1" pin="A8"/>
+<junction x="-27.94" y="-325.12"/>
 </segment>
 </net>
 <net name="Сеть_11" class="0">
@@ -2930,19 +2909,19 @@ GND</text>
 </net>
 <net name="Сеть_27" class="0">
 <segment>
-<wire layer="91" width="0.1" x1="-34.29" y1="-383.522" x2="-35.56" y2="-383.54"/>
-<wire layer="91" width="0.1" x1="-34.29" y1="-383.522" x2="-10.16" y2="-383.522"/>
+<wire layer="91" width="0.1" x1="-35.56" y1="-381" x2="-22.225" y2="-381"/>
+<wire layer="91" width="0.1" x1="-22.225" y1="-381" x2="-22.225" y2="-383.522"/>
+<wire layer="91" width="0.1" x1="-22.225" y1="-383.522" x2="-10.16" y2="-383.522"/>
 <pinref part="ENC_SW" gate="PART_1" pin="1"/>
 <pinref part="U8" gate="PART_1" pin="B8"/>
 </segment>
 </net>
 <net name="Сеть_28" class="0">
 <segment>
-<wire layer="91" width="0.1" x1="-10.16" y1="-375.902" x2="-27.94" y2="-375.902"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-375.902" x2="-27.94" y2="-378.46"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-378.46" x2="-35.56" y2="-378.46"/>
-<pinref part="U8" gate="PART_1" pin="B5"/>
+<wire layer="91" width="0.1" x1="-34.29" y1="-375.902" x2="-35.56" y2="-375.92"/>
+<wire layer="91" width="0.1" x1="-34.29" y1="-375.902" x2="-10.16" y2="-375.902"/>
 <pinref part="ENC_SW" gate="PART_1" pin="3"/>
+<pinref part="U8" gate="PART_1" pin="B5"/>
 </segment>
 </net>
 <net name="Сеть_29" class="0">
@@ -3285,6 +3264,27 @@ GND</text>
 <wire layer="91" width="0.1" x1="99.06" y1="-388.62" x2="73.66" y2="-388.62"/>
 <pinref part="STEPPER_SHIELD" gate="PART_1" pin="13"/>
 <junction x="73.66" y="-388.62"/>
+</segment>
+</net>
+<net name="Сеть_33" class="0">
+<segment>
+<wire layer="91" width="0.1" x1="-35.56" y1="-367.03" x2="-29.21" y2="-367.03"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-341.63" x2="-29.21" y2="-331.47"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-367.03" x2="-29.21" y2="-341.63"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-331.47" x2="-33.02" y2="-331.47"/>
+<pinref part="ENC_CP" gate="PART_1" pin="2"/>
+<pinref part="R14" gate="PART_1" pin="2"/>
+<wire layer="91" width="0.1" x1="-82.55" y1="-341.63" x2="-29.21" y2="-341.63"/>
+<pinref part="FPC" gate="PART_1" pin="15"/>
+<junction x="-29.21" y="-341.63"/>
+<wire layer="91" width="0.1" x1="-10.16" y1="-299.72" x2="-29.21" y2="-299.72"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-299.72" x2="-29.21" y2="-331.47"/>
+<pinref part="U7" gate="PART_1" pin="A9"/>
+<junction x="-29.21" y="-331.47"/>
+<wire layer="91" width="0.1" x1="-35.56" y1="-378.46" x2="-29.21" y2="-378.46"/>
+<wire layer="91" width="0.1" x1="-29.21" y1="-378.46" x2="-29.21" y2="-367.03"/>
+<pinref part="ENC_SW" gate="PART_1" pin="2"/>
+<junction x="-29.21" y="-367.03"/>
 </segment>
 </net>
 </nets>
