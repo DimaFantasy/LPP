@@ -3,7 +3,7 @@
 <title>Static Call Graph - [LPP_STM32F103Cx\LPP_STM32F103Cx.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image LPP_STM32F103Cx\LPP_STM32F103Cx.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Wed Nov  5 13:04:47 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Wed Dec  3 22:01:42 2025
 <BR><P>
 <H3>Maximum Stack Usage =        220 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1761,8 +1761,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerCallback
 </UL>
 
-<P><STRONG><a name="[d7]"></a>YSetEnablePin</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.YSetEnablePin))
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<P><STRONG><a name="[d7]"></a>YSetEnablePin</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, main.o(.text.YSetEnablePin))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = YSetEnablePin
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
@@ -1789,7 +1791,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YCalculatePower
 </UL>
 
-<P><STRONG><a name="[54]"></a>main</STRONG> (Thumb, 1092 bytes, Stack size 80 bytes, main.o(.text.main))
+<P><STRONG><a name="[54]"></a>main</STRONG> (Thumb, 1096 bytes, Stack size 80 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = main &rArr; Lpp_MainLoop &rArr; PacketSend &rArr; USBD_CUSTOM_HID_SendReport &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Lpp_MainLoop

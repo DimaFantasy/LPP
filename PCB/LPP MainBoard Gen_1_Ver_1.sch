@@ -95,6 +95,49 @@
 <wire layer="21" width="0.12" x1="-6.195" y1="1.776" x2="-6.195" y2="5.785"/>
 <circle layer="21" x="1.2" y="6.215" radius="0.25" width="0"/>
 </package>
+<package name="TO127P1500X440-8N">
+<description>MF: Infineon Technologies
+Description: 
+                        
+                            Half Bridge Driver DC Motors, General Purpose Power MOSFET PG-TO263-7-1
+                        
+                    
+Package: TO-263-8 Infineon Technologies
+Price: None
+SnapEDA_Link: https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=snap
+MP: IFX007T
+Availability: Not in stock
+Check_prices: https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=eda</description>
+<smd name="1" x="-6.07" y="3.81" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="4" x="-6.07" y="0" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="2" x="-6.07" y="2.54" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="3" x="-6.07" y="1.27" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="5" x="-6.07" y="-1.27" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="6" x="-6.07" y="-2.54" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="7" x="-6.07" y="-3.81" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
+<smd name="8" x="3.89" y="0" layer="1" dx="8.04" dy="8.67" rot="R0" stop="yes" cream="no" thermals="no"/>
+<wire layer="51" width="0.127" x1="6.67" y1="5" x2="6.67" y2="-5"/>
+<wire layer="51" width="0.127" x1="6.67" y1="-5" x2="-2.59" y2="-5"/>
+<wire layer="51" width="0.127" x1="-2.59" y1="-5" x2="-2.59" y2="5"/>
+<wire layer="51" width="0.127" x1="-2.59" y1="5" x2="6.67" y2="5"/>
+<wire layer="21" width="0.127" x1="6.67" y1="5" x2="-2.59" y2="5"/>
+<wire layer="21" width="0.127" x1="-2.59" y1="5" x2="-2.59" y2="-5"/>
+<wire layer="21" width="0.127" x1="-2.59" y1="-5" x2="6.67" y2="-5"/>
+<circle layer="21" x="-8.5" y="3.81" radius="0.2" width="0"/>
+<circle layer="51" x="-8.5" y="3.81" radius="0.2" width="0"/>
+<rectangle x1="3.06" y1="1.785" x2="4.72" y2="0.385" layer="31" rot="R0"/>
+<rectangle x1="3.06" y1="-0.385" x2="4.72" y2="-1.785" layer="31" rot="R0"/>
+<rectangle x1="3.06" y1="3.955" x2="4.72" y2="2.555" layer="31" rot="R0"/>
+<rectangle x1="3.06" y1="-2.555" x2="4.72" y2="-3.955" layer="31" rot="R0"/>
+<rectangle x1="0.38" y1="1.785" x2="2.04" y2="0.385" layer="31" rot="R0"/>
+<rectangle x1="0.38" y1="-0.385" x2="2.04" y2="-1.785" layer="31" rot="R0"/>
+<rectangle x1="0.38" y1="3.955" x2="2.04" y2="2.555" layer="31" rot="R0"/>
+<rectangle x1="0.38" y1="-2.555" x2="2.04" y2="-3.955" layer="31" rot="R0"/>
+<rectangle x1="5.74" y1="1.785" x2="7.4" y2="0.385" layer="31" rot="R0"/>
+<rectangle x1="5.74" y1="-0.385" x2="7.4" y2="-1.785" layer="31" rot="R0"/>
+<rectangle x1="5.74" y1="3.955" x2="7.4" y2="2.555" layer="31" rot="R0"/>
+<rectangle x1="5.74" y1="-2.555" x2="7.4" y2="-3.955" layer="31" rot="R0"/>
+</package>
 <package name="R_0805_1206">
 <smd name="1@_1" x="-0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R0" stop="yes" cream="yes" thermals="no"/>
 <smd name="2@_1" x="0.9" y="0" layer="1" dx="1.21" dy="1.57" roundness="41" rot="R180" stop="yes" cream="yes" thermals="no"/>
@@ -163,46 +206,46 @@ mail: dvi534538@mail/ru</description>
 <wire layer="21" width="0.15" x1="-3.016" y1="-0.722" x2="-3.016" y2="0.617"/>
 </package>
 <package name="ST_PILL">
-<pad name="1" x="-7.015" y="24.128" drill="0.7" shape="square" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="2" x="-7.015" y="21.588" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="3" x="-7.015" y="19.048" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="4" x="-7.015" y="16.508" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="5" x="-7.015" y="13.968" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="6" x="-7.015" y="11.428" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="7" x="-7.015" y="8.888" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="8" x="-7.015" y="6.348" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="9" x="-7.015" y="3.808" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="10" x="-7.015" y="1.268" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="11" x="-7.015" y="-1.272" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="12" x="-7.015" y="-3.812" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="13" x="-7.015" y="-6.352" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="14" x="-7.015" y="-8.892" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="15" x="-7.015" y="-11.432" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="16" x="-7.015" y="-13.972" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="17" x="-7.015" y="-16.512" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="18" x="-7.015" y="-19.052" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="19" x="-7.015" y="-21.592" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="20" x="-7.015" y="-24.132" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="40" x="7.985" y="24.128" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="39" x="7.985" y="21.588" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="38" x="7.985" y="19.048" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="37" x="7.985" y="16.508" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="36" x="7.985" y="13.968" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="35" x="7.985" y="11.428" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="34" x="7.985" y="8.888" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="33" x="7.985" y="6.348" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="32" x="7.985" y="3.808" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="31" x="7.985" y="1.268" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="30" x="7.985" y="-1.272" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="29" x="7.985" y="-3.812" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="28" x="7.985" y="-6.352" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="27" x="7.985" y="-8.892" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="26" x="7.985" y="-11.432" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="25" x="7.985" y="-13.972" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="24" x="7.985" y="-16.512" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="23" x="7.985" y="-19.052" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="22" x="7.985" y="-21.592" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
-<pad name="21" x="7.985" y="-24.132" drill="0.7" diameter="1.2" rot="R270" stop="yes" thermals="no"/>
+<pad name="1" x="-7.015" y="24.128" drill="0.8" shape="square" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="2" x="-7.015" y="21.588" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="3" x="-7.015" y="19.048" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="4" x="-7.015" y="16.508" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="5" x="-7.015" y="13.968" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="6" x="-7.015" y="11.428" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="7" x="-7.015" y="8.888" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="8" x="-7.015" y="6.348" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="9" x="-7.015" y="3.808" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="10" x="-7.015" y="1.268" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="11" x="-7.015" y="-1.272" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="12" x="-7.015" y="-3.812" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="13" x="-7.015" y="-6.352" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="14" x="-7.015" y="-8.892" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="15" x="-7.015" y="-11.432" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="16" x="-7.015" y="-13.972" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="17" x="-7.015" y="-16.512" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="18" x="-7.015" y="-19.052" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="19" x="-7.015" y="-21.592" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="20" x="-7.015" y="-24.132" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="40" x="7.985" y="24.128" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="39" x="7.985" y="21.588" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="38" x="7.985" y="19.048" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="37" x="7.985" y="16.508" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="36" x="7.985" y="13.968" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="35" x="7.985" y="11.428" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="34" x="7.985" y="8.888" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="33" x="7.985" y="6.348" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="32" x="7.985" y="3.808" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="31" x="7.985" y="1.268" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="30" x="7.985" y="-1.272" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="29" x="7.985" y="-3.812" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="28" x="7.985" y="-6.352" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="27" x="7.985" y="-8.892" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="26" x="7.985" y="-11.432" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="25" x="7.985" y="-13.972" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="24" x="7.985" y="-16.512" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="23" x="7.985" y="-19.052" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="22" x="7.985" y="-21.592" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
+<pad name="21" x="7.985" y="-24.132" drill="0.8" diameter="1.3" rot="R270" stop="yes" thermals="no"/>
 <wire layer="21" width="0.12" x1="-8.345" y1="25.828" x2="-5.685" y2="25.828"/>
 <wire layer="21" width="0.12" x1="-5.685" y1="25.828" x2="-5.685" y2="-25.832"/>
 <wire layer="21" width="0.12" x1="-5.685" y1="-25.832" x2="-8.345" y2="-25.832"/>
@@ -278,31 +321,31 @@ mail: dvi534538@mail/ru</description>
 </package>
 <package name="DB25M">
 <description>Unique Name: TE_DB25M</description>
-<pad name="14" x="-15.24" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="15" x="-12.471" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="16" x="-9.703" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="17" x="-6.934" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="18" x="-4.166" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="19" x="-1.397" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="20" x="1.372" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="21" x="4.14" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="22" x="6.909" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="23" x="9.677" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="24" x="12.446" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="25" x="15.215" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="13" x="16.612" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="12" x="13.843" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="11" x="11.074" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="1" x="-16.612" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="2" x="-13.843" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="3" x="-11.074" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="4" x="-8.306" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="5" x="-5.537" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="6" x="-2.769" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="25" x="-15.24" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="24" x="-12.471" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="23" x="-9.703" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="22" x="-6.934" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="21" x="-4.166" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="20" x="-1.397" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="19" x="1.372" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="18" x="4.14" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="17" x="6.909" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="16" x="9.677" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="15" x="12.446" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="14" x="15.215" y="-1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="1" x="16.612" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="2" x="13.843" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="3" x="11.074" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="13" x="-16.612" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="12" x="-13.843" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="11" x="-11.074" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="10" x="-8.306" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="9" x="-5.537" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="8" x="-2.769" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
 <pad name="7" x="0" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="8" x="2.769" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="9" x="5.537" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
-<pad name="10" x="8.306" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="6" x="2.769" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="5" x="5.537" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
+<pad name="4" x="8.306" y="1.422" drill="0.8" diameter="1.5" rot="R0" stop="yes" thermals="no"/>
 <pad name="@26_1" x="-23.5" y="0" drill="3.15" diameter="5" rot="R0" stop="yes" thermals="no"/>
 <pad name="@26" x="23.5" y="0" drill="3.15" diameter="5" rot="R0" stop="yes" thermals="no"/>
 <wire layer="21" width="0.25" x1="-26.721" y1="-6.477" x2="-26.721" y2="3.302"/>
@@ -410,49 +453,6 @@ Check_prices: https://www.snapeda.com/parts/MAX15070AAUT+T/Maxim+Integrated/view
 <circle layer="21" x="-2.5" y="1" radius="0.2" width="0"/>
 <circle layer="51" x="-2.5" y="1" radius="0.2" width="0"/>
 </package>
-<package name="TO127P1500X440-8N">
-<description>MF: Infineon Technologies
-Description: 
-                        
-                            Half Bridge Driver DC Motors, General Purpose Power MOSFET PG-TO263-7-1
-                        
-                    
-Package: TO-263-8 Infineon Technologies
-Price: None
-SnapEDA_Link: https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=snap
-MP: IFX007T
-Availability: Not in stock
-Check_prices: https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=eda</description>
-<smd name="1" x="-6.07" y="3.81" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="4" x="-6.07" y="0" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="2" x="-6.07" y="2.54" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="3" x="-6.07" y="1.27" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="5" x="-6.07" y="-1.27" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="6" x="-6.07" y="-2.54" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="7" x="-6.07" y="-3.81" layer="1" dx="3.67" dy="0.79" roundness="26" rot="R0" stop="yes" cream="yes" thermals="no"/>
-<smd name="8" x="3.89" y="0" layer="1" dx="8.04" dy="8.67" rot="R0" stop="yes" cream="no" thermals="no"/>
-<wire layer="51" width="0.127" x1="6.67" y1="5" x2="6.67" y2="-5"/>
-<wire layer="51" width="0.127" x1="6.67" y1="-5" x2="-2.59" y2="-5"/>
-<wire layer="51" width="0.127" x1="-2.59" y1="-5" x2="-2.59" y2="5"/>
-<wire layer="51" width="0.127" x1="-2.59" y1="5" x2="6.67" y2="5"/>
-<wire layer="21" width="0.127" x1="6.67" y1="5" x2="-2.59" y2="5"/>
-<wire layer="21" width="0.127" x1="-2.59" y1="5" x2="-2.59" y2="-5"/>
-<wire layer="21" width="0.127" x1="-2.59" y1="-5" x2="6.67" y2="-5"/>
-<circle layer="21" x="-8.5" y="3.81" radius="0.2" width="0"/>
-<circle layer="51" x="-8.5" y="3.81" radius="0.2" width="0"/>
-<rectangle x1="3.06" y1="1.785" x2="4.72" y2="0.385" layer="31" rot="R0"/>
-<rectangle x1="3.06" y1="-0.385" x2="4.72" y2="-1.785" layer="31" rot="R0"/>
-<rectangle x1="3.06" y1="3.955" x2="4.72" y2="2.555" layer="31" rot="R0"/>
-<rectangle x1="3.06" y1="-2.555" x2="4.72" y2="-3.955" layer="31" rot="R0"/>
-<rectangle x1="0.38" y1="1.785" x2="2.04" y2="0.385" layer="31" rot="R0"/>
-<rectangle x1="0.38" y1="-0.385" x2="2.04" y2="-1.785" layer="31" rot="R0"/>
-<rectangle x1="0.38" y1="3.955" x2="2.04" y2="2.555" layer="31" rot="R0"/>
-<rectangle x1="0.38" y1="-2.555" x2="2.04" y2="-3.955" layer="31" rot="R0"/>
-<rectangle x1="5.74" y1="1.785" x2="7.4" y2="0.385" layer="31" rot="R0"/>
-<rectangle x1="5.74" y1="-0.385" x2="7.4" y2="-1.785" layer="31" rot="R0"/>
-<rectangle x1="5.74" y1="3.955" x2="7.4" y2="2.555" layer="31" rot="R0"/>
-<rectangle x1="5.74" y1="-2.555" x2="7.4" y2="-3.955" layer="31" rot="R0"/>
-</package>
 <package name="PLS_5">
 <description>LINK: &lt;a href="http://vinratel.at.ua/"&gt;http://vinratel.at.ua/&lt;/a&gt;
 author: &lt;a href="&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;."&gt;&#1044;&#1072;&#1085;&#1100;&#1082;&#1086;&#1074;&#1089;&#1082;&#1080;&#1081; &#1042;.&#1048;.&lt;/a&gt;
@@ -556,6 +556,19 @@ mail: dvi534538@mail/ru</description>
 <pin name="D+" visible="both" length="short" direction="io" x="-8.89" y="2.54"/>
 <pin name="CASE" visible="both" length="short" direction="pwr" rot="R180" x="8.89" y="-5.08"/>
 <pin name="GND" visible="both" length="short" direction="pwr" rot="R180" x="8.89" y="0"/>
+</symbol>
+<symbol name="BTN7933B">
+<wire layer="94" width="0.254" x1="10.16" y1="-10.16" x2="-10.16" y2="-10.16"/>
+<wire layer="94" width="0.254" x1="-10.16" y1="-10.16" x2="-10.16" y2="10.16"/>
+<wire layer="94" width="0.254" x1="-10.16" y1="10.16" x2="10.16" y2="10.16"/>
+<wire layer="94" width="0.254" x1="10.16" y1="10.16" x2="10.16" y2="-10.16"/>
+<pin name="GND" visible="both" length="short" direction="pwr" rot="R180" x="12.7" y="-7.62"/>
+<pin name="IN" visible="both" length="short" direction="in" x="-12.7" y="2.54"/>
+<pin name="INH" visible="both" length="short" direction="in" x="-12.7" y="0"/>
+<pin name="OUT" visible="both" length="short" direction="out" rot="R180" x="12.7" y="2.54"/>
+<pin name="SR" visible="both" length="short" direction="in" x="-12.7" y="-2.54"/>
+<pin name="IS" visible="both" length="short" direction="out" rot="R180" x="12.7" y="-2.54"/>
+<pin name="VS" visible="both" length="short" direction="pwr" rot="R180" x="12.7" y="7.62"/>
 </symbol>
 <symbol name="+5V">
 <wire layer="94" width="0.25" x1="-2.54" y1="0" x2="2.54" y2="0"/>
@@ -1032,50 +1045,6 @@ mail: dvi534538@mail/ru</description>
 <pin name="P_OUT" visible="both" length="short" direction="out" rot="R180" x="15.24" y="0"/>
 <pin name="GND" visible="both" length="short" direction="pwr" rot="R180" x="15.24" y="-5.08"/>
 </symbol>
-<symbol name="IFX007T">
-<wire layer="94" width="0.254" x1="10.16" y1="-10.16" x2="-10.16" y2="-10.16"/>
-<wire layer="94" width="0.254" x1="-10.16" y1="-10.16" x2="-10.16" y2="10.16"/>
-<wire layer="94" width="0.254" x1="-10.16" y1="10.16" x2="10.16" y2="10.16"/>
-<wire layer="94" width="0.254" x1="10.16" y1="10.16" x2="10.16" y2="-10.16"/>
-<pin name="GND" visible="both" length="short" direction="pwr" rot="R180" x="12.7" y="-7.62"/>
-<pin name="IN" visible="both" length="short" direction="in" x="-12.7" y="2.54"/>
-<pin name="INH" visible="both" length="short" direction="in" x="-12.7" y="0"/>
-<pin name="OUT" visible="both" length="short" direction="out" rot="R180" x="12.7" y="2.54"/>
-<pin name="SR" visible="both" length="short" direction="in" x="-12.7" y="-2.54"/>
-<pin name="IS" visible="both" length="short" direction="out" rot="R180" x="12.7" y="-2.54"/>
-<pin name="VS" visible="both" length="short" direction="pwr" rot="R180" x="12.7" y="7.62"/>
-</symbol>
-<symbol name="PLS_5">
-<wire layer="94" width="0.25" x1="-3.81" y1="5.08" x2="-3.81" y2="-7.62"/>
-<wire layer="94" width="0.25" x1="0" y1="5.08" x2="0" y2="-7.62"/>
-<wire layer="94" width="0.25" x1="-3.81" y1="5.08" x2="-1.27" y2="5.08"/>
-<wire layer="94" width="0.25" x1="-3.81" y1="-7.62" x2="-1.27" y2="-7.62"/>
-<wire layer="94" width="0.25" x1="-3.81" y1="2.54" x2="-1.27" y2="2.54"/>
-<wire layer="94" width="0.25" x1="-3.81" y1="0" x2="-1.27" y2="0"/>
-<wire layer="94" width="0.25" x1="-3.81" y1="-2.54" x2="-1.27" y2="-2.54"/>
-<wire layer="94" width="0.25" x1="-3.81" y1="-5.08" x2="-1.27" y2="-5.08"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="5.08" x2="15.24" y2="5.08"/>
-<wire layer="94" width="0.25" x1="15.24" y1="5.08" x2="15.24" y2="-7.62"/>
-<wire layer="94" width="0.25" x1="15.24" y1="-7.62" x2="13.97" y2="-7.62"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="-7.62" x2="13.97" y2="-7.62"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="2.54" x2="15.24" y2="2.54"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="0" x2="15.24" y2="0"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="-2.54" x2="15.24" y2="-2.54"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="-5.08" x2="15.24" y2="-5.08"/>
-<pin name="1" visible="both" length="short" direction="nc" x="-6.35" y="3.81"/>
-<pin name="2" visible="both" length="short" direction="nc" x="-6.35" y="1.27"/>
-<pin name="3" visible="both" length="short" direction="nc" x="-6.35" y="-1.27"/>
-<pin name="4" visible="both" length="short" direction="nc" x="-6.35" y="-3.81"/>
-<pin name="5" visible="both" length="short" direction="nc" x="-6.35" y="-6.35"/>
-</symbol>
-<symbol name="CAP_0805_1206">
-<wire layer="94" width="0.25" x1="-0.317" y1="-1.905" x2="-0.317" y2="1.905"/>
-<wire layer="94" width="0.25" x1="0.317" y1="-1.905" x2="0.317" y2="1.905"/>
-<wire layer="94" width="0.25" x1="0.318" y1="0" x2="1.27" y2="0"/>
-<wire layer="94" width="0.25" x1="-1.27" y1="0" x2="-0.317" y2="0"/>
-<pin name="1" visible="pad" length="short" direction="pas" x="-3.81" y="0"/>
-<pin name="2" visible="pad" length="short" direction="pas" rot="R180" x="3.81" y="0"/>
-</symbol>
 <symbol name="PILL_STM32G431">
 <wire layer="94" width="0.25" x1="-20.342" y1="25.392" x2="-14.95" y2="25.392"/>
 <wire layer="94" width="0.25" x1="-14.95" y1="25.392" x2="-14.95" y2="-25.424"/>
@@ -1174,6 +1143,37 @@ mail: dvi534538@mail/ru</description>
 <pin name="3.3v@2" visible="both" length="short" direction="nc" rot="R180" x="22.842" y="21.584"/>
 <pin name="G@2" visible="both" length="short" direction="nc" rot="R180" x="22.842" y="24.106"/>
 </symbol>
+<symbol name="PLS_5">
+<wire layer="94" width="0.25" x1="-3.81" y1="5.08" x2="-3.81" y2="-7.62"/>
+<wire layer="94" width="0.25" x1="0" y1="5.08" x2="0" y2="-7.62"/>
+<wire layer="94" width="0.25" x1="-3.81" y1="5.08" x2="-1.27" y2="5.08"/>
+<wire layer="94" width="0.25" x1="-3.81" y1="-7.62" x2="-1.27" y2="-7.62"/>
+<wire layer="94" width="0.25" x1="-3.81" y1="2.54" x2="-1.27" y2="2.54"/>
+<wire layer="94" width="0.25" x1="-3.81" y1="0" x2="-1.27" y2="0"/>
+<wire layer="94" width="0.25" x1="-3.81" y1="-2.54" x2="-1.27" y2="-2.54"/>
+<wire layer="94" width="0.25" x1="-3.81" y1="-5.08" x2="-1.27" y2="-5.08"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="5.08" x2="15.24" y2="5.08"/>
+<wire layer="94" width="0.25" x1="15.24" y1="5.08" x2="15.24" y2="-7.62"/>
+<wire layer="94" width="0.25" x1="15.24" y1="-7.62" x2="13.97" y2="-7.62"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="-7.62" x2="13.97" y2="-7.62"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="2.54" x2="15.24" y2="2.54"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="0" x2="15.24" y2="0"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="-2.54" x2="15.24" y2="-2.54"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="-5.08" x2="15.24" y2="-5.08"/>
+<pin name="1" visible="both" length="short" direction="nc" x="-6.35" y="3.81"/>
+<pin name="2" visible="both" length="short" direction="nc" x="-6.35" y="1.27"/>
+<pin name="3" visible="both" length="short" direction="nc" x="-6.35" y="-1.27"/>
+<pin name="4" visible="both" length="short" direction="nc" x="-6.35" y="-3.81"/>
+<pin name="5" visible="both" length="short" direction="nc" x="-6.35" y="-6.35"/>
+</symbol>
+<symbol name="CAP_0805_1206">
+<wire layer="94" width="0.25" x1="-0.317" y1="-1.905" x2="-0.317" y2="1.905"/>
+<wire layer="94" width="0.25" x1="0.317" y1="-1.905" x2="0.317" y2="1.905"/>
+<wire layer="94" width="0.25" x1="0.318" y1="0" x2="1.27" y2="0"/>
+<wire layer="94" width="0.25" x1="-1.27" y1="0" x2="-0.317" y2="0"/>
+<pin name="1" visible="pad" length="short" direction="pas" x="-3.81" y="0"/>
+<pin name="2" visible="pad" length="short" direction="pas" rot="R180" x="3.81" y="0"/>
+</symbol>
 <symbol name="USB_TYPE_A_HORIZONTAL">
 <wire layer="94" width="0.254" x1="-7.62" y1="10.16" x2="-7.62" y2="-7.62"/>
 <wire layer="94" width="0.254" x1="-7.62" y1="-7.62" x2="7.62" y2="-7.62"/>
@@ -1209,6 +1209,41 @@ mail: dvi534538@mail/ru</description>
 <attribute name="VALUE" value="Type B, Receptacle"/>
 <attribute name="PART_NUMBER_(DIGI-KEY)" value="A123109-ND"/>
 <attribute name="UNIQUE_NAME" value="TE_1734366-4"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BTN7933B" prefix="U">
+<gates>
+<gate name="PART_1" symbol="BTN7933B" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TO127P1500X440-8N">
+<connects>
+<connect gate="PART_1" pin="GND" pad="1"/>
+<connect gate="PART_1" pin="IN" pad="2"/>
+<connect gate="PART_1" pin="INH" pad="3"/>
+<connect gate="PART_1" pin="OUT" pad="4 8"/>
+<connect gate="PART_1" pin="SR" pad="5"/>
+<connect gate="PART_1" pin="IS" pad="6"/>
+<connect gate="PART_1" pin="VS" pad="7"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="VALUE" value="BTN7933B"/>
+<attribute name="MF" value="Infineon Technologies"/>
+<attribute name="DESCRIPTION" value="
+                        
+                            Half Bridge Driver DC Motors, General Purpose Power MOSFET PG-TO263-7-1
+                        
+                    "/>
+<attribute name="PACKAGE" value="TO-263-8 Infineon Technologies"/>
+<attribute name="PRICE" value="None"/>
+<attribute name="SNAPEDA_LINK" value="https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=snap"/>
+<attribute name="MP" value="IFX007T"/>
+<attribute name="AVAILABILITY" value="Not in stock"/>
+<attribute name="CHECK_PRICES" value="https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=eda"/>
 </technology>
 </technologies>
 </device>
@@ -1295,7 +1330,9 @@ mail: dvi534538@mail/ru</description>
 <connect gate="PART_1" pin="MINUS" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="VALUE" value="10 mf"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -1492,7 +1529,9 @@ mail: dvi534538@mail/ru</description>
 <connect gate="PART_1" pin="OSC2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="VALUE" value="12MHz"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -1533,7 +1572,7 @@ mail: dvi534538@mail/ru</description>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="VALUE" value="CNC"/>
+<attribute name="VALUE" value="DB25M"/>
 <attribute name="UNIQUE_NAME" value="TE_DB25M"/>
 </technology>
 </technologies>
@@ -1630,7 +1669,7 @@ mail: dvi534538@mail/ru</description>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="VALUE" value="J-1"/>
+<attribute name="VALUE" value="DC-005-5.5-2.1"/>
 </technology>
 </technologies>
 </device>
@@ -1666,81 +1705,6 @@ mail: dvi534538@mail/ru</description>
 <attribute name="AVAILABILITY" value="In Stock"/>
 <attribute name="CHECK_PRICES" value="https://www.snapeda.com/parts/MAX15070AAUT+T/Maxim+Integrated/view-part/?ref=eda"/>
 </technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="IFX007T" prefix="U">
-<gates>
-<gate name="PART_1" symbol="IFX007T" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="TO127P1500X440-8N">
-<connects>
-<connect gate="PART_1" pin="GND" pad="1"/>
-<connect gate="PART_1" pin="IN" pad="2"/>
-<connect gate="PART_1" pin="INH" pad="3"/>
-<connect gate="PART_1" pin="OUT" pad="4 8"/>
-<connect gate="PART_1" pin="SR" pad="5"/>
-<connect gate="PART_1" pin="IS" pad="6"/>
-<connect gate="PART_1" pin="VS" pad="7"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="VALUE" value="IFX007T"/>
-<attribute name="MF" value="Infineon Technologies"/>
-<attribute name="DESCRIPTION" value="
-                        
-                            Half Bridge Driver DC Motors, General Purpose Power MOSFET PG-TO263-7-1
-                        
-                    "/>
-<attribute name="PACKAGE" value="TO-263-8 Infineon Technologies"/>
-<attribute name="PRICE" value="None"/>
-<attribute name="SNAPEDA_LINK" value="https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=snap"/>
-<attribute name="MP" value="IFX007T"/>
-<attribute name="AVAILABILITY" value="Not in stock"/>
-<attribute name="CHECK_PRICES" value="https://www.snapeda.com/parts/IFX007T/Infineon/view-part/?ref=eda"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="PLS_5" prefix="BLDC">
-<gates>
-<gate name="PART_1" symbol="PLS_5" x="-5.715" y="1.27"/>
-</gates>
-<devices>
-<device name="" package="PLS_5">
-<connects>
-<connect gate="PART_1" pin="1" pad="1"/>
-<connect gate="PART_1" pin="2" pad="2"/>
-<connect gate="PART_1" pin="3" pad="3"/>
-<connect gate="PART_1" pin="4" pad="4"/>
-<connect gate="PART_1" pin="5" pad="5"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="VALUE" value="BLDC  SHIELD"/>
-<attribute name="WEB" value="http://vinratel.at.ua/"/>
-<attribute name="AUTHOR" value="Даньковский В.И."/>
-<attribute name="MAIL" value="dvi534538@mail/ru"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="CAP_0805_1206" prefix="C">
-<gates>
-<gate name="PART_1" symbol="CAP_0805_1206" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="СAP_0805_1206">
-<connects>
-<connect gate="PART_1" pin="1" pad="1@_1"/>
-<connect gate="PART_1" pin="2" pad="2@_1"/>
-</connects>
-<technologies>
-<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -1801,6 +1765,46 @@ mail: dvi534538@mail/ru</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="PLS_5" prefix="BLDC">
+<gates>
+<gate name="PART_1" symbol="PLS_5" x="-5.715" y="1.27"/>
+</gates>
+<devices>
+<device name="" package="PLS_5">
+<connects>
+<connect gate="PART_1" pin="1" pad="1"/>
+<connect gate="PART_1" pin="2" pad="2"/>
+<connect gate="PART_1" pin="3" pad="3"/>
+<connect gate="PART_1" pin="4" pad="4"/>
+<connect gate="PART_1" pin="5" pad="5"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="VALUE" value="BLDC  SHIELD"/>
+<attribute name="WEB" value="http://vinratel.at.ua/"/>
+<attribute name="AUTHOR" value="Даньковский В.И."/>
+<attribute name="MAIL" value="dvi534538@mail/ru"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_0805_1206" prefix="C">
+<gates>
+<gate name="PART_1" symbol="CAP_0805_1206" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="СAP_0805_1206">
+<connects>
+<connect gate="PART_1" pin="1" pad="1@_1"/>
+<connect gate="PART_1" pin="2" pad="2@_1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 <deviceset name="USB_TYPE_A_HORIZONTAL" prefix="USB_OUT">
 <gates>
 <gate name="PART_1" symbol="USB_TYPE_A_HORIZONTAL" x="0" y="-1.27"/>
@@ -1857,8 +1861,8 @@ mail: dvi534538@mail/ru</description>
 <part name="BLDC" library="common" deviceset="PLS_5" device="" value="BLDC  SHIELD"/>
 <part name="C1" library="common" deviceset="CAP_P_5MM" device="" value="1000 mf"/>
 <part name="C2" library="common" deviceset="CAP_0805_1206" device=""/>
-<part name="C3" library="common" deviceset="CAP_P_3MM" device=""/>
-<part name="C4" library="common" deviceset="CAP_P_3MM" device=""/>
+<part name="C3" library="common" deviceset="CAP_P_3MM" device="" value="10 mf"/>
+<part name="C4" library="common" deviceset="CAP_P_3MM" device="" value="10 mf"/>
 <part name="C5" library="common" deviceset="CAP_0805_1206" device=""/>
 <part name="C6" library="common" deviceset="CAP_SMD_P_5MM" device=""/>
 <part name="C7" library="common" deviceset="CAP_SMD_P_5MM" device=""/>
@@ -1866,9 +1870,9 @@ mail: dvi534538@mail/ru</description>
 <part name="C9" library="common" deviceset="CAP_0805_1206" device=""/>
 <part name="C10" library="common" deviceset="CAP_P_5MM" device=""/>
 <part name="C11" library="common" deviceset="CAP_P_5MM" device=""/>
-<part name="CNC" library="common" deviceset="DB25M" device="" value="CNC"/>
+<part name="CNC" library="common" deviceset="DB25M" device="" value="DB25M"/>
 <part name="DC" library="common" deviceset="2_SCREW_TERM._BLK." device="" value="DC"/>
-<part name="DC_IN" library="common" deviceset="J-1" device="" value="J-1"/>
+<part name="DC_IN" library="common" deviceset="J-1" device="" value="DC-005-5.5-2.1"/>
 <part name="ENC_CP" library="common" deviceset="PLS_3" device="" value="ENC CP"/>
 <part name="ENC_SW" library="common" deviceset="PLS_3" device="" value="ENC SW"/>
 <part name="FPC" library="common" deviceset="FPC_24_1MM" device="" value="FPC 24 1mm"/>
@@ -1901,21 +1905,21 @@ mail: dvi534538@mail/ru</description>
 <part name="R2" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R3" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R4" library="common" deviceset="R_0805_1206" device=""/>
-<part name="R5" library="common" deviceset="R_0805_1206" device=""/>
+<part name="R5" library="common" deviceset="R_0805_1206" device="" value="5.1 k"/>
 <part name="R6" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R7" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R8" library="common" deviceset="R_0805_1206" device=""/>
-<part name="R9" library="common" deviceset="R_0805_1206" device=""/>
-<part name="R10" library="common" deviceset="R_0805_1206" device=""/>
+<part name="R9" library="common" deviceset="R_0805_1206" device="" value="5.1 k"/>
+<part name="R10" library="common" deviceset="R_0805_1206" device="" value="1.5 k"/>
 <part name="R11" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R12" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R13" library="common" deviceset="R_0805_1206" device=""/>
 <part name="R14" library="common" deviceset="R_0805_1206" device=""/>
 <part name="STEPPER_SHIELD" library="common" deviceset="PLS_16" device="" value="STEPPER SHIELD"/>
 <part name="U1" library="common" deviceset="MAX15070AAUT+T" device="" value="MAX15070"/>
-<part name="U3" library="common" deviceset="IFX007T" device="" value="IFX007T"/>
+<part name="U3" library="common" deviceset="BTN7933B" device="" value="BTN7933B"/>
 <part name="U4" library="common" deviceset="MAX15070AAUT+T" device="" value="MAX15070"/>
-<part name="U5" library="common" deviceset="IFX007T" device="" value="IFX007T"/>
+<part name="U5" library="common" deviceset="BTN7933B" device="" value="BTN7933B"/>
 <part name="U7" library="common" deviceset="PILL_STM32G431" device="" value="Pill STM32G431"/>
 <part name="U8" library="common" deviceset="BLUE_PILL_STM32F103" device="" value="Blue Pill STM32F103"/>
 <part name="USB_IN" library="common" deviceset="USB-1_TYPE_B" device="" value="Type B, Receptacle"/>
@@ -1923,7 +1927,7 @@ mail: dvi534538@mail/ru</description>
 <part name="USB_PULLUP" library="common" deviceset="PLS_2" device="" value="USB PULLUP"/>
 <part name="XP2" library="common" deviceset="PLS_2" device="" value="BKL SEL"/>
 <part name="XP3" library="common" deviceset="PLS_2" device="" value="BKL  SEL"/>
-<part name="Z" library="common" deviceset="Q_1" device=""/>
+<part name="Z" library="common" deviceset="Q_1" device="" value="12MHz"/>
 </parts>
 <modules/>
 <sheets>
@@ -1961,8 +1965,8 @@ DIR
 ENA
 GND</text>
 <text x="-104.934" y="-317.471" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">USB_+5V
-USB_+5V
-USB_+5V
+USB_GND
+USB_GND
 USB_DM
 USB_DP
 USB_GND
@@ -1997,7 +2001,7 @@ OUT</text>
 <text x="-56.039" y="-374.679" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">PB5
 X_ENC_B
 PВ8</text>
-<text x="-1.746" y="-344.199" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">X2_EN
+<text x="-1.746" y="-344.199" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">X_EN
 X_MO_R 
 X_MO_L 
 X_MO_ENA
@@ -2021,8 +2025,8 @@ GND
 -
 -
 -
-X2_DIR
-X2_STEP
+X_DIR
+X_STEP
 Y_DIR
 Y_STEP
 Y_EN
@@ -2077,32 +2081,32 @@ PWM_LASER
 -
 -
 -</text>
-<text x="106.204" y="-356.899" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">+18V
-+5V
-X_STEP
-X_DIR
-X_ENABLE
-Y_STEP
-Y_DIR
-Y_ENABLE
-Z_STEP
-Z_DIR
-Z_ENABLE
-E_STOP
-PROBE
-PWM_LED
-PWM_LASER
-GND</text>
 <text x="-58.579" y="-285.779" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">PA8
 USB_DP</text>
 <text x="-56.039" y="-363.249" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">X_ENC_A
 X_ENC_B
 GND</text>
+<text x="106.204" y="-356.899" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="top-left" distance="77">+18V
++5V
+PROBE
+E_STOP
+Z_ENABLE
+Z_DIR
+Z_STEP
+Y_ENABLE
+Y_DIR
+Y_STEP
+X_ENABLE
+X_DIR
+X_STEP
+PWM_LED
+PWM_LASER
+GND</text>
 <text x="-9.316" y="-186.69" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BLDC  SHIELD</text>
 <text x="24.759" y="-194.743" size="1.48" layer="97" font="vector" ratio="10" rot="R90" align="bottom-left" distance="76">1000 mf</text>
 <text x="-61.995" y="-206.375" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-62.478" y="-211.449" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-62.478" y="-216.529" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-65.947" y="-211.449" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">10 mf</text>
+<text x="-65.947" y="-216.529" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">10 mf</text>
 <text x="-61.995" y="-221.615" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-142.488" y="-343.529" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-142.488" y="-348.609" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
@@ -2111,9 +2115,9 @@ GND</text>
 <text x="-142.488" y="-338.449" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-142.488" y="-353.689" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="112.554" y="-278.656" size="1.233" layer="97" font="vector" ratio="10" rot="R180" align="top-left" distance="84">GND</text>
-<text x="105.876" y="-274.955" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">CNC</text>
+<text x="104.384" y="-274.955" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">DB25M</text>
 <text x="30.458" y="-224.79" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">DC</text>
-<text x="-150.029" y="-378.46" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">J-1</text>
+<text x="-157.361" y="-378.46" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">DC-005-5.5-2.1</text>
 <text x="-48.084" y="-363.22" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">ENC CP</text>
 <text x="-48.267" y="-374.65" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">ENC SW</text>
 <text x="-96.405" y="-346.71" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">FPC 24 1mm</text>
@@ -2146,21 +2150,21 @@ GND</text>
 <text x="54.845" y="-204.47" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-27.705" y="-219.71" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="125.73" y="-225.825" size="1.48" layer="97" font="vector" ratio="10" rot="R90" align="bottom-left" distance="76"></text>
-<text x="-27.705" y="-224.79" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-30.554" y="-224.79" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">5.1 k</text>
 <text x="-27.705" y="-236.22" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="54.845" y="-238.76" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-27.705" y="-247.65" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-27.705" y="-252.73" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
-<text x="-28.975" y="-285.75" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-30.554" y="-252.73" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">5.1 k</text>
+<text x="-31.824" y="-285.75" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">1.5 k</text>
 <text x="63.735" y="-302.26" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="63.735" y="-307.34" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-39.135" y="-323.85" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="-39.135" y="-330.2" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
 <text x="95.905" y="-337.82" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">STEPPER SHIELD</text>
 <text x="83.351" y="-198.12" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">MAX15070</text>
-<text x="-0.628" y="-213.36" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">IFX007T</text>
+<text x="-1.884" y="-213.36" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BTN7933B</text>
 <text x="83.351" y="-232.41" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">MAX15070</text>
-<text x="-0.628" y="-241.3" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">IFX007T</text>
+<text x="-1.884" y="-241.3" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BTN7933B</text>
 <text x="4.163" y="-285.717" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">Pill STM32G431</text>
 <text x="1.241" y="-344.137" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">Blue Pill STM32F103</text>
 <text x="-74.819" y="-243.84" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">Type B, Receptacle</text>
@@ -2168,7 +2172,7 @@ GND</text>
 <text x="-57.235" y="-285.75" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">USB PULLUP</text>
 <text x="135.539" y="-204.47" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BKL SEL</text>
 <text x="134.798" y="-214.63" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">BKL  SEL</text>
-<text x="-81.045" y="-206.502" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76"></text>
+<text x="-84.409" y="-206.502" size="1.48" layer="97" font="vector" ratio="10" rot="R0" align="bottom-left" distance="76">12MHz</text>
 </plain>
 <moduleinsts/>
 <instances>
@@ -2430,6 +2434,14 @@ GND</text>
 <wire layer="91" width="0.1" x1="-82.55" y1="-334.01" x2="-78.74" y2="-334.01"/>
 <pinref part="FPC" gate="PART_1" pin="18"/>
 <junction x="-78.74" y="-334.01"/>
+<wire layer="91" width="0.1" x1="-78.74" y1="-331.47" x2="-78.74" y2="-323.85"/>
+<wire layer="91" width="0.1" x1="-78.74" y1="-323.85" x2="-82.55" y2="-323.85"/>
+<pinref part="FPC" gate="PART_1" pin="22"/>
+<junction x="-78.74" y="-331.47"/>
+<wire layer="91" width="0.1" x1="-78.74" y1="-323.85" x2="-78.74" y2="-321.31"/>
+<wire layer="91" width="0.1" x1="-78.74" y1="-321.31" x2="-82.55" y2="-321.31"/>
+<pinref part="FPC" gate="PART_1" pin="23"/>
+<junction x="-78.74" y="-323.85"/>
 <junction x="-78.74" y="-349.25"/>
 <wire layer="91" width="0.1" x1="-78.74" y1="-369.57" x2="-78.74" y2="-392.43"/>
 <pinref part="NetPort19" gate="PART_1" pin="GND"/>
@@ -2568,6 +2580,18 @@ GND</text>
 <wire layer="91" width="0.1" x1="-27.94" y1="-378.46" x2="-10.16" y2="-378.46"/>
 <pinref part="ENC_CP" gate="PART_1" pin="3"/>
 <pinref part="U8" gate="PART_1" pin="B6"/>
+<wire layer="91" width="0.1" x1="-33.02" y1="-325.12" x2="-27.94" y2="-325.12"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-346.71" x2="-27.94" y2="-364.49"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-325.12" x2="-27.94" y2="-346.71"/>
+<pinref part="R13" gate="PART_1" pin="2"/>
+<junction x="-27.94" y="-364.49"/>
+<wire layer="91" width="0.1" x1="-10.16" y1="-297.162" x2="-27.94" y2="-297.162"/>
+<wire layer="91" width="0.1" x1="-27.94" y1="-297.162" x2="-27.94" y2="-325.12"/>
+<pinref part="U7" gate="PART_1" pin="A8"/>
+<junction x="-27.94" y="-325.12"/>
+<wire layer="91" width="0.1" x1="-82.55" y1="-346.71" x2="-27.94" y2="-346.71"/>
+<pinref part="FPC" gate="PART_1" pin="13"/>
+<junction x="-27.94" y="-346.71"/>
 </segment>
 </net>
 <net name="Сеть_7" class="0">
@@ -2611,20 +2635,12 @@ GND</text>
 <pinref part="STEPPER_SHIELD" gate="PART_1" pin="2"/>
 </segment>
 <segment>
-<wire layer="91" width="0.1" x1="-82.55" y1="-318.77" x2="-77.47" y2="-318.77"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-321.31" x2="-77.47" y2="-323.85"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-318.77" x2="-77.47" y2="-321.31"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-323.85" x2="-82.55" y2="-323.85"/>
-<pinref part="FPC" gate="PART_1" pin="24"/>
-<pinref part="FPC" gate="PART_1" pin="22"/>
-<wire layer="91" width="0.1" x1="-82.55" y1="-321.31" x2="-77.47" y2="-321.31"/>
-<pinref part="FPC" gate="PART_1" pin="23"/>
-<junction x="-77.47" y="-321.31"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-323.85" x2="-77.47" y2="-331.47"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-331.47" x2="-77.47" y2="-344.17"/>
-<wire layer="91" width="0.1" x1="-77.47" y1="-344.17" x2="-82.55" y2="-344.17"/>
+<wire layer="91" width="0.1" x1="-82.55" y1="-344.17" x2="-77.47" y2="-344.17"/>
+<wire layer="91" width="0.1" x1="-77.47" y1="-331.47" x2="-77.47" y2="-318.77"/>
+<wire layer="91" width="0.1" x1="-77.47" y1="-344.17" x2="-77.47" y2="-331.47"/>
+<wire layer="91" width="0.1" x1="-77.47" y1="-318.77" x2="-82.55" y2="-318.77"/>
 <pinref part="FPC" gate="PART_1" pin="14"/>
-<junction x="-77.47" y="-323.85"/>
+<pinref part="FPC" gate="PART_1" pin="24"/>
 <wire layer="91" width="0.1" x1="-77.47" y1="-331.47" x2="-59.69" y2="-331.47"/>
 <wire layer="91" width="0.1" x1="-59.69" y1="-331.47" x2="-59.69" y2="-327.66"/>
 <pinref part="NetPort12" gate="PART_1" pin="+5V"/>
@@ -2695,21 +2711,6 @@ GND</text>
 <pinref part="R10" gate="PART_1" pin="1"/>
 </segment>
 </net>
-<net name="Сеть_10" class="0">
-<segment>
-<wire layer="91" width="0.1" x1="-33.02" y1="-325.12" x2="-27.94" y2="-325.12"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-346.71" x2="-27.94" y2="-364.49"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-325.12" x2="-27.94" y2="-346.71"/>
-<pinref part="R13" gate="PART_1" pin="2"/>
-<wire layer="91" width="0.1" x1="-82.55" y1="-346.71" x2="-27.94" y2="-346.71"/>
-<pinref part="FPC" gate="PART_1" pin="13"/>
-<junction x="-27.94" y="-346.71"/>
-<wire layer="91" width="0.1" x1="-10.16" y1="-297.162" x2="-27.94" y2="-297.162"/>
-<wire layer="91" width="0.1" x1="-27.94" y1="-297.162" x2="-27.94" y2="-325.12"/>
-<pinref part="U7" gate="PART_1" pin="A8"/>
-<junction x="-27.94" y="-325.12"/>
-</segment>
-</net>
 <net name="Сеть_11" class="0">
 <segment>
 <wire layer="91" width="0.1" x1="-137.16" y1="-259.08" x2="-119.38" y2="-259.08"/>
@@ -2724,9 +2725,9 @@ GND</text>
 <wire layer="91" width="0.1" x1="85.09" y1="-355.582" x2="35.564" y2="-355.582"/>
 <pinref part="CNC" gate="PART_1" pin="P3"/>
 <pinref part="U8" gate="PART_1" pin="B11"/>
-<wire layer="91" width="0.1" x1="85.09" y1="-355.582" x2="85.09" y2="-365.76"/>
-<wire layer="91" width="0.1" x1="85.09" y1="-365.76" x2="99.06" y2="-365.76"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="4"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-386.08" x2="85.09" y2="-386.08"/>
+<wire layer="91" width="0.1" x1="85.09" y1="-386.08" x2="85.09" y2="-355.582"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="12"/>
 <junction x="85.09" y="-355.582"/>
 </segment>
 </net>
@@ -2802,9 +2803,9 @@ GND</text>
 <wire layer="91" width="0.1" x1="83.82" y1="-363.202" x2="35.564" y2="-363.202"/>
 <pinref part="CNC" gate="PART_1" pin="P5"/>
 <pinref part="U8" gate="PART_1" pin="B0"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-370.84" x2="83.82" y2="-370.84"/>
-<wire layer="91" width="0.1" x1="83.82" y1="-370.84" x2="83.82" y2="-363.202"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="6"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-381" x2="83.82" y2="-381"/>
+<wire layer="91" width="0.1" x1="83.82" y1="-381" x2="83.82" y2="-363.202"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="10"/>
 <junction x="83.82" y="-363.202"/>
 </segment>
 </net>
@@ -2815,9 +2816,9 @@ GND</text>
 <wire layer="91" width="0.1" x1="82.55" y1="-360.68" x2="35.564" y2="-360.68"/>
 <pinref part="CNC" gate="PART_1" pin="P6"/>
 <pinref part="U8" gate="PART_1" pin="B1"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-373.38" x2="82.55" y2="-373.38"/>
-<wire layer="91" width="0.1" x1="82.55" y1="-373.38" x2="82.55" y2="-360.68"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="7"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-378.46" x2="82.55" y2="-378.46"/>
+<wire layer="91" width="0.1" x1="82.55" y1="-378.46" x2="82.55" y2="-360.68"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="9"/>
 <junction x="82.55" y="-360.68"/>
 </segment>
 </net>
@@ -2837,16 +2838,16 @@ GND</text>
 <net name="Сеть_22" class="0">
 <segment>
 <wire layer="91" width="0.1" x1="100.33" y1="-321.31" x2="80.01" y2="-321.31"/>
-<wire layer="91" width="0.1" x1="80.01" y1="-378.46" x2="80.01" y2="-398.78"/>
-<wire layer="91" width="0.1" x1="80.01" y1="-321.31" x2="80.01" y2="-378.46"/>
+<wire layer="91" width="0.1" x1="80.01" y1="-373.38" x2="80.01" y2="-398.78"/>
+<wire layer="91" width="0.1" x1="80.01" y1="-321.31" x2="80.01" y2="-373.38"/>
 <wire layer="91" width="0.1" x1="80.01" y1="-398.78" x2="-16.51" y2="-398.78"/>
 <wire layer="91" width="0.1" x1="-16.51" y1="-398.78" x2="-16.51" y2="-358.14"/>
 <wire layer="91" width="0.1" x1="-16.51" y1="-358.14" x2="-10.16" y2="-358.14"/>
 <pinref part="CNC" gate="PART_1" pin="P8"/>
 <pinref part="U8" gate="PART_1" pin="A9"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-378.46" x2="80.01" y2="-378.46"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="9"/>
-<junction x="80.01" y="-378.46"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-373.38" x2="80.01" y2="-373.38"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="7"/>
+<junction x="80.01" y="-373.38"/>
 </segment>
 </net>
 <net name="Сеть_23" class="0">
@@ -2882,16 +2883,16 @@ GND</text>
 <net name="Сеть_25" class="0">
 <segment>
 <wire layer="91" width="0.1" x1="100.33" y1="-318.77" x2="78.74" y2="-318.77"/>
-<wire layer="91" width="0.1" x1="78.74" y1="-381" x2="78.74" y2="-397.51"/>
-<wire layer="91" width="0.1" x1="78.74" y1="-318.77" x2="78.74" y2="-381"/>
+<wire layer="91" width="0.1" x1="78.74" y1="-370.84" x2="78.74" y2="-397.51"/>
+<wire layer="91" width="0.1" x1="78.74" y1="-318.77" x2="78.74" y2="-370.84"/>
 <wire layer="91" width="0.1" x1="78.74" y1="-397.51" x2="-15.24" y2="-397.51"/>
 <wire layer="91" width="0.1" x1="-15.24" y1="-397.51" x2="-15.24" y2="-360.68"/>
 <wire layer="91" width="0.1" x1="-15.24" y1="-360.68" x2="-10.16" y2="-360.68"/>
 <pinref part="CNC" gate="PART_1" pin="P9"/>
 <pinref part="U8" gate="PART_1" pin="A10"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-381" x2="78.74" y2="-381"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="10"/>
-<junction x="78.74" y="-381"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-370.84" x2="78.74" y2="-370.84"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="6"/>
+<junction x="78.74" y="-370.84"/>
 </segment>
 </net>
 <net name="Сеть_26" class="0">
@@ -2901,9 +2902,9 @@ GND</text>
 <wire layer="91" width="0.1" x1="77.47" y1="-368.282" x2="35.564" y2="-368.282"/>
 <pinref part="CNC" gate="PART_1" pin="P17"/>
 <pinref part="U8" gate="PART_1" pin="A6"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-383.54" x2="77.47" y2="-383.54"/>
-<wire layer="91" width="0.1" x1="77.47" y1="-383.54" x2="77.47" y2="-368.282"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="11"/>
+<wire layer="91" width="0.1" x1="97.79" y1="-368.282" x2="99.06" y2="-368.3"/>
+<wire layer="91" width="0.1" x1="97.79" y1="-368.282" x2="77.47" y2="-368.282"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="5"/>
 <junction x="77.47" y="-368.282"/>
 </segment>
 </net>
@@ -2933,9 +2934,9 @@ GND</text>
 <wire layer="91" width="0.1" x1="-11.43" y1="-345.44" x2="-10.16" y2="-345.44"/>
 <pinref part="CNC" gate="PART_1" pin="P4"/>
 <pinref part="U8" gate="PART_1" pin="B12"/>
-<wire layer="91" width="0.1" x1="87.63" y1="-341.63" x2="87.63" y2="-368.3"/>
-<wire layer="91" width="0.1" x1="87.63" y1="-368.3" x2="99.06" y2="-368.3"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="5"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-383.54" x2="87.63" y2="-383.54"/>
+<wire layer="91" width="0.1" x1="87.63" y1="-383.54" x2="87.63" y2="-341.63"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="11"/>
 <junction x="87.63" y="-341.63"/>
 </segment>
 </net>
@@ -3016,9 +3017,9 @@ GND</text>
 <wire layer="91" width="0.1" x1="86.36" y1="-358.14" x2="35.564" y2="-358.14"/>
 <pinref part="CNC" gate="PART_1" pin="P2"/>
 <pinref part="U8" gate="PART_1" pin="B10"/>
-<wire layer="91" width="0.1" x1="86.36" y1="-358.14" x2="86.36" y2="-363.22"/>
-<wire layer="91" width="0.1" x1="86.36" y1="-363.22" x2="99.06" y2="-363.22"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="3"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-388.62" x2="86.36" y2="-388.62"/>
+<wire layer="91" width="0.1" x1="86.36" y1="-388.62" x2="86.36" y2="-358.14"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="13"/>
 <junction x="86.36" y="-358.14"/>
 </segment>
 </net>
@@ -3236,16 +3237,18 @@ GND</text>
 <wire layer="91" width="0.1" x1="100.33" y1="-308.61" x2="72.39" y2="-308.61"/>
 <pinref part="CNC" gate="PART_1" pin="P13"/>
 <pinref part="R12" gate="PART_1" pin="2"/>
-<wire layer="91" width="0.1" x1="72.39" y1="-386.08" x2="72.39" y2="-400.05"/>
-<wire layer="91" width="0.1" x1="72.39" y1="-308.61" x2="72.39" y2="-386.08"/>
+<wire layer="91" width="0.1" x1="72.39" y1="-367.03" x2="72.39" y2="-400.05"/>
+<wire layer="91" width="0.1" x1="72.39" y1="-308.61" x2="72.39" y2="-367.03"/>
 <wire layer="91" width="0.1" x1="72.39" y1="-400.05" x2="-13.97" y2="-400.05"/>
 <wire layer="91" width="0.1" x1="-13.97" y1="-400.05" x2="-13.97" y2="-386.08"/>
 <wire layer="91" width="0.1" x1="-13.97" y1="-386.08" x2="-10.16" y2="-386.08"/>
 <pinref part="U8" gate="PART_1" pin="B9"/>
 <junction x="72.39" y="-308.61"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-386.08" x2="72.39" y2="-386.08"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="12"/>
-<junction x="72.39" y="-386.08"/>
+<wire layer="91" width="0.1" x1="99.06" y1="-365.76" x2="82.55" y2="-365.76"/>
+<wire layer="91" width="0.1" x1="82.55" y1="-365.76" x2="82.55" y2="-367.03"/>
+<wire layer="91" width="0.1" x1="82.55" y1="-367.03" x2="72.39" y2="-367.03"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="4"/>
+<junction x="72.39" y="-367.03"/>
 </segment>
 </net>
 <net name="Сеть_32" class="0">
@@ -3257,13 +3260,15 @@ GND</text>
 <wire layer="91" width="0.1" x1="-10.16" y1="-381" x2="-12.7" y2="-381"/>
 <wire layer="91" width="0.1" x1="-12.7" y1="-381" x2="-12.7" y2="-396.24"/>
 <wire layer="91" width="0.1" x1="-12.7" y1="-396.24" x2="73.66" y2="-396.24"/>
-<wire layer="91" width="0.1" x1="73.66" y1="-396.24" x2="73.66" y2="-388.62"/>
-<wire layer="91" width="0.1" x1="73.66" y1="-388.62" x2="73.66" y2="-303.53"/>
+<wire layer="91" width="0.1" x1="73.66" y1="-396.24" x2="73.66" y2="-361.95"/>
+<wire layer="91" width="0.1" x1="73.66" y1="-361.95" x2="73.66" y2="-303.53"/>
 <pinref part="U8" gate="PART_1" pin="B7"/>
 <junction x="73.66" y="-303.53"/>
-<wire layer="91" width="0.1" x1="99.06" y1="-388.62" x2="73.66" y2="-388.62"/>
-<pinref part="STEPPER_SHIELD" gate="PART_1" pin="13"/>
-<junction x="73.66" y="-388.62"/>
+<wire layer="91" width="0.1" x1="97.79" y1="-363.22" x2="99.06" y2="-363.22"/>
+<wire layer="91" width="0.1" x1="97.79" y1="-363.22" x2="97.79" y2="-361.95"/>
+<wire layer="91" width="0.1" x1="97.79" y1="-361.95" x2="73.66" y2="-361.95"/>
+<pinref part="STEPPER_SHIELD" gate="PART_1" pin="3"/>
+<junction x="73.66" y="-361.95"/>
 </segment>
 </net>
 <net name="Сеть_33" class="0">
