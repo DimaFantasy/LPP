@@ -1327,7 +1327,6 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="1" x1="36.9" y1="73" x2="36.9" y2="70"/>
 <wire layer="16" width="1" x1="36.9" y1="70" x2="37" y2="70"/>
 <wire layer="16" width="1" x1="39.1" y1="63.35" x2="37" y2="63.35"/>
-<wire layer="16" width="1" x1="37" y1="63.35" x2="37" y2="63.3"/>
 <wire layer="16" width="1" x1="7.884967" y1="41.108067" x2="7.708067" y2="41.108067"/>
 <wire layer="16" width="1" x1="7.708067" y1="41.108067" x2="6.1" y2="39.5"/>
 <wire layer="16" width="1" x1="6.1" y1="39.5" x2="6.1" y2="34.3"/>
@@ -1488,7 +1487,7 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="1" x1="6.7" y1="8.650133" x2="10.571267" y2="8.650133"/>
 <wire layer="1" width="1" x1="16.9" y1="104.1" x2="13.4" y2="104.1"/>
 <wire layer="1" width="1" x1="13.4" y1="104.1" x2="12.9" y2="104.6"/>
-<polygon width="0.635" layer="1" spacing="1.27" isolate="1" rank="2">
+<polygon width="0.635" layer="1" spacing="1.27" isolate="1" rank="3">
 <vertex x="0.3175" y="74.6825"/>
 <vertex x="0.3175" y="0.3175"/>
 <vertex x="24.6825" y="0.3175"/>
@@ -1504,7 +1503,7 @@ mail: dvi534538@mail/ru</description>
 <vertex x="11.3175" y="114.6825"/>
 <vertex x="11.3175" y="74.6825"/>
 </polygon>
-<polygon width="0.635" layer="16" spacing="1.27" isolate="1" rank="2">
+<polygon width="0.635" layer="16" spacing="1.27" isolate="1" rank="3">
 <vertex x="0.3175" y="114.6825"/>
 <vertex x="0.3175" y="0.3175"/>
 <vertex x="24.6825" y="0.3175"/>
@@ -1575,8 +1574,8 @@ mail: dvi534538@mail/ru</description>
 <via x="21.2" y="75.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="U7" pad="5"/>
 <contactref element="U8" pad="14"/>
-<via x="12.6" y="77.1" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
-<via x="4.9" y="76.7" extent="1-16" drill="0.8" diameter="1" shape="round" alwaysstop="no"/>
+<via x="12.6" y="77.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="4.9" y="76.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="3.6" y1="60.4" x2="6.4" y2="57.6"/>
 <wire layer="16" width="0.33" x1="6.4" y1="57.6" x2="8.8" y2="57.6"/>
 <wire layer="16" width="0.33" x1="8.8" y1="57.6" x2="9.3" y2="57.1"/>
@@ -1680,7 +1679,6 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="10.584967" y1="43.648033" x2="10.584967" y2="43.4"/>
 <wire layer="16" width="0.8" x1="10.584967" y1="43.4" x2="11.068633" y2="43.4"/>
 <wire layer="16" width="0.8" x1="11.068633" y1="43.4" x2="12.268633" y2="42.2"/>
-<wire layer="16" width="0.8" x1="12.268633" y1="42.2" x2="12.3" y2="42.2"/>
 <wire layer="16" width="0.8" x1="7.884967" y1="43.648033" x2="10.584967" y2="43.648033"/>
 <wire layer="16" width="0.8" x1="10.584967" y1="43.648033" x2="10.584967" y2="43.648033"/>
 <wire layer="16" width="0.33" x1="3.8" y1="38.2" x2="3.8" y2="40.775"/>
@@ -1865,7 +1863,7 @@ mail: dvi534538@mail/ru</description>
 <via x="32.5" y="103.8" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="30.5" y="107.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <via x="38.7" y="67.3" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="39.2" y="20.4" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="39.1" y="20.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="STEPPER_SHIELD" pad="1"/>
 <contactref element="U3" pad="7"/>
 <contactref element="U5" pad="7"/>
@@ -1887,19 +1885,15 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="1" x1="33.9" y1="107.1" x2="30.5" y2="107.1"/>
 <wire layer="16" width="1" x1="30.4" y1="12.4" x2="30.4" y2="15.3"/>
 <wire layer="16" width="1" x1="30.4" y1="15.3" x2="35.6" y2="20.5"/>
-<wire layer="16" width="1" x1="35.6" y1="20.5" x2="38.105004" y2="20.5"/>
-<wire layer="16" width="1" x1="38.105004" y1="20.5" x2="39.1" y2="20.5"/>
+<wire layer="16" width="1" x1="35.6" y1="20.5" x2="39.1" y2="20.5"/>
 <wire layer="16" width="1" x1="39.1" y1="20.5" x2="39.1" y2="25.25"/>
 <wire layer="16" width="1" x1="38.7" y1="67.3" x2="36.7" y2="67.3"/>
 <wire layer="16" width="1" x1="36.7" y1="67.3" x2="33.5" y2="70.5"/>
 <wire layer="16" width="1" x1="33.5" y1="70.5" x2="30.5" y2="70.5"/>
 <wire layer="16" width="1" x1="30.5" y1="70.5" x2="29.1" y2="71.9"/>
 <wire layer="16" width="1" x1="29.1" y1="71.9" x2="29.1" y2="78.3"/>
-<wire layer="16" width="1" x1="39.2" y1="20.4" x2="39.1" y2="20.5"/>
+<wire layer="16" width="1" x1="39.1" y1="20.5" x2="39.1" y2="20.5"/>
 <wire layer="16" width="1" x1="35.300027" y1="109.800294" x2="35.300033" y2="111.800268"/>
-<wire layer="16" width="0.329997" x1="39.2" y1="20.4" x2="39.2" y2="18.925108"/>
-<wire layer="16" width="0.329997" x1="39.2" y1="18.925108" x2="38.105004" y2="18.925108"/>
-<wire layer="16" width="0.329997" x1="38.105004" y1="18.925108" x2="38.105004" y2="20.5"/>
 <wire layer="1" width="1" x1="32.5" y1="103.8" x2="32.5" y2="91.9"/>
 <wire layer="1" width="1" x1="32.5" y1="91.9" x2="31.5" y2="90.9"/>
 <wire layer="1" width="1" x1="29.1" y1="81.2" x2="29.1" y2="88.5"/>
@@ -1908,8 +1902,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="1" x1="30.55" y1="105.75" x2="30.55" y2="107.05"/>
 <wire layer="1" width="1" x1="30.55" y1="107.05" x2="30.5" y2="107.1"/>
 <wire layer="1" width="1" x1="29.1" y1="81.2" x2="29.1" y2="78.3"/>
-<wire layer="1" width="1" x1="39.2" y1="20.4" x2="39.2" y2="21.2"/>
-<wire layer="1" width="1" x1="39.2" y1="21.2" x2="43.4" y2="25.4"/>
+<wire layer="1" width="1" x1="39.1" y1="20.5" x2="39.1" y2="21.1"/>
+<wire layer="1" width="1" x1="39.1" y1="21.1" x2="43.4" y2="25.4"/>
 <wire layer="1" width="1" x1="43.4" y1="25.4" x2="45.1" y2="25.4"/>
 <wire layer="1" width="1" x1="45.1" y1="25.4" x2="47.8" y2="28.1"/>
 <wire layer="1" width="1" x1="47.8" y1="28.1" x2="47.8" y2="60.4"/>
@@ -1985,7 +1979,7 @@ mail: dvi534538@mail/ru</description>
 <contactref element="STEPPER_SHIELD" pad="9"/>
 <contactref element="U8" pad="34"/>
 <via x="27.5" y="72.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="36.9" y="45.5" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
+<via x="36.9" y="45.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="27.5" y1="72.9" x2="27" y2="72.9"/>
 <wire layer="16" width="0.33" x1="27" y1="72.9" x2="25.688067" y2="71.588067"/>
 <wire layer="16" width="0.33" x1="25.688067" y1="71.588067" x2="25.584967" y2="71.588067"/>
@@ -2025,7 +2019,7 @@ mail: dvi534538@mail/ru</description>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_22">
 <contactref element="CNC" pad="8"/>
-<via x="36.9" y="40.8" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
+<via x="36.9" y="40.5" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="STEPPER_SHIELD" pad="7"/>
 <contactref element="U8" pad="6"/>
 <via x="12.5" y="74.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
@@ -2035,8 +2029,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.329997" x1="39.1" y1="40.49" x2="40.59" y2="40.49"/>
 <wire layer="16" width="0.329997" x1="40.59" y1="40.49" x2="41.631" y2="41.531"/>
 <wire layer="16" width="0.329997" x1="41.631" y1="41.531" x2="42.878" y2="41.531"/>
-<wire layer="16" width="0.33" x1="39.1" y1="40.49" x2="37.21" y2="40.49"/>
-<wire layer="16" width="0.33" x1="37.21" y1="40.49" x2="36.9" y2="40.8"/>
+<wire layer="16" width="0.33" x1="39.1" y1="40.49" x2="36.91" y2="40.49"/>
+<wire layer="16" width="0.33" x1="36.91" y1="40.49" x2="36.9" y2="40.5"/>
 <wire layer="1" width="0.33" x1="12.5" y1="74.9" x2="12.8" y2="74.9"/>
 <wire layer="1" width="0.33" x1="12.8" y1="74.9" x2="13.8" y2="73.9"/>
 <wire layer="1" width="0.33" x1="13.8" y1="73.9" x2="13.8" y2="72.2"/>
@@ -2047,8 +2041,8 @@ mail: dvi534538@mail/ru</description>
 <wire layer="1" width="0.33" x1="26" y1="72.8" x2="31.8" y2="67"/>
 <wire layer="1" width="0.33" x1="31.8" y1="67" x2="31.8" y2="58.9"/>
 <wire layer="1" width="0.33" x1="31.8" y1="58.9" x2="35.8" y2="54.9"/>
-<wire layer="1" width="0.33" x1="35.8" y1="54.9" x2="35.8" y2="41.9"/>
-<wire layer="1" width="0.33" x1="35.8" y1="41.9" x2="36.9" y2="40.8"/>
+<wire layer="1" width="0.33" x1="35.8" y1="54.9" x2="35.8" y2="41.6"/>
+<wire layer="1" width="0.33" x1="35.8" y1="41.6" x2="36.9" y2="40.5"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_23">
 <contactref element="BLDC" pad="4"/>
@@ -2101,7 +2095,7 @@ mail: dvi534538@mail/ru</description>
 <contactref element="STEPPER_SHIELD" pad="6"/>
 <contactref element="U8" pad="7"/>
 <via x="12.5" y="70.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="34.4" y="41.7" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
+<via x="34.4" y="41.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="10.584967" y1="71.588067" x2="11.011933" y2="71.588067"/>
 <wire layer="16" width="0.33" x1="11.011933" y1="71.588067" x2="12.5" y2="70.1"/>
 <wire layer="16" width="0.33" x1="39.1" y1="37.95" x2="40.85" y2="37.95"/>
@@ -2127,8 +2121,8 @@ mail: dvi534538@mail/ru</description>
 <contactref element="CNC" pad="17"/>
 <contactref element="STEPPER_SHIELD" pad="5"/>
 <contactref element="U8" pad="31"/>
-<via x="27.5" y="64.7" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
-<via x="27.8" y="43.7" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
+<via x="27.5" y="64.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="27.8" y="43.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="25.584967" y1="63.968067" x2="26.768067" y2="63.968067"/>
 <wire layer="16" width="0.33" x1="26.768067" y1="63.968067" x2="27.5" y2="64.7"/>
 <wire layer="16" width="0.33" x1="27.5" y1="64.7" x2="31.3" y2="64.7"/>
@@ -2195,9 +2189,9 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.329997" x1="33.395107" y1="46.998103" x2="28.887496" y2="46.998103"/>
 <wire layer="16" width="0.329997" x1="28.887496" y1="46.998103" x2="28.285599" y2="47.6"/>
 <wire layer="16" width="0.329997" x1="28.285599" y1="47.6" x2="27.4" y2="47.6"/>
-<wire layer="16" width="0.329997" x1="19.5" y1="86.8" x2="19.439992" y2="86.739992"/>
-<wire layer="16" width="0.329997" x1="19.439992" y1="86.739992" x2="19.439992" y2="69.856604"/>
-<wire layer="16" width="0.329997" x1="19.439992" y1="69.856604" x2="21.295004" y2="68.001591"/>
+<wire layer="16" width="0.329997" x1="19.5" y1="86.8" x2="19.3" y2="86.6"/>
+<wire layer="16" width="0.329997" x1="19.3" y1="86.6" x2="19.3" y2="69.996596"/>
+<wire layer="16" width="0.329997" x1="19.3" y1="69.996596" x2="21.295004" y2="68.001591"/>
 <wire layer="1" width="0.33" x1="12.5" y1="86.8" x2="19.5" y2="86.8"/>
 <wire layer="1" width="0.329997" x1="21.295004" y1="68.001591" x2="21.295004" y2="53.254986"/>
 <wire layer="1" width="0.329997" x1="21.295004" y1="53.254986" x2="21.954998" y2="52.594993"/>
@@ -2268,8 +2262,8 @@ mail: dvi534538@mail/ru</description>
 <contactref element="STEPPER_SHIELD" pad="3"/>
 <contactref element="U8" pad="15"/>
 <via x="19.3" y="57.6" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
-<via x="29" y="61.7" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
-<via x="31.7" y="39.1" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
+<via x="29" y="61.7" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
+<via x="31.7" y="39.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="12.4" y1="51.2" x2="10.653" y2="51.2"/>
 <wire layer="16" width="0.33" x1="10.653" y1="51.2" x2="10.584967" y2="51.268033"/>
 <wire layer="16" width="0.33" x1="10.584967" y1="51.268033" x2="12.4" y2="51.268033"/>
@@ -2323,8 +2317,9 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.33" x1="22.299975" y1="98.899975" x2="20.6" y2="97.2"/>
 <wire layer="16" width="0.33" x1="20.6" y1="97.2" x2="20.6" y2="85.9"/>
 <wire layer="16" width="0.33" x1="20.6" y1="85.9" x2="20.1" y2="85.4"/>
-<wire layer="16" width="0.33" x1="20.1" y1="85.4" x2="20.1" y2="71.1"/>
-<wire layer="16" width="0.33" x1="20.1" y1="71.1" x2="20.6" y2="70.6"/>
+<wire layer="16" width="0.33" x1="20.1" y1="85.4" x2="20.1" y2="71.16669"/>
+<wire layer="16" width="0.33" x1="20.1" y1="71.16669" x2="20.6" y2="70.66669"/>
+<wire layer="16" width="0.33" x1="20.6" y1="70.66669" x2="20.6" y2="70.6"/>
 <wire layer="16" width="0.33" x1="5.4" y1="51.2" x2="4.2" y2="51.2"/>
 <wire layer="16" width="0.33" x1="4.2" y1="51.2" x2="3.7" y2="50.7"/>
 <wire layer="16" width="0.33" x1="3.7" y1="50.7" x2="1.57" y2="50.7"/>
@@ -2422,9 +2417,9 @@ mail: dvi534538@mail/ru</description>
 <wire layer="16" width="0.8" x1="31.56" y1="84.56" x2="33.83" y2="84.56"/>
 <wire layer="16" width="0.33" x1="38.1" y1="98.7" x2="34.3" y2="98.7"/>
 <wire layer="16" width="0.33" x1="34.3" y1="98.7" x2="30.4" y2="94.8"/>
-<wire layer="16" width="0.33" x1="30.4" y1="94.8" x2="29.8" y2="94.8"/>
-<wire layer="16" width="0.33" x1="29.8" y1="94.8" x2="28.9" y2="93.9"/>
-<wire layer="16" width="0.33" x1="28.9" y1="93.9" x2="28.9" y2="86"/>
+<wire layer="16" width="0.33" x1="30.4" y1="94.8" x2="30.4" y2="94.7"/>
+<wire layer="16" width="0.33" x1="30.4" y1="94.7" x2="28.9" y2="93.2"/>
+<wire layer="16" width="0.33" x1="28.9" y1="93.2" x2="28.9" y2="86"/>
 <wire layer="16" width="0.33" x1="28.9" y1="86" x2="30.4" y2="84.5"/>
 <wire layer="16" width="0.33" x1="30.4" y1="84.5" x2="31.5" y2="84.5"/>
 <wire layer="16" width="0.33" x1="10.584967" y1="84.288033" x2="12.473" y2="82.4"/>
@@ -2456,7 +2451,7 @@ mail: dvi534538@mail/ru</description>
 <via x="27.5" y="74.9" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <contactref element="STEPPER_SHIELD" pad="13"/>
 <contactref element="U8" pad="35"/>
-<via x="37" y="57.1" extent="1-16" drill="0.485667" diameter="1.016" shape="round" alwaysstop="no"/>
+<via x="37" y="57.1" extent="1-16" drill="0.4" diameter="1" shape="round" alwaysstop="no"/>
 <wire layer="16" width="0.33" x1="25.584967" y1="74.128033" x2="26.728033" y2="74.128033"/>
 <wire layer="16" width="0.33" x1="26.728033" y1="74.128033" x2="27.5" y2="74.9"/>
 <wire layer="16" width="0.33" x1="39.1" y1="55.73" x2="40.465" y2="55.73"/>
@@ -2627,9 +2622,8 @@ mail: dvi534538@mail/ru</description>
 <signal name="&#1057;&#1077;&#1090;&#1100;_44">
 <contactref element="LAZER_SW" pad="3"/>
 <contactref element="U8" pad="25"/>
-<wire layer="16" width="0.33" x1="25.584967" y1="48.728067" x2="26.671933" y2="48.728067"/>
-<wire layer="16" width="0.33" x1="26.671933" y1="48.728067" x2="26.703867" y2="48.76"/>
-<wire layer="16" width="0.33" x1="26.703867" y1="48.76" x2="31.9" y2="48.76"/>
+<wire layer="16" width="0.33" x1="25.584967" y1="48.728067" x2="31.9" y2="48.728067"/>
+<wire layer="16" width="0.33" x1="31.9" y1="48.728067" x2="31.9" y2="48.76"/>
 </signal>
 <signal name="&#1057;&#1077;&#1090;&#1100;_45">
 <contactref element="LAZER_SW" pad="1"/>
