@@ -524,13 +524,13 @@ void YTimerCallback(void);
 extern void YTimerSet(uint16_t period);
 // Установить физическое направление мотора Y (DIR)
 // **Реализовать в main.c**
-extern void YTimerSetDir(uint8_t dir_pin_state);
+extern void YSetDir(uint8_t dir_pin_state);
 // Сгенерировать импульс STEP для мотора Y
 // **Реализовать в main.c**
-extern void YTimerStep(uint8_t step_pin_state);
+extern void YSetStep(uint8_t step_pin_state);
 // Управление сигналом ENABLE (включение/выключение драйвера)
 // **Реализовать в main.c**
-extern void YSetEnablePin(uint8_t enabled);
+extern void YSetEnable(uint8_t enabled);
 
 // Управление мотором X
 
@@ -551,10 +551,10 @@ extern void MotorX_Set(int power);
 extern void XTimerSet(uint16_t period);
 // Установить физическое направление мотора X (DIR) (в режиме MOTORX_MODE_STEP)
 // **Реализовать в main.c**
-extern void XTimerSetDir(uint8_t dir_pin_state);
+extern void XSetDir(uint8_t dir_pin_state);
 // Сгенерировать импульс STEP для мотора Y (в режиме MOTORX_MODE_STEP)
 // **Реализовать в main.c**
-extern void XTimerStep(uint8_t step_pin_state);
+extern void XSetStep(uint8_t step_pin_state);
 // Управление сигналом ENABLE (включение/выключение драйвера)
 // **Реализовать в main.c**
 extern void XSetEnablePin(uint8_t enabled);

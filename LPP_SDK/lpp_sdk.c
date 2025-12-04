@@ -619,8 +619,9 @@ void PrintStep(void) {
                 nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
             }
         } else {
-            // Вне области печати — лазер выключен
+            // Вне зоны печати: выключить лазер и сбросить интерполяцию
             SetLaserPWM(0);
+            interp_counter = 0;  
         }
 
         // --- Смена направления движения (вправо → влево) ---
@@ -700,8 +701,9 @@ void PrintStepForStepper(int8_t direction) {
                 nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
             }
         } else {
-            // Вне области печати — лазер выключен
+            // Вне зоны печати: выключить лазер и сбросить интерполяцию
             SetLaserPWM(0);
+            interp_counter = 0;  
         }
         
         // --- Смена направления движения (вправо → влево) ---
@@ -1091,7 +1093,7 @@ void PacketReceive(uint8_t* buffer) {
             Y_STEP_LO = 1;
         }
 				
-				YSetEnablePin(SET_Y.DAT.W_Y_ENABLED);
+				YSetEnable(SET_Y.DAT.W_Y_ENABLED);
 				
 				SET_Y.DAT.W_Y_EN_POS = Y_POS;
 				
@@ -1309,17 +1311,17 @@ void Lpp_MainLoop(void) {
 void YMove(int direction) {
     if (Y_PIN == 1) {
         Y_PIN = 0;
-        YTimerStep(Y_STEP_HI);  // Фронт STEP
+        YSetStep(Y_STEP_HI);  // Фронт STEP
         Y_POS += direction;     // Обновляем позицию
     } else {
         Y_PIN = 1;
         // Установка направления перед импульсом
         if (direction == 1) {
-            YTimerSetDir(Y_DIR_HI);  // Вверх
+            YSetDir(Y_DIR_HI);  // Вверх
         } else {
-            YTimerSetDir(Y_DIR_LO);  // Вниз
+            YSetDir(Y_DIR_LO);  // Вниз
         }
-        YTimerStep(Y_STEP_LO);  // Подготовка к следующему шагу
+        YSetStep(Y_STEP_LO);  // Подготовка к следующему шагу
     }
 }
 
@@ -1380,7 +1382,7 @@ void YTimerCallback(void) {
 void XMove(int direction) {
     if (X_PIN == 1) {
         X_PIN = 0;
-        XTimerStep(X_STEP_HI);  // Фронт STEP
+        XSetStep(X_STEP_HI);  // Фронт STEP
         X_POS += direction;
 			
         // Обработка печати после каждого шага
@@ -1389,11 +1391,11 @@ void XMove(int direction) {
     } else {
         X_PIN = 1;
         if (direction == 1) {
-            XTimerSetDir(X_DIR_HI);  // Вправо
+            XSetDir(X_DIR_HI);  // Вправо
         } else {
-            XTimerSetDir(X_DIR_LO);  // Влево
+            XSetDir(X_DIR_LO);  // Влево
         }
-        XTimerStep(X_STEP_LO);  // Подготовка к следующему шагу
+        XSetStep(X_STEP_LO);  // Подготовка к следующему шагу
     }
 }
 

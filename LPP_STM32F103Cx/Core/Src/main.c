@@ -690,7 +690,7 @@ void MotorX_Init(MotorXMode_t mode)
  * @brief  Устанавливает направление DIR для оси Y.
  * @param  dir_state: 0 — одно направление, 1 — противоположное.
  */
-void YTimerSetDir(uint8_t dir_state)
+void YSetDir(uint8_t dir_state)
 {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, dir_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
@@ -699,12 +699,25 @@ void YTimerSetDir(uint8_t dir_state)
  * @brief  Устанавливает уровень STEP для оси Y.
  * @param  step_state: 0 — низкий уровень, 1 — высокий уровень.
  */
-void YTimerStep(uint8_t step_state)
+void YSetStep(uint8_t step_state)
 {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, step_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
+/**
+ * @brief  Управляет сигналом ENABLE для оси Y.
+ * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
+ */
+void YSetEnable(uint8_t enabled)
+{
+	
+    GPIO_PinState st = enabled ? GPIO_PIN_SET : GPIO_PIN_RESET;
 
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, st);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, st);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, st);	
+	
+}
 
 // установка периода и запуск таймера YTimer
 void YTimerSet(uint16_t period)
@@ -720,7 +733,7 @@ void YTimerSet(uint16_t period)
  * @brief  Устанавливает направление DIR для оси X.
  * @param  dir_state: 0 — одно направление, 1 — противоположное.
  */
-void XTimerSetDir(uint8_t dir_state)
+void XSetDir(uint8_t dir_state)
 {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, dir_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
@@ -729,9 +742,18 @@ void XTimerSetDir(uint8_t dir_state)
  * @brief  Устанавливает уровень STEP для оси X.
  * @param  step_state: 0 — низкий уровень, 1 — высокий уровень.
  */
-void XTimerStep(uint8_t step_state)
+void XSetStep(uint8_t step_state)
 {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, step_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
+}
+
+/**
+ * @brief  Управляет сигналом ENABLE для оси X.
+ * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
+ */
+void XSetEnablePin(uint8_t enabled)
+{
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 
@@ -924,34 +946,6 @@ void XferCpltCallback(DMA_HandleTypeDef* hdma) {
 	if (hdma == &hdma_memtomem_dma1_channel1) {
 		FIFO_DATA_EndDma();		
 	}
-}
-
-// ============================================================================
-// Управление сигналом ENABLE для оси X и Y
-// ============================================================================
-
-/**
- * @brief  Управляет сигналом ENABLE для оси Y.
- * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
- */
-void YSetEnablePin(uint8_t enabled)
-{
-	
-    GPIO_PinState st = enabled ? GPIO_PIN_SET : GPIO_PIN_RESET;
-
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, st);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, st);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, st);	
-	
-}
-
-/**
- * @brief  Управляет сигналом ENABLE для оси X.
- * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
- */
-void XSetEnablePin(uint8_t enabled)
-{
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 /* USER CODE END 4 */
