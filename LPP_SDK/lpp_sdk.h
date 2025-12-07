@@ -70,6 +70,13 @@ typedef enum {
     MOTORX_MODE_STEP = 3      // Режим шагового двигателя: PB13 = STEP, PB14 = DIR (GPIO)
 } MotorXMode_t;
 
+// Направление движения оси X
+typedef enum {
+    X_MOTION_NONE  = 0,   // Нет движения
+    X_MOTION_RIGHT = 1,   // Движение вправо
+    X_MOTION_LEFT  = 2    // Движение влево
+} X_MOTION_T;
+
 // Состояния движения по оси Y
 typedef enum {
     MOVE_HALT = 0,            // Остановка
@@ -269,11 +276,10 @@ typedef union {
         uint8_t W_X_POL_DIR;     // Полярность DIR
         uint8_t W_X_MODE;        // Режим энкодера
 				
-        int16_t W_X_ACCL;       // Ускорение X						
-        int16_t W_X_MIN_POW;    // Минимальная мощность X
-        uint8_t W_X_ENABLED_PIN;// Включить контролер				
-		
-				
+        int16_t W_X_ACCL;        // Ускорение X						
+        int16_t W_X_MIN_POW;     // Минимальная мощность X
+        uint8_t W_X_ENABLED_PIN; // Включить контролер	
+				uint8_t W_X_MOTION;     // Постояное движение 0=стоп, 1=вправо, 2=влево				
     } DAT;
     uint8_t BIN[64];
 } TYPE_SET_X;
@@ -479,7 +485,7 @@ extern volatile uint16_t ENCODER_B_PIN;  // Пин энкодера B
 
 void DWT_Init(void);
 void DWT_1kHz_Handler(void);
-void EncoderX_Update_F103(int8_t pos_delta);
+void EncoderX_Update(int8_t pos_delta);
 
 // Управление лазером и подсветкой (реализуется в main.c)
 extern void SetLaserPWM(uint16_t pwm_value);      // Установка мощности лазера (ШИМ)
@@ -552,12 +558,12 @@ extern void XTimerSet(uint16_t period);
 // Установить физическое направление мотора X (DIR) (в режиме MOTORX_MODE_STEP)
 // **Реализовать в main.c**
 extern void XSetDir(uint8_t dir_pin_state);
-// Сгенерировать импульс STEP для мотора Y (в режиме MOTORX_MODE_STEP)
+// Сгенерировать импульс STEP для мотора X (в режиме MOTORX_MODE_STEP)
 // **Реализовать в main.c**
 extern void XSetStep(uint8_t step_pin_state);
 // Управление сигналом ENABLE (включение/выключение драйвера)
 // **Реализовать в main.c**
-extern void XSetEnablePin(uint8_t enabled);
+extern void XSetEnable(uint8_t enabled);
 
 #ifdef __cplusplus
 }

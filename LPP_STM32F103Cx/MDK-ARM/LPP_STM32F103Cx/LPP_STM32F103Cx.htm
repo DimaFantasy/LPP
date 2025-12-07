@@ -3,7 +3,7 @@
 <title>Static Call Graph - [LPP_STM32F103Cx\LPP_STM32F103Cx.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image LPP_STM32F103Cx\LPP_STM32F103Cx.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Thu Dec  4 06:49:50 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sun Dec  7 06:05:27 2025
 <BR><P>
 <H3>Maximum Stack Usage =        220 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -581,12 +581,12 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c4]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin))
-<BR><BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetEnablePin
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetEnablePin
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerStep
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerSetDir
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerStep
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerSetDir
+<BR><BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetEnable
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetStep
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetDir
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetEnable
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetStep
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetDir
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Init
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Set
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1076,7 +1076,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[c3]"></a>MotorX_Init</STRONG> (Thumb, 660 bytes, Stack size 128 bytes, main.o(.text.MotorX_Init))
+<P><STRONG><a name="[c3]"></a>MotorX_Init</STRONG> (Thumb, 684 bytes, Stack size 128 bytes, main.o(.text.MotorX_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = MotorX_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_ConfigBreakDeadTime
@@ -1111,7 +1111,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1692 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
+<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1712 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASHEx_Erase
@@ -1122,13 +1122,13 @@ Global Symbols
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw2
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw1
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetUIDw0
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetEnablePin
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetEnablePin
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FIFO_DATA_StartDma
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketSend
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserLightPWMFrequency
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLightPWM
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetEnable
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetEnable
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Init
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XStartTracking
@@ -1161,7 +1161,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
 </UL>
 
-<P><STRONG><a name="[de]"></a>PrintStepForStepper</STRONG> (Thumb, 1052 bytes, Stack size 32 bytes, lpp_sdk.o(.text.PrintStepForStepper))
+<P><STRONG><a name="[de]"></a>PrintStepForStepper</STRONG> (Thumb, 1056 bytes, Stack size 32 bytes, lpp_sdk.o(.text.PrintStepForStepper))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = PrintStepForStepper &rArr; PrintStopJob
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InterpTimerStart
@@ -1179,7 +1179,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[dd]"></a>PrintStopJob</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, lpp_sdk.o(.text.PrintStopJob))
+<P><STRONG><a name="[dd]"></a>PrintStopJob</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, lpp_sdk.o(.text.PrintStopJob))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = PrintStopJob
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
@@ -1702,26 +1702,42 @@ Global Symbols
 <P><STRONG><a name="[fc]"></a>XCalculatePower</STRONG> (Thumb, 232 bytes, Stack size 8 bytes, lpp_sdk.o(.text.XCalculatePower))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerStep
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerSetDir
+<BR>[Calls]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetStep
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetDir
 <LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStepForStepper
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerCallback
 </UL>
 
-<P><STRONG><a name="[d8]"></a>XSetEnablePin</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.XSetEnablePin))
+<P><STRONG><a name="[fe]"></a>XSetDir</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, main.o(.text.XSetDir))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = XSetDir
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XCalculatePower
+</UL>
+
+<P><STRONG><a name="[d8]"></a>XSetEnable</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.XSetEnable))
 <BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[d5]"></a>XStartTracking</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, lpp_sdk.o(.text.XStartTracking))
+<P><STRONG><a name="[fd]"></a>XSetStep</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, main.o(.text.XSetStep))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = XSetStep
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XCalculatePower
+</UL>
+
+<P><STRONG><a name="[d5]"></a>XStartTracking</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, lpp_sdk.o(.text.XStartTracking))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = XStartTracking
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[b6]"></a>XTimerCallback</STRONG> (Thumb, 660 bytes, Stack size 8 bytes, lpp_sdk.o(.text.XTimerCallback))
+<P><STRONG><a name="[b6]"></a>XTimerCallback</STRONG> (Thumb, 704 bytes, Stack size 8 bytes, lpp_sdk.o(.text.XTimerCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerSet
@@ -1735,18 +1751,6 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerCallback
 </UL>
 
-<P><STRONG><a name="[fe]"></a>XTimerSetDir</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.XTimerSetDir))
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XCalculatePower
-</UL>
-
-<P><STRONG><a name="[fd]"></a>XTimerStep</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.XTimerStep))
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XCalculatePower
-</UL>
-
 <P><STRONG><a name="[4b]"></a>XferCpltCallback</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, main.o(.text.XferCpltCallback))
 <BR><BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FIFO_DATA_EndDma
 </UL>
@@ -1755,18 +1759,30 @@ Global Symbols
 <P><STRONG><a name="[101]"></a>YCalculatePower</STRONG> (Thumb, 222 bytes, Stack size 8 bytes, lpp_sdk.o(.text.YCalculatePower))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = YCalculatePower
 </UL>
-<BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerStep
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerSetDir
+<BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetStep
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetDir
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerCallback
 </UL>
 
-<P><STRONG><a name="[d7]"></a>YSetEnablePin</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, main.o(.text.YSetEnablePin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = YSetEnablePin
+<P><STRONG><a name="[103]"></a>YSetDir</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.YSetDir))
+<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YCalculatePower
+</UL>
+
+<P><STRONG><a name="[d7]"></a>YSetEnable</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, main.o(.text.YSetEnable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = YSetEnable
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
+</UL>
+
+<P><STRONG><a name="[102]"></a>YSetStep</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.YSetStep))
+<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YCalculatePower
 </UL>
 
 <P><STRONG><a name="[b9]"></a>YTimerCallback</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, lpp_sdk.o(.text.YTimerCallback))
@@ -1778,18 +1794,6 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[138]"></a>YTimerSet</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.YTimerSet), UNUSED)
-
-<P><STRONG><a name="[103]"></a>YTimerSetDir</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.YTimerSetDir))
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YCalculatePower
-</UL>
-
-<P><STRONG><a name="[102]"></a>YTimerStep</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, main.o(.text.YTimerStep))
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YCalculatePower
-</UL>
 
 <P><STRONG><a name="[54]"></a>main</STRONG> (Thumb, 1096 bytes, Stack size 80 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = main &rArr; Lpp_MainLoop &rArr; PacketSend &rArr; USBD_CUSTOM_HID_SendReport &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer

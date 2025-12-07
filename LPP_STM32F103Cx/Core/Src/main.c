@@ -421,7 +421,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11
+                          |GPIO_PIN_12, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PC13 */
   GPIO_InitStruct.Pin = GPIO_PIN_13;
@@ -437,8 +438,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB0 PB1 PB12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_12;
+  /*Configure GPIO pins : PB0 PB1 PB10 PB11
+                           PB12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11
+                          |GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -508,7 +511,10 @@ void MotorX_Set(int power) {
 void MotorX_Init(MotorXMode_t mode)
 {
     if (motorXMode == mode) return; // если режим уже установлен — выходим
-
+	
+		__HAL_RCC_TIM1_FORCE_RESET();     // полный аппаратный сброс TIM1 (как после включения MCU)
+		__HAL_RCC_TIM1_RELEASE_RESET();   // выход из сброса — таймер в чистом состоянии
+		
     // ------------------------------------------------------------------------
     // Режим START — отключаем таймер и переводим пины в безопасное состояние
     // ------------------------------------------------------------------------
@@ -729,29 +735,39 @@ void YTimerSet(uint16_t period)
 // ============================================================================
 // Управление шаговым двигателем X (в режиме MOTORX_MODE_STEP)
 // ============================================================================
+
+
+
+
 /**
  * @brief  Устанавливает направление DIR для оси X.
- * @param  dir_state: 0 — одно направление, 1 — противоположное.
  */
 void XSetDir(uint8_t dir_state)
 {
+    // Локальный драйвер X (на плате)
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, dir_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+    // DB25 выход (Pin 3)
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, dir_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 /**
  * @brief  Устанавливает уровень STEP для оси X.
- * @param  step_state: 0 — низкий уровень, 1 — высокий уровень.
  */
 void XSetStep(uint8_t step_state)
 {
+    // Локальный драйвер X
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, step_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+    // DB25 выход (Pin 2)
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, step_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 /**
  * @brief  Управляет сигналом ENABLE для оси X.
  * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
  */
-void XSetEnablePin(uint8_t enabled)
+void XSetEnable(uint8_t enabled)
 {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
