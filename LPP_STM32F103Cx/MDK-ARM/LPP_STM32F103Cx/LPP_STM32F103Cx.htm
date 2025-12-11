@@ -3,9 +3,9 @@
 <title>Static Call Graph - [LPP_STM32F103Cx\LPP_STM32F103Cx.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image LPP_STM32F103Cx\LPP_STM32F103Cx.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Mon Dec  8 00:21:57 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Thu Dec 11 08:36:41 2025
 <BR><P>
-<H3>Maximum Stack Usage =        220 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        228 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 CUSTOM_HID_OutEvent_FS &rArr; PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
 <P>
@@ -444,7 +444,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
 <P><STRONG><a name="[35]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, stm32f1xx_it.o(.text.EXTI9_5_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = EXTI9_5_IRQHandler &rArr; HAL_GPIO_EXTI_IRQHandler &rArr; HAL_GPIO_EXTI_Callback &rArr; PrintStep &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = EXTI9_5_IRQHandler &rArr; HAL_GPIO_EXTI_IRQHandler &rArr; HAL_GPIO_EXTI_Callback &rArr; PrintStep &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_IRQHandler
 </UL>
@@ -557,7 +557,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[6b]"></a>HAL_GPIO_EXTI_Callback</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, main.o(.text.HAL_GPIO_EXTI_Callback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = HAL_GPIO_EXTI_Callback &rArr; PrintStep &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_GPIO_EXTI_Callback &rArr; PrintStep &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStep
 </UL>
@@ -565,7 +565,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[61]"></a>HAL_GPIO_EXTI_IRQHandler</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(.text.HAL_GPIO_EXTI_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = HAL_GPIO_EXTI_IRQHandler &rArr; HAL_GPIO_EXTI_Callback &rArr; PrintStep &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_GPIO_EXTI_IRQHandler &rArr; HAL_GPIO_EXTI_Callback &rArr; PrintStep &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
 </UL>
@@ -940,7 +940,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a8]"></a>HAL_TIM_IRQHandler</STRONG> (Thumb, 334 bytes, Stack size 16 bytes, stm32f1xx_hal_tim.o(.text.HAL_TIM_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_CommutCallback
@@ -1011,7 +1011,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ac]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, main.o(.text.HAL_TIM_PeriodElapsedCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YTimerCallback
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Stop_IT
@@ -1101,7 +1101,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerCallback
+<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerCallback
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStepForStepper
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStopJob
 </UL>
 
 <P><STRONG><a name="[15]"></a>NMI_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.NMI_Handler))
@@ -1111,8 +1114,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1712 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
-<BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
+<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1744 bytes, Stack size 48 bytes, lpp_sdk.o(.text.PacketReceive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASHEx_Erase
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Lock
@@ -1130,6 +1133,7 @@ Global Symbols
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetEnable
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;YSetEnable
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Init
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Set
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XStartTracking
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FifoPosY_Push
@@ -1150,7 +1154,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
 <P><STRONG><a name="[6c]"></a>PrintStep</STRONG> (Thumb, 1004 bytes, Stack size 24 bytes, lpp_sdk.o(.text.PrintStep))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = PrintStep &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = PrintStep &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadEncoderPins
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InterpTimerStart
@@ -1161,11 +1165,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
 </UL>
 
-<P><STRONG><a name="[de]"></a>PrintStepForStepper</STRONG> (Thumb, 1056 bytes, Stack size 32 bytes, lpp_sdk.o(.text.PrintStepForStepper))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = PrintStepForStepper &rArr; PrintStopJob
+<P><STRONG><a name="[de]"></a>PrintStepForStepper</STRONG> (Thumb, 1104 bytes, Stack size 32 bytes, lpp_sdk.o(.text.PrintStepForStepper))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InterpTimerStart
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Set
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStopJob
 </UL>
 <BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XCalculatePower
@@ -1179,10 +1184,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[dd]"></a>PrintStopJob</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, lpp_sdk.o(.text.PrintStopJob))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = PrintStopJob
+<P><STRONG><a name="[dd]"></a>PrintStopJob</STRONG> (Thumb, 70 bytes, Stack size 24 bytes, lpp_sdk.o(.text.PrintStopJob))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetLaserPWM
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Set
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStep
 <LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrintStepForStepper
@@ -1224,28 +1230,28 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(.text)
 </UL>
 <P><STRONG><a name="[37]"></a>TIM1_UP_IRQHandler</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.TIM1_UP_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = TIM1_UP_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = TIM1_UP_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
 <P><STRONG><a name="[3a]"></a>TIM2_IRQHandler</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.TIM2_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = TIM2_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = TIM2_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
 <P><STRONG><a name="[3b]"></a>TIM3_IRQHandler</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.TIM3_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = TIM3_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = TIM3_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
 <P><STRONG><a name="[3c]"></a>TIM4_IRQHandler</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.TIM4_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = TIM4_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = TIM4_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
@@ -1700,7 +1706,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
 <P><STRONG><a name="[fc]"></a>XCalculatePower</STRONG> (Thumb, 232 bytes, Stack size 8 bytes, lpp_sdk.o(.text.XCalculatePower))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetStep
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XSetDir
@@ -1738,7 +1744,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[b6]"></a>XTimerCallback</STRONG> (Thumb, 704 bytes, Stack size 8 bytes, lpp_sdk.o(.text.XTimerCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = XTimerCallback &rArr; XCalculatePower &rArr; PrintStepForStepper &rArr; PrintStopJob &rArr; MotorX_Set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerSet
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorX_Set
@@ -1835,7 +1841,7 @@ Local Symbols
 <BR>[Address Reference Count : 1]<UL><LI> usbd_custom_hid_if.o(.data.USBD_CustomHID_fops_FS)
 </UL>
 <P><STRONG><a name="[13]"></a>CUSTOM_HID_OutEvent_FS</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, usbd_custom_hid_if.o(.text.CUSTOM_HID_OutEvent_FS))
-<BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = CUSTOM_HID_OutEvent_FS &rArr; PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
+<BR><BR>[Stack]<UL><LI>Max Depth = 228<LI>Call Chain = CUSTOM_HID_OutEvent_FS &rArr; PacketReceive &rArr; MotorX_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>

@@ -549,7 +549,23 @@ void XStopTracking(void) {
     X_STOPPING = 1;
     // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
     if (motorXMode != MOTORX_MODE_STEP) {
+        // Деактивируем трекинг
         X_TRACKING_ACTIVE = 0;
+    
+        // Обнуляем PID/PI части
+        W_X_POWER_REAL = 0;
+        W_X_SPEED_ERROR_INTEGRAL = 0;
+    
+        // Сбрасываем направление для обоих режимов
+        X_POLAR_DYNAMIC = 0;
+        X_POLAR_STATIC = 0;
+    
+        // Сбрасываем флаги активации
+        X_START_STATIC_ACTIVE = 0;
+    
+        // Останавливаем мотор
+        MotorX_Set(0);;
+
     }
 }
 
@@ -753,8 +769,6 @@ void PrintStopJob(T_PRINT_STATUS PRINT_STATUS) {
     // Сброс активных флагов процесса печати
     START_PRINT = 0;
     SetupPrintJob = 0;
-	  // Зафиксировать текущую позицию X как целевую
-		X_GO_POS = X_POS;                  ////////////////////////////////////////////////////////////
 
     // ========================================================
     // БЕЗОПАСНАЯ ОСТАНОВКА ТРЕКИНГА
@@ -782,8 +796,8 @@ void PacketReceive(uint8_t* buffer) {
         // ============================================================================
         __disable_irq();
         if ((FIFO_DATA.count >= FIFO_DATA.capacity) || (PRINT_DAT->DAT.R_FIFO_FUL == 1)) {
-            PRINT_DAT->DAT.R_FIFO_FUL = 1;
-            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count;
+            PRINT_DAT->DAT.R_FIFO_FUL = 1; //FIFO не принял данные, пакет нужно повторить
+            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count; // Текущее количество блоков в FIFO
             __enable_irq();
         } else {
             uint16_t next_tail = (FIFO_DATA.tail + 1) % FIFO_DATA.capacity;
@@ -792,8 +806,8 @@ void PacketReceive(uint8_t* buffer) {
             FIFO_DATA_StartDma((uint32_t)PRINT_DAT->DAT.W_BUFFER, (uint32_t)FIFO_DATA.BLOCKS[FIFO_DATA.tail],
                                sizeof(FIFO_DATA.BLOCKS[0])  // или FIFO_DATA_BLOCK_SIZE, если определено
             );
-            PRINT_DAT->DAT.R_FIFO_FUL = 0;
-            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count;
+            PRINT_DAT->DAT.R_FIFO_FUL = 0; //FIFO принял данные, можно отправлять следующий пакет
+            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count; // Текущее количество блоков в FIFO
         }
         // ============================================================================
         // Обработка FIFO координат Y
@@ -804,6 +818,7 @@ void PacketReceive(uint8_t* buffer) {
         }
         PRINT_DAT->DAT.R_FIFO_Y_COUNT = FifoPosY_FreeSpace();
         __enable_irq();
+
         // Обновление параметров управления
         PRINT_CONFIG.DAT.W_SET_LAZER = PRINT_DAT->DAT.W_SET_LAZER;
 
@@ -1003,9 +1018,7 @@ void PacketReceive(uint8_t* buffer) {
             SET_X.DAT.W_X_RESET = 0;
         }
 
-        // ========================================================
-        // ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА
-        // ========================================================
+        // === ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА ===
         if (SET_X.DAT.W_X_TRECK == 1) {
             // Запуск трекинга
             W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
@@ -1016,11 +1029,14 @@ void PacketReceive(uint8_t* buffer) {
 
             XStartTracking(SET_X.DAT.W_X_L_POS, SET_X.DAT.W_X_R_POS);
         } else {
-            // ========================================================
-            // ВЫКЛЮЧЕНИЕ ТРЕКИНГА - БЕЗОПАСНАЯ ОСТАНОВКА
-            // ========================================================
+            // Трекинг был включен - останавливаем безопасно
+            X_STOPPING = 1;
+            // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
+            if (motorXMode != MOTORX_MODE_STEP) {
+                // Деактивируем трекинг
+                X_TRACKING_ACTIVE = 0;
+            }
 
-            XStopTracking();  // Трекинг был включен - останавливаем безопасно
             W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
             W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
         }
