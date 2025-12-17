@@ -1,4 +1,4 @@
-# LPP MainBoard Gen-1 (Ver. 1)
+# LPP MainBoard Gen-1 (Ver. 2)
 
 ⚠️ **Статус проекта:**  
 Разводка завершена, плата собрана и успешно прошла первичную проверку.  
@@ -55,23 +55,17 @@
 # 📂 Файлы проекта (DipTrace)
 
 ### *.dip — платы
-- **LPP_MainBoard_Gen_1_Ver_1.dip** — основная плата управления (разводка готова, не тестирована).
+- **LPP_MainBoard_Gen_1_Ver_2.dip** — основная плата управления (разводка готова, не тестирована).
 - **LPP_Carriage_Module_Gen_1_Ver_1.dip** — рабочая версия.
 - **LPP_Carriage_Module_Gen_2_Ver_1.dip** — лазер 3 А (не тестировано).
 - **LPP_Stepper_Shield_Gen_1_Ver_1.dip** — в разработке.
 
 ### *.dch — схемы
-- **LPP_MainBoard_Gen_1_Ver_1.dch**
+- **LPP_MainBoard_Gen_1_Ver_2.dch**
 - **LPP_Carriage_Module_Gen_1_Ver_1.dch**
 - **LPP_Carriage_Module_Gen_2_Ver_1.dch**
 - **LPP_Stepper_Shield_Gen_1_Ver_1.dch**
 
----
-
-# 📤 Импорт в Eagle / KiCad / Altium
-
-- **LPP_MainBoard_Gen_1_Ver_1.sch** — экспорт схемы.  
-- **LPP_MainBoard_Gen_1_Ver_1.brd** — экспорт платы.
 
 ---
 
