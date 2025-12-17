@@ -89,7 +89,7 @@ static void MX_TIM4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+static uint8_t enc_b_state = 0;
 /* USER CODE END 0 */
 
 /**
@@ -135,7 +135,7 @@ int main(void)
 
     // Инициализация мотора X
 
-//    MotorX_Init(MOTORX_MODE_START);
+//    XMotorInit(X_MOTOR_MODE_START);
 
     // Запуск PWM для лазера и подсветки
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);  // Лазер
@@ -147,7 +147,7 @@ int main(void)
     // Инициализация задержки и периферии
     HAL_Delay(2000);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);    // Включение USB
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);  // Выключение контроллера Y
+/////////////////////////////////////////////////////////////////    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);  // Выключение контроллера Y
 
     // Настройка DMA callback
     HAL_DMA_RegisterCallback(&hdma_memtomem_dma1_channel1, HAL_DMA_XFER_CPLT_CB_ID, XferCpltCallback);
@@ -163,6 +163,14 @@ int main(void)
     /* USER CODE BEGIN 3 */
 			
 			Lpp_MainLoop();
+			
+//		if (GPIOB->IDR & ENCODER_B_PIN)
+//        GPIOA->BSRR = GPIO_BSRR_BS6;   // PA6 = 1
+//    else
+//        GPIOA->BSRR = GPIO_BSRR_BR6;   // PA6 = 0
+
+
+
     }
   /* USER CODE END 3 */
 }
@@ -454,7 +462,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);//////////////////////////////////////////
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
@@ -472,13 +480,13 @@ static void MX_GPIO_Init(void)
  * @param power Мощность (-5000 до +5000)
  * @retval None
  */
-void MotorX_Set(int power) {
+void XMotorSet(int power) {
     // Ограничение мощности
     if (power > 5000) power = 5000;
     if (power < -5000) power = -5000;
 
     // Режим ONE_PWM: один ШИМ + DIR
-    if (motorXMode == MOTORX_MODE_ONE_PWM) {
+    if (XMotorMode == X_MOTOR_MODE_ONE_PWM) {
         TIM1->CCR1 = (W_X_POL_PWM == 0) ? abs(power) : (5000 - abs(power));
         
         HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14,
@@ -487,7 +495,7 @@ void MotorX_Set(int power) {
     }
 
     // Режим TWO_PWM: два ШИМ канала
-    if (motorXMode == MOTORX_MODE_TWO_PWM) {
+    if (XMotorMode == X_MOTOR_MODE_TWO_PWM) {
         if (W_X_POL_PWM == 0) {
             TIM1->CCR1 = 5000 + power;
             TIM1->CCR2 = 5000 - power;
@@ -501,16 +509,16 @@ void MotorX_Set(int power) {
 // ============================================================================
 // MotorX_Init — инициализация таймера и GPIO для оси X
 // Поддерживаются 3 режима работы двигателя:
-//   1) MOTORX_MODE_STEP      — Шаговый двигатель (STEP + DIR)
-//   2) MOTORX_MODE_ONE_PWM   — Один ШИМ + DIR
-//   3) MOTORX_MODE_TWO_PWM   — Два ШИМ (Dual H-Bridge)
+//   1) X_MOTOR_MODE_STEP      — Шаговый двигатель (STEP + DIR)
+//   2) X_MOTOR_MODE_ONE_PWM   — Один ШИМ + DIR
+//   3) X_MOTOR_MODE_TWO_PWM   — Два ШИМ (Dual H-Bridge)
 // В любом режиме пин PB15 (ENABLE) используется как выход, активный уровень
 // задаётся при настройке, но здесь он просто включается.
 // ============================================================================
 
-void MotorX_Init(MotorXMode_t mode)
+void XMotorInit(X_MOTOR_MODE_T mode)
 {
-    if (motorXMode == mode) return; // если режим уже установлен — выходим
+    if (XMotorMode == mode) return; // если режим уже установлен — выходим
 	
 		__HAL_RCC_TIM1_FORCE_RESET();     // полный аппаратный сброс TIM1 (как после включения MCU)
 		__HAL_RCC_TIM1_RELEASE_RESET();   // выход из сброса — таймер в чистом состоянии
@@ -518,7 +526,7 @@ void MotorX_Init(MotorXMode_t mode)
     // ------------------------------------------------------------------------
     // Режим START — отключаем таймер и переводим пины в безопасное состояние
     // ------------------------------------------------------------------------
-    if (mode == MOTORX_MODE_START)
+    if (mode == X_MOTOR_MODE_START)
     {
         __HAL_RCC_TIM1_FORCE_RESET();     // сброс таймера
         __HAL_RCC_TIM1_RELEASE_RESET();
@@ -529,7 +537,7 @@ void MotorX_Init(MotorXMode_t mode)
         GPIO_InitStruct.Pull = GPIO_NOPULL;
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-        motorXMode = mode;
+        XMotorMode = mode;
         return;
     }
 
@@ -554,7 +562,7 @@ void MotorX_Init(MotorXMode_t mode)
     // ------------------------------------------------------------------------
     // Режим STEP + DIR (шаговый двигатель, без энкодера)
     // ------------------------------------------------------------------------
-    if (mode == MOTORX_MODE_STEP)
+    if (mode == X_MOTOR_MODE_STEP)
     {
         // Настройка GPIO: PB13 = STEP, PB14 = DIR
         GPIO_InitStruct.Pin = GPIO_PIN_13 | GPIO_PIN_14;
@@ -591,7 +599,7 @@ void MotorX_Init(MotorXMode_t mode)
         HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig);
 
         // Прерывание TIM1_UP (срабатывает по завершению импульса)
-        HAL_NVIC_SetPriority(TIM1_UP_IRQn, 1, 0);
+        HAL_NVIC_SetPriority(TIM1_UP_IRQn, 1, 0);  
         HAL_NVIC_EnableIRQ(TIM1_UP_IRQn);
 				
 				// Обнуляем счётчик таймера
@@ -612,7 +620,7 @@ void MotorX_Init(MotorXMode_t mode)
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-        if (mode == MOTORX_MODE_TWO_PWM) {
+        if (mode == X_MOTOR_MODE_TWO_PWM) {
             GPIO_InitStruct.Pin = GPIO_PIN_14;
             GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
             HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -625,7 +633,7 @@ void MotorX_Init(MotorXMode_t mode)
 
         // Настройка TIM1 под PWM
         htim1.Instance = TIM1;
-        if (mode == MOTORX_MODE_ONE_PWM) {
+        if (mode == X_MOTOR_MODE_ONE_PWM) {
             htim1.Init.Prescaler = 15;
             htim1.Init.Period = 4999;
         } else {
@@ -679,14 +687,14 @@ void MotorX_Init(MotorXMode_t mode)
         TIM1->BDTR |= TIM_BDTR_MOE;
         TIM1->CCER |= TIM_CCER_CC1NE;
 
-        if (mode == MOTORX_MODE_TWO_PWM) {
+        if (mode == X_MOTOR_MODE_TWO_PWM) {
             HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
             TIM1->CCER |= TIM_CCER_CC2NE;
         }
     }
 
     // Сохраняем текущий режим
-    motorXMode = mode;
+    XMotorMode = mode;
 }
 
 // ============================================================================
@@ -720,7 +728,7 @@ void YSetEnable(uint8_t enabled)
     GPIO_PinState st = enabled ? GPIO_PIN_SET : GPIO_PIN_RESET;
 
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, st);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, st);
+////////////////////////////////////////////////////////////////////////////////    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, st);
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, st);	
 	
 }
@@ -733,7 +741,7 @@ void YTimerSet(uint16_t period)
 }
 
 // ============================================================================
-// Управление шаговым двигателем X (в режиме MOTORX_MODE_STEP)
+// Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
 // ============================================================================
 
 
@@ -800,7 +808,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     if (htim->Instance == TIM3) {
 			
         // SDK вариант: один шаг интерполяции
-        if (PrintStepInterp() == 0)
+        if (XInterpTimerCallback() == 0)
         {
             // Возврат 0 означает, что серия интерполяции завершена
             HAL_TIM_Base_Stop_IT(&htim3);
@@ -904,7 +912,7 @@ void SetLaserLightPWMFrequency(uint32_t freq_hz)
     __HAL_TIM_SET_COUNTER(&htim2, 0);
 }
 
-void InterpTimerStart(uint32_t period) {
+void XInterpTimerStart(uint32_t period) {
     // Старт интерполяционого таймера
 	  TIM3->ARR = period;          // Установка периода
     TIM3->SR &= ~TIM_SR_UIF;     // Сброс флага прерывания
@@ -922,9 +930,23 @@ uint16_t ReadEncoderPins(void) {
  * @param GPIO_Pin Пин, вызвавший прерывание
  * @retval None
  */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {		
-	PrintStep();
-};
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+
+
+    XEncoderCallback(GPIO_Pin);
+	
+	
+uint16_t enc = ReadEncoderPins();
+
+if (enc & ENCODER_A_PIN)
+    GPIOA->BSRR = GPIO_BSRR_BS6;   // PA6 = 1
+else
+    GPIOA->BSRR = GPIO_BSRR_BR6;   // PA6 = 0
+
+	
+}
+
+
 
 
 // ============================================================================
@@ -973,7 +995,7 @@ void XferCpltCallback(DMA_HandleTypeDef* hdma) {
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-    __disable_irq();
+////////////////////////////////////////////////////////////////    __disable_irq();
     while (1) {
     }
   /* USER CODE END Error_Handler_Debug */

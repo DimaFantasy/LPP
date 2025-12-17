@@ -64,11 +64,11 @@ extern "C" {
 
 // Режимы работы мотора X
 typedef enum {
-    MOTORX_MODE_START = 0,    // Отключение пинов (высокий импеданс)
-    MOTORX_MODE_ONE_PWM = 1,  // Режим: один ШИМ (PB13 = TIM1_CH1N) + DIR (PB14 = GPIO)
-    MOTORX_MODE_TWO_PWM = 2,  // Режим: два ШИМ канала (PB13 = TIM1_CH1N, PB14 = TIM1_CH2N)
-    MOTORX_MODE_STEP = 3      // Режим шагового двигателя: PB13 = STEP, PB14 = DIR (GPIO)
-} MotorXMode_t;
+    X_MOTOR_MODE_START = 0,    // Отключение пинов (высокий импеданс)
+    X_MOTOR_MODE_ONE_PWM = 1,  // Режим: один ШИМ (PB13 = TIM1_CH1N) + DIR (PB14 = GPIO)
+    X_MOTOR_MODE_TWO_PWM = 2,  // Режим: два ШИМ канала (PB13 = TIM1_CH1N, PB14 = TIM1_CH2N)
+    X_MOTOR_MODE_STEP = 3      // Режим шагового двигателя: PB13 = STEP, PB14 = DIR (GPIO)
+} X_MOTOR_MODE_T;
 
 // Направление движения оси X
 typedef enum {
@@ -95,7 +95,7 @@ typedef enum {
     PRINT_STATUS_ERROR_Y = 4,  // Ошибка позиционирования по Y
     PRINT_STATUS_ERROR_X = 5,  // Ошибка позиционирования по X
     PRINT_STATUS_BUSY = 6      // Занят (инициализация)
-} T_PRINT_STATUS;
+} PRINT_STATUS_T;
 
 // Статус готовности оси Y
 typedef enum {
@@ -477,32 +477,19 @@ typedef struct {
 extern volatile uint8_t W_X_POL_DIR;  // Полярность направления
 extern volatile uint8_t W_X_POL_PWM;  // Полярность ШИМ
 
-extern MotorXMode_t motorXMode;
-
-// Пины энкодера
-extern volatile uint16_t ENCODER_A_PIN;  // Пин энкодера A
-extern volatile uint16_t ENCODER_B_PIN;  // Пин энкодера B
+extern X_MOTOR_MODE_T XMotorMode;
 
 void DWT_Init(void);
 void DWT_1kHz_Handler(void);
-void EncoderX_Update(int8_t pos_delta);
+void XEncoder_Update(int8_t pos_delta);
 
 // Управление лазером и подсветкой (реализуется в main.c)
 extern void SetLaserPWM(uint16_t pwm_value);      // Установка мощности лазера (ШИМ)
 extern void SetLightPWM(uint16_t pwm_value);      // Установка мощности подсветки (ШИМ)
 extern void SetLaserLightPWMFrequency(uint32_t prescaler);  // Установка делителя частоты PWM лазера и подсветки
 
-extern void InterpTimerStart(uint32_t period);  // Запуск таймера интерполяции
-extern uint16_t ReadEncoderPins(void);          // Чтение состояния выводов энкодера
-
-// Основной обработчик энкодера и печати
-void PrintStep(void);  
-
-// Один шаг интерполяции. Возвращает 1 — если серия интерполированных шагов завершена
-uint8_t PrintStepInterp(void);  
-
 // Остановка задания печати и сброс параметров
-void PrintStopJob(T_PRINT_STATUS PRINT_STATUS);  
+void PrintStopJob(PRINT_STATUS_T PRINT_STATUS);  
 
 // Отправка 64-байтного пакета хосту (реализуется в main.c, но вызывается из SDK)
 extern uint8_t PacketSend(uint8_t* buffer);
@@ -539,26 +526,45 @@ extern void YSetStep(uint8_t step_pin_state);
 extern void YSetEnable(uint8_t enabled);
 
 // Управление мотором X
+// Запуск таймера интерполяции оси X
+// Используется для интерполяции при печати оси X
+extern void XInterpTimerStart(uint32_t period);  // Запуск таймера интерполяции
+// Callback таймера интерполяции оси X (TIM3)
+// Выполняет один интерполированный шаг, возвращает 1 при завершении серии
+extern uint8_t XInterpTimerCallback(void);  
+
+
+// Пины энкодера оси X
+// Используются для чтения квадратурного энкодера (каналы A и B)
+extern volatile uint16_t ENCODER_A_PIN;  // Пин энкодера A
+extern volatile uint16_t ENCODER_B_PIN;  // Пин энкодера B
+// Чтение состояния пинов энкодера (каналы A и B)
+// Возвращает маску ENCODER_A_PIN | ENCODER_B_PIN
+extern uint16_t ReadEncoderPins(void); // Чтение состояния выводов энкодера
+// Callback энкодера оси X (вызывается из EXTI по фронтам A/B)
+// Считывает состояние энкодера и обновляет позицию X
+// Может инициировать логику печати при движении каретки 
+void XEncoderCallback(uint16_t GPIO_Pin); 
 
 // Таймерный обработчик X, вызывается циклически (примерно, 1 кГц)
 // Рассчитывает PID, позицию и управляет реальной мощностью
 // Логика реализована в SDK
 void XTimerCallback(void);
 // Инициализация мотора X с указанным режимом работы
-// MOTORX_MODE_START/ONE_PWM/TWO_PWM/STEP
+// X_MOTOR_MODE_START/ONE_PWM/TWO_PWM/STEP
 // **Реализовать в main.c**
-extern void MotorX_Init(MotorXMode_t mode);
+extern void XMotorInit(X_MOTOR_MODE_T mode);
 // Установка мощности мотора X с учетом направления и полярности
 // power = [-W_X_POWER_MAX..+W_X_POWER_MAX]
 // **Реализовать в main.c**
-extern void MotorX_Set(int power);
+extern void XMotorSet(int power);
 
-// Установка периода и запуск TIM1 для шагов X (в режиме MOTORX_MODE_STEP)
+// Установка периода и запуск TIM1 для шагов X (в режиме X_MOTOR_MODE_STEP)
 extern void XTimerSet(uint16_t period);
-// Установить физическое направление мотора X (DIR) (в режиме MOTORX_MODE_STEP)
+// Установить физическое направление мотора X (DIR) (в режиме X_MOTOR_MODE_STEP)
 // **Реализовать в main.c**
 extern void XSetDir(uint8_t dir_pin_state);
-// Сгенерировать импульс STEP для мотора X (в режиме MOTORX_MODE_STEP)
+// Сгенерировать импульс STEP для мотора X (в режиме X_MOTOR_MODE_STEP)
 // **Реализовать в main.c**
 extern void XSetStep(uint8_t step_pin_state);
 // Управление сигналом ENABLE (включение/выключение драйвера)

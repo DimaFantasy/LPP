@@ -30,6 +30,37 @@
 #include "lpp_sdk.h"
 
 #include <string.h>
+
+volatile uint8_t Ztest_hit;
+volatile int8_t pos_delta;
+volatile uint8_t X_POS_STATE;
+
+volatile static uint32_t diag_cnt = 0;
+static int32_t last_X_PHYS = -1;
+
+static uint8_t laser_pulse = 0;
+
+
+    // =====================================================
+    // ===== НЕЗАВИСИМАЯ ТЕСТОВАЯ СИСТЕМА (НАЧАЛО) =====
+    // =====================================================
+
+    static int32_t X_TEST_POS = 0;
+    static uint8_t X_TEST_LAST_STATE = 0;
+    static uint8_t test_inited = 0;
+		
+		// ============================================================================
+		// Виртуальное состояние энкодера (EXTI toggle-модель)
+		// ============================================================================
+		static uint8_t X_ENC_STATE = 0;        // bit1 = A, bit0 = B
+		static uint8_t X_ENC_LAST_STATE = 0;
+		static uint8_t X_ENC_INITED = 0;		
+		
+		
+		
+		
+		
+
 // ============================================================================
 // Переменные управления осью X
 // ============================================================================
@@ -119,7 +150,7 @@ volatile uint16_t X_Kd = 0;  // Дифференциальный коэффиц�
 // Переменные управления движением по X
 // ============================================================================
 
-MotorXMode_t motorXMode = MOTORX_MODE_START;  // Режимы работы мотора X
+X_MOTOR_MODE_T XMotorMode = X_MOTOR_MODE_START;  // Режимы работы мотора X
 
 volatile int32_t X_GO_POS = 0;  // Целевая позиция каретки X
 volatile int32_t X_POS = 0;     // Текущая позиция каретки X
@@ -132,7 +163,7 @@ volatile uint8_t X_START_STATIC_ACTIVE = 0;  // Флаг начала стати
 volatile uint8_t W_X_POL_DIR = 0;  // Полярность направления
 volatile uint8_t W_X_POL_PWM = 0;  // Полярность ШИМ
 
-// Управление шаговым двигателем X (в режиме MOTORX_MODE_STEP)
+// Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
 volatile int32_t X_START_POS = 0;   // Начальная позиция X
 volatile int32_t X_HALF_POS = 0;    // Половина пути X
 volatile uint8_t X_PIN = 0;         // Состояние "виртуального" STEP (0/1)
@@ -140,7 +171,7 @@ volatile uint16_t X_REAL_SPED = 0;  // Реальная скорость X (пе
 volatile int16_t X_MIN_POW = 0;     // Минимальная мощность (период) для X
 volatile int16_t X_ACCL = 0;        // Ускорение (длина разгона/торможения в шагах)
 
-// Управление шаговым двигателем X (в режиме MOTORX_MODE_STEP)
+// Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
 volatile uint8_t X_DIR_HI = 0;   // Направление X (высокий уровень)
 volatile uint8_t X_DIR_LO = 0;   // Направление X (низкий уровень)
 volatile uint8_t X_STEP_HI = 0;  // Шаг X (высокий уровень)
@@ -343,7 +374,7 @@ static uint16_t CyclesToMicroseconds(uint32_t cycles) {
  * @param pos_delta Изменение позиции (-1, 0, +1)
  * @retval None
  */
-void EncoderX_Update(int8_t pos_delta) {
+void XEncoder_Update(int8_t pos_d) {
     uint32_t now_cycles = DWT->CYCCNT;
     uint32_t elapsed_cycles = now_cycles - last_time_cycles;
     last_time_cycles = now_cycles;
@@ -361,7 +392,12 @@ void EncoderX_Update(int8_t pos_delta) {
 
     // Обновление глобальных переменных
     W_X_SPEED = raw_interval;
-    W_X_EN_DIRECT = (pos_delta > 0) ? 1 : -1;
+    W_X_EN_DIRECT = (pos_d > 0) ? 1 : -1;
+//		if (pos_d > 0) {
+//				W_X_EN_DIRECT = 1;
+//		} else if (pos_d < 0) {
+//				W_X_EN_DIRECT = -1;
+//		}		
     g_encoder_timeout_active = 0;
 }
 
@@ -396,7 +432,7 @@ volatile TYPE_FIFO_DATA FIFO_DATA = {0};    // Глобальный FIFO для 
 // ============================================================================
 
 void FifoPosY_Init(void) {
-    __disable_irq();       // Отключаем прерывания для атомарной операции
+////////////////////////////////////////////////////////////////    __disable_irq();       // Отключаем прерывания для атомарной операции
     FIFO_POS_Y.head = 0;   // Сброс индекса головы очереди
     FIFO_POS_Y.tail = 0;   // Сброс индекса хвоста очереди
     FIFO_POS_Y.count = 0;  // Сброс счетчика элементов
@@ -405,11 +441,11 @@ void FifoPosY_Init(void) {
     for (uint32_t i = 0; i < FIFO_POS_Y_SIZE; i++) {
         FIFO_POS_Y.POS_Y[i] = 0;  // Инициализация нулями
     }
-    __enable_irq();  // Включаем прерывания
+////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
 }
 
 uint8_t FifoPosY_Push(volatile int32_t value) {
-    __disable_irq();                            // Отключаем прерывания
+////////////////////////////////////////////////////////////////    __disable_irq();                            // Отключаем прерывания
     if (FIFO_POS_Y.count >= FIFO_POS_Y_SIZE) {  // Проверка переполнения
         __enable_irq();                         // Включаем прерывания
         return 0;                               // Очередь заполнена
@@ -419,12 +455,12 @@ uint8_t FifoPosY_Push(volatile int32_t value) {
     FIFO_POS_Y.head = (FIFO_POS_Y.head + 1) % FIFO_POS_Y_SIZE;  // Сдвиг головы
     FIFO_POS_Y.count++;                                         // Увеличение счетчика
 
-    __enable_irq();  // Включаем прерывания
+////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
     return 1;        // Успешная запись
 }
 
 uint8_t FifoPosY_Pop(volatile int32_t* value) {
-    __disable_irq();              // Отключаем прерывания
+////////////////////////////////////////////////////////////////    __disable_irq();              // Отключаем прерывания
     if (FIFO_POS_Y.count == 0) {  // Проверка пустоты очереди
         __enable_irq();           // Включаем прерывания
         return 0;                 // Очередь пуста
@@ -434,7 +470,7 @@ uint8_t FifoPosY_Pop(volatile int32_t* value) {
     FIFO_POS_Y.tail = (FIFO_POS_Y.tail + 1) % FIFO_POS_Y_SIZE;  // Сдвиг хвоста
     FIFO_POS_Y.count--;                                         // Уменьшение счетчика
 
-    __enable_irq();  // Включаем прерывания
+////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
     return 1;        // Успешное чтение
 }
 
@@ -455,7 +491,7 @@ uint8_t FifoPosY_FreeSpace(void) {
 // ============================================================================
 
 void FifoData_Init(void) {
-    __disable_irq();                            // Отключаем прерывания для атомарной инициализации
+////////////////////////////////////////////////////////////////    __disable_irq();                            // Отключаем прерывания для атомарной инициализации
     FIFO_DATA.head = 0;                         // Сброс индекса головы
     FIFO_DATA.tail = 0;                         // Сброс индекса хвоста
     FIFO_DATA.count = 0;                        // Сброс счетчика элементов
@@ -470,7 +506,7 @@ void FifoData_Init(void) {
             FIFO_DATA.BLOCKS[i][j] = 0;  // Инициализация нулями
         }
     }
-    __enable_irq();  // Включаем прерывания
+////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
 }
 
 uint8_t FifoData_IsEmpty(void) {
@@ -548,7 +584,7 @@ void XStartTracking(int32_t left_pos, int32_t right_pos) {
 void XStopTracking(void) {
     X_STOPPING = 1;
     // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
-    if (motorXMode != MOTORX_MODE_STEP) {
+    if (XMotorMode != X_MOTOR_MODE_STEP) {
         // Деактивируем трекинг
         X_TRACKING_ACTIVE = 0;
     
@@ -564,30 +600,57 @@ void XStopTracking(void) {
         X_START_STATIC_ACTIVE = 0;
     
         // Останавливаем мотор
-        MotorX_Set(0);;
+        XMotorSet(0);;
 
     }
 }
 
 // ============================================================================
-// Основной обработчик энкодера и логики печати
+// Основной обработчик энкодера по X и логики печати
 // ============================================================================
-void PrintStep(void) {
-    ///	if (motorXMode == MOTORX_MODE_STEP) return; // исключаем правку X_POS энкодером
-    // Таблица направлений энкодера (Грей-код)
-    static const int8_t increment[16] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
-    uint16_t gpio_state = ReadEncoderPins();  // Чтение пинов энкодера
-    uint8_t X_POS_STATE =
-        ((gpio_state & ENCODER_B_PIN) ? 1 : 0) | (((gpio_state & ENCODER_A_PIN) ? 1 : 0) << 1);
+void XEncoderCallback(uint16_t GPIO_Pin) {
 
-    if (X_POS_STATE == X_POS_LAST_STATE) return;                          // Нет изменений — выход
-    int8_t pos_delta = increment[X_POS_STATE | (X_POS_LAST_STATE << 2)];  // Расчет приращения
-    X_POS += pos_delta;                                                   // Обновление позиции X
-    X_POS_LAST_STATE = X_POS_STATE;                                       // Сохранение состояния
+    uint16_t gpio_state = ReadEncoderPins();  // Чтение пинов энкодера
+
+    // Таблица направлений энкодера (Грей-код)
+    static const int8_t increment[16] = {
+        0, -1,  1,  0,
+        1,  0,  0, -1,
+       -1,  0,  0,  1,
+        0,  1, -1,  0
+    };
+
+    // ---------- ОБЩЕЕ СОСТОЯНИЕ ----------
+    uint8_t curr_state =
+        ((gpio_state & ENCODER_B_PIN) ? 1 : 0) |
+        (((gpio_state & ENCODER_A_PIN) ? 1 : 0) << 1); 
+
+    // ---------- ОСНОВНАЯ ЛОГИКА (КАК БЫЛО) ----------
+    if (curr_state == X_POS_LAST_STATE)
+        return;
+
+    int8_t pos_delta = increment[curr_state | (X_POS_LAST_STATE << 2)];
+    X_POS += pos_delta;
+    X_POS_LAST_STATE = curr_state;
+
+
+
+
+// Тестовая индикация
+if (X_POS == 1038) {
+    SetLaserPWM(100);
+} else {
+    SetLaserPWM(0);
+}
+	
+
+
+	
+			
     if (pos_delta != 0) {
-        EncoderX_Update(pos_delta);  // Обновление времени в логике F103
+        XEncoder_Update(pos_delta);  // Обновление времени в логике 
         // --- Старт печати при достижении левой границы и движении вправо и 3 проходов---
-        if (pos_delta > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) {
+        if (pos_delta > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) { 
             PRINT_ACTIVE_COUNT++;  // Счетчик активных шагов
             if (PRINT_ACTIVE_COUNT >= PRINT_ACTIVE_COUNT_THRESHOLD) {
                 PRINT_ACTIVE = 0;  // Сброс активности
@@ -612,26 +675,31 @@ void PrintStep(void) {
 
     // --- Основной процесс печати ---
     if (START_PRINT) {
-        // Проверка нахождения в зоне печати
-        if (X_POS >= PRINT_LEFT_BORDER && X_POS <= PRINT_RIGHT_BORDER) {
-            activeBuffer = NextBuffer;  // Переключение буфера
-            // Управление лазером по текущему биту
-            SetLaserPWM(nextPrintBit[activeBuffer][0] ? PRINT_CONFIG.DAT.W_SET_LAZER : 0);
-            // Запуск интерполяции (дробных шагов)
-            if (INTERPOL_X > 1) {
-                interp_counter = 1;
-                InterpTimerStart(W_X_SPEED / INTERPOL_X);
-            }
-            // Подготовка следующего буфера битов
-            NextBuffer = activeBuffer ^ 1;
-            for (uint8_t i = 0; i < INTERPOL_X; i++) {
-                nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
-            }
-        } else {
-            // Вне зоны печати: выключить лазер и сбросить интерполяцию
-            SetLaserPWM(0);
-            interp_counter = 0;
-        }
+			
+			
+//        // Проверка нахождения в зоне печати
+//        if (X_POS >= PRINT_LEFT_BORDER && X_POS <= PRINT_RIGHT_BORDER) {
+//										
+//            activeBuffer = NextBuffer;  // Переключение буфера
+//            // Управление лазером по текущему биту
+//            SetLaserPWM(nextPrintBit[activeBuffer][0] ? PRINT_CONFIG.DAT.W_SET_LAZER : 0);
+//            // Запуск интерполяции (дробных шагов)
+//            if (INTERPOL_X > 1) {
+//                interp_counter = 1;
+//                XInterpTimerStart(W_X_SPEED / INTERPOL_X);
+//            }
+//            // Подготовка следующего буфера битов
+//            NextBuffer = activeBuffer ^ 1;
+//            for (uint8_t i = 0; i < INTERPOL_X; i++) {
+//                nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
+//            }
+//        } else {
+//            // Вне зоны печати: выключить лазер и сбросить интерполяцию
+//            SetLaserPWM(0);
+//            interp_counter = 0;
+//        }
+				
+				
 
         // --- Смена направления движения (вправо → влево) ---
         if ((W_X_EN_DIRECT == 1) && (X_POS > PRINT_RIGHT_BORDER) && (CURRENT_PRINT_DIRECTION == 0)) {
@@ -650,20 +718,21 @@ void PrintStep(void) {
             SetLaserPWM(0);
             if (FifoPosY_Pop(&Y_FINISH_POS)) {
                 Y_IMAGE_POSITION++;           // Следующая строка
-                CURRENT_PRINT_DIRECTION = 0;  // Направление вправо
+                CURRENT_PRINT_DIRECTION = 0;  // Изменение направления
             } else {
                 PrintStopJob(PRINT_STATUS_END);  // Конец данных
                 return;
             }
         }
     }
+		
 }
 
 // ============================================================================
 // Обработчик печати для STEPPER режима (без энкодера)
 // ============================================================================
-void PrintStepForStepper(int8_t direction) {
-    EncoderX_Update(direction);  // Обновление времени в логике F103
+void XStepperStepCallback(int8_t direction) {
+    XEncoder_Update(direction);  // Обновление времени в логике 
     // --- Старт печати при достижении левой границы и движении вправо ---
     if (direction > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) {
         PRINT_ACTIVE_COUNT++;
@@ -701,7 +770,7 @@ void PrintStepForStepper(int8_t direction) {
             // Запуск интерполяции (дробных шагов)
             if (INTERPOL_X > 1) {
                 interp_counter = 1;
-                InterpTimerStart(X_REAL_SPED / INTERPOL_X);
+                XInterpTimerStart(X_REAL_SPED / INTERPOL_X);
             }
 
             // Подготовка следующего буфера битов
@@ -745,7 +814,7 @@ void PrintStepForStepper(int8_t direction) {
 // Выполнение одного шага интерполяции
 // Возвращает 1 — если серия интерполированных шагов завершена
 // ============================================================================
-uint8_t PrintStepInterp(void) {
+uint8_t XInterpTimerCallback(void) {
     // Установка мощности лазера в зависимости от текущего бита
     if (nextPrintBit[activeBuffer][interp_counter]) {
         SetLaserPWM(PRINT_CONFIG.DAT.W_SET_LAZER);
@@ -762,7 +831,7 @@ uint8_t PrintStepInterp(void) {
 // ============================================================================
 // Остановка задания печати и сброс параметров
 // ============================================================================
-void PrintStopJob(T_PRINT_STATUS PRINT_STATUS) {
+void PrintStopJob(PRINT_STATUS_T PRINT_STATUS) {
     // Выключение лазера
     SetLaserPWM(0);
 
@@ -794,14 +863,14 @@ void PacketReceive(uint8_t* buffer) {
         // ============================================================================
         // Обработка состояния FIFO данных и запуск DMA для новых данных
         // ============================================================================
-        __disable_irq();
+////////////////////////////////////////////////////////////////        __disable_irq();
         if ((FIFO_DATA.count >= FIFO_DATA.capacity) || (PRINT_DAT->DAT.R_FIFO_FUL == 1)) {
             PRINT_DAT->DAT.R_FIFO_FUL = 1; //FIFO не принял данные, пакет нужно повторить
             PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count; // Текущее количество блоков в FIFO
             __enable_irq();
         } else {
             uint16_t next_tail = (FIFO_DATA.tail + 1) % FIFO_DATA.capacity;
-            __enable_irq();
+////////////////////////////////////////////////////////////////            __enable_irq();
             // Передаём
             FIFO_DATA_StartDma((uint32_t)PRINT_DAT->DAT.W_BUFFER, (uint32_t)FIFO_DATA.BLOCKS[FIFO_DATA.tail],
                                sizeof(FIFO_DATA.BLOCKS[0])  // или FIFO_DATA_BLOCK_SIZE, если определено
@@ -812,12 +881,12 @@ void PacketReceive(uint8_t* buffer) {
         // ============================================================================
         // Обработка FIFO координат Y
         // ============================================================================
-        __disable_irq();
+////////////////////////////////////////////////////////////////        __disable_irq();
         if (PRINT_DAT->DAT.R_FIFO_Y_COUNT == 1) {
             FifoPosY_Push(PRINT_DAT->DAT.W_Y_BUFFER);
         }
         PRINT_DAT->DAT.R_FIFO_Y_COUNT = FifoPosY_FreeSpace();
-        __enable_irq();
+////////////////////////////////////////////////////////////////        __enable_irq();
 
         // Обновление параметров управления
         PRINT_CONFIG.DAT.W_SET_LAZER = PRINT_DAT->DAT.W_SET_LAZER;
@@ -1001,7 +1070,7 @@ void PacketReceive(uint8_t* buffer) {
 
         W_X_POL_DIR = SET_X.DAT.W_X_POL_DIR;
         W_X_POL_PWM = SET_X.DAT.W_X_POL_PWM;
-        MotorX_Init(SET_X.DAT.W_X_MODE);
+        XMotorInit(SET_X.DAT.W_X_MODE);
 
         if (SET_X.DAT.W_X_POL_EN == 0) {
             ENCODER_A_PIN = 0x0040;
@@ -1016,6 +1085,17 @@ void PacketReceive(uint8_t* buffer) {
             X_GO_POS = 0;
             SET_X.DAT.W_X_MOV_POS = 0;
             SET_X.DAT.W_X_RESET = 0;
+					
+					
+X_TEST_POS = 0;
+X_POS_LAST_STATE = 0;
+X_TEST_LAST_STATE = 0;
+test_inited = 0;
+
+X_ENC_STATE = 0;
+X_ENC_LAST_STATE = 0;
+X_ENC_INITED = 0;					
+					
         }
 
         // === ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА ===
@@ -1032,7 +1112,7 @@ void PacketReceive(uint8_t* buffer) {
             // Трекинг был включен - останавливаем безопасно
             X_STOPPING = 1;
             // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
-            if (motorXMode != MOTORX_MODE_STEP) {
+            if (XMotorMode != X_MOTOR_MODE_STEP) {
                 // Деактивируем трекинг
                 X_TRACKING_ACTIVE = 0;
             }
@@ -1151,13 +1231,13 @@ void PacketReceive(uint8_t* buffer) {
 // Функция завершения DMA (вызов из main.c при окончании копирования блока)
 // ============================================================================
 void FIFO_DATA_EndDma(void) {
-    __disable_irq();  // Отключение прерываний для атомарного обновления FIFO
+////////////////////////////////////////////////////////////////    __disable_irq();  // Отключение прерываний для атомарного обновления FIFO
     // Обновление индексов FIFO после успешной DMA передачи
     if (FIFO_DATA.count < FIFO_DATA.capacity) {                      // Проверка, есть ли место в FIFO
         FIFO_DATA.tail = (FIFO_DATA.tail + 1) % FIFO_DATA.capacity;  // Сдвиг хвоста
         FIFO_DATA.count++;                                           // Увеличение счетчика элементов
     }
-    __enable_irq();  // Включение прерываний
+////////////////////////////////////////////////////////////////    __enable_irq();  // Включение прерываний
     // Активация печати при получении данных
     if (PRINT_CONFIG.DAT.R_PRINT_STATUS == PRINT_STATUS_PRINT &&  // Проверка, что идет печать
         PRINT_ACTIVE == 0 && START_PRINT == 0) {                  // Проверка флагов активности
@@ -1177,7 +1257,7 @@ void Lpp_Init(void) {
         JumpToApplication(BASE_BOOT_START_ADDR);
     }
 
-    motorXMode = 255;  // Принудительная инициализация при первом вызове
+    XMotorMode = 255;  // Принудительная инициализация при первом вызове
     // Инициализация параметров печати
     PRINT_CONFIG.DAT.R_PRINT_STATUS = PRINT_STATUS_END;
     // Инициализация подсистем SDK
@@ -1191,7 +1271,7 @@ void Lpp_Init(void) {
 
     // При необходимости можно добавить инициализацию лазера, мотора и т.п.
     // SetLaserPWM(0);
-    // MotorX_Init(MOTORX_MODE_START);
+    // XMotorInit(X_MOTOR_MODE_START);
 }
 
 // ============================================================================
@@ -1268,7 +1348,7 @@ void Lpp_MainLoop(void) {
             CURRENT_PRINT_DIRECTION = 0;
             FifoData_ReadBitReset();  // Сброс состояния чтения битов
 
-            if (motorXMode == MOTORX_MODE_STEP) {
+            if (XMotorMode == X_MOTOR_MODE_STEP) {
                 // ========================================================
                 // ИНИЦИАЛИЗАЦИЯ ДЛЯ СТЕППЕРА
                 // ========================================================
@@ -1391,17 +1471,17 @@ void YTimerCallback(void) {
 }
 
 // ============================================================================
-// Движение по оси X (в режиме MOTORX_MODE_STEP)
+// Движение по оси X (в режиме X_MOTOR_MODE_STEP)
 // direction: 1 = вправо, -1 = влево
 // ============================================================================
 void XMove(int direction) {
     if (X_PIN == 1) {
         X_PIN = 0;
         XSetStep(X_STEP_HI);  // Фронт STEP
-        X_POS += direction;
+        X_POS += direction; 
 
         // Обработка печати после каждого шага
-        PrintStepForStepper(direction);
+        XStepperStepCallback(direction);
 
     } else {
         X_PIN = 1;
@@ -1448,7 +1528,7 @@ void XTimerCallback(void) {
     // ========================================================
     // РЕЖИМ ШАГОВОГО МОТОРА
     // ========================================================
-    if (motorXMode == MOTORX_MODE_STEP) {
+    if (XMotorMode == X_MOTOR_MODE_STEP) {
         // --- Определяем стартовую позицию при начале движения ---
         if (X_POS == X_START_POS || X_POS == X_GO_POS) X_START_POS = X_POS;
 
@@ -1551,7 +1631,7 @@ void XTimerCallback(void) {
             else if (W_X_POWER_REAL < -W_X_POWER_MAX)
                 W_X_POWER_REAL = -W_X_POWER_MAX;
 
-            MotorX_Set(W_X_POWER_REAL);
+            XMotorSet(W_X_POWER_REAL);
         }
 
         // ========================================================
@@ -1599,9 +1679,9 @@ void XTimerCallback(void) {
 
                 if (W_X_POWER_REAL > W_X_POWER_MAX) W_X_POWER_REAL = W_X_POWER_MAX;
                 if (W_X_POWER_REAL < -W_X_POWER_MAX) W_X_POWER_REAL = -W_X_POWER_MAX;
-                MotorX_Set(W_X_POWER_REAL);
+                XMotorSet(W_X_POWER_REAL);
             } else {
-                MotorX_Set(0);
+                XMotorSet(0);
             }
         }
     }
