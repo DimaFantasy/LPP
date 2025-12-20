@@ -3,7 +3,7 @@
 <title>Static Call Graph - [LPP_STM32F103Cx\LPP_STM32F103Cx.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image LPP_STM32F103Cx\LPP_STM32F103Cx.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sat Dec 20 07:30:03 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sat Dec 20 08:05:07 2025
 <BR><P>
 <H3>Maximum Stack Usage =        220 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1042,7 +1042,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bc]"></a>Lpp_MainLoop</STRONG> (Thumb, 500 bytes, Stack size 24 bytes, lpp_sdk.o(.text.Lpp_MainLoop))
+<P><STRONG><a name="[bc]"></a>Lpp_MainLoop</STRONG> (Thumb, 494 bytes, Stack size 24 bytes, lpp_sdk.o(.text.Lpp_MainLoop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = Lpp_MainLoop &rArr; PacketSend &rArr; USBD_CUSTOM_HID_SendReport &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketSend
@@ -1078,7 +1078,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xb.o(RESET)
 </UL>
-<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1728 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
+<P><STRONG><a name="[5f]"></a>PacketReceive</STRONG> (Thumb, 1724 bytes, Stack size 40 bytes, lpp_sdk.o(.text.PacketReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = PacketReceive &rArr; XMotorInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASHEx_Erase
@@ -1752,7 +1752,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[b6]"></a>XTimerCallback</STRONG> (Thumb, 758 bytes, Stack size 16 bytes, lpp_sdk.o(.text.XTimerCallback))
+<P><STRONG><a name="[b6]"></a>XTimerCallback</STRONG> (Thumb, 754 bytes, Stack size 16 bytes, lpp_sdk.o(.text.XTimerCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = XTimerCallback &rArr; XCalculatePower &rArr; XStepperStepCallback &rArr; PrintStopJob &rArr; XMotorSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerSet

@@ -118,7 +118,8 @@ volatile int32_t W_X_SPEED_ERROR = 0;     // Ошибка скорости
 // ----------------------------------------------------
 volatile uint16_t X_KP = 0;  // Пропорциональный коэффициент
 volatile uint16_t X_KI = 0;  // Интегральный коэффициент
-volatile uint16_t X_KD = 0;  // Дифференциальный коэффициент
+
+volatile uint16_t X_KP_POS = 0;  // Пропорциональный коэффициент при позиционировании
 
 // ============================================================================
 // Переменные управления положением X
@@ -1077,6 +1078,8 @@ void PacketReceive(uint8_t* buffer) {
             SET_X.DAT.W_X_MOV_POS = 0;
             SET_X.DAT.W_X_RESET = 0;
         }
+				
+				X_KP_POS = SET_X.DAT.X_KP_POS; 
 
         // === ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА ===
         if (SET_X.DAT.W_X_TRECK == 1) {
@@ -1085,7 +1088,6 @@ void PacketReceive(uint8_t* buffer) {
             W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
             X_KP = SET_X.DAT.W_X_KP;
             X_KI = SET_X.DAT.W_X_KI;
-            X_KD = SET_X.DAT.W_X_KD;
 					
             XStartTracking(SET_X.DAT.W_X_L_POS, SET_X.DAT.W_X_R_POS);
         } else {
@@ -1354,7 +1356,6 @@ void Lpp_MainLoop(void) {
                 W_X_SPEED_SET = PRINT_CONFIG.DAT.W_X_SPEED_SET;  // Скорость движения
                 X_KP = PRINT_CONFIG.DAT.W_X_KP;                  // Коэффициент P
                 X_KI = PRINT_CONFIG.DAT.W_X_KI;                  // Коэффициент I
-                X_KD = PRINT_CONFIG.DAT.W_X_KD;                  // Коэффициент D
 
                 // Установка крайних позиций с учетом зоны разгона/торможения
                 SET_X.DAT.W_X_L_POS =
@@ -1670,8 +1671,7 @@ void XTimerCallback(void) {
                         // ------------------------------------------------
                         // Пропорциональная составляющая (P)
                         // ------------------------------------------------
-                        int32_t Kp = 20;
-                        int32_t base_power = position_error * Kp;
+                        int32_t base_power = position_error * X_KP_POS;
 
                         // ------------------------------------------------
                         // Если позиция не меняется — наращиваем усилие

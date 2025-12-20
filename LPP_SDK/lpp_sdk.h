@@ -269,7 +269,7 @@ typedef union {
         int16_t W_DIV_X_ST;      // Делитель частоты (стояние)
         uint8_t W_X_KP;          // Коэффициент P
         uint8_t W_X_KI;          // Коэффициент I
-        uint8_t W_X_KD;          // Коэффициент D
+        uint8_t X_KP_POS;        // Коэффициент P При позиционировании
         uint8_t W_X_RESET;       // Сброс позиции каретки
         uint8_t W_X_POL_EN;      // Полярность энкодера
         uint8_t W_X_POL_PWM;     // Полярность H-моста
