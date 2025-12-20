@@ -31,36 +31,6 @@
 
 #include <string.h>
 
-volatile uint8_t Ztest_hit;
-volatile int8_t pos_delta;
-volatile uint8_t X_POS_STATE;
-
-volatile static uint32_t diag_cnt = 0;
-static int32_t last_X_PHYS = -1;
-
-static uint8_t laser_pulse = 0;
-
-
-    // =====================================================
-    // ===== НЕЗАВИСИМАЯ ТЕСТОВАЯ СИСТЕМА (НАЧАЛО) =====
-    // =====================================================
-
-    static int32_t X_TEST_POS = 0;
-    static uint8_t X_TEST_LAST_STATE = 0;
-    static uint8_t test_inited = 0;
-		
-		// ============================================================================
-		// Виртуальное состояние энкодера (EXTI toggle-модель)
-		// ============================================================================
-		static uint8_t X_ENC_STATE = 0;        // bit1 = A, bit0 = B
-		static uint8_t X_ENC_LAST_STATE = 0;
-		static uint8_t X_ENC_INITED = 0;		
-		
-		
-		
-		
-		
-
 // ============================================================================
 // Переменные управления осью X
 // ============================================================================
@@ -129,61 +99,75 @@ TYPE_APP_ID APP_ID = {0};
 TYPE_SPEED_TEST SPEED_TEST = {0};
 
 // ============================================================================
-// Переменные управления осью X
+// ПЕРЕМЕННЫЕ УПРАВЛЕНИЯ ОСЬЮ X
 // ============================================================================
 
+// ----------------------------------------------------
 // Параметры управления движением по X
+// ----------------------------------------------------
 volatile int16_t W_X_POWER_REAL = 0;      // Реальная мощность на моторе
 volatile int8_t W_X_EN_DIRECT = 0;        // Направление движения каретки
-volatile uint16_t W_X_SPEED_SET = 1000;   // Установленная скорость движения
-volatile int32_t W_X_SPEED_FILTERED = 0;  // Скорость с учетом направления
-volatile uint16_t W_X_POWER_MAX = 500;    // Максимальная мощность X
+volatile uint16_t W_X_SPEED_SET = 1000;   // Заданная скорость движения
+volatile int32_t W_X_SPEED_FILTERED = 0;  // Скорость с учётом направления
+volatile uint16_t W_X_POWER_MAX = 500;    // Максимальная мощность
 volatile uint16_t W_X_SPEED = 0;          // Скорость в тиках счетчика
 volatile int32_t W_X_SPEED_ERROR = 0;     // Ошибка скорости
 
+// ----------------------------------------------------
 // PID коэффициенты для стабилизации скорости
-volatile uint16_t X_Kp = 0;  // Пропорциональный коэффициент
-volatile uint16_t X_Ki = 0;  // Интегральный коэффициент
-volatile uint16_t X_Kd = 0;  // Дифференциальный коэффициент
+// ----------------------------------------------------
+volatile uint16_t X_KP = 0;  // Пропорциональный коэффициент
+volatile uint16_t X_KI = 0;  // Интегральный коэффициент
+volatile uint16_t X_KD = 0;  // Дифференциальный коэффициент
 
 // ============================================================================
-// Переменные управления движением по X
+// Переменные управления положением X
 // ============================================================================
 
-X_MOTOR_MODE_T XMotorMode = X_MOTOR_MODE_START;  // Режимы работы мотора X
-
-volatile int32_t X_GO_POS = 0;  // Целевая позиция каретки X
-volatile int32_t X_POS = 0;     // Текущая позиция каретки X
+X_MOTOR_MODE_T X_MOTOR_MODE = X_MOTOR_MODE_START;  // Режим работы мотора
+volatile int32_t X_GO_POS = 0;                     // Целевая позиция каретки
+volatile int32_t X_POS = 0;                        // Текущая позиция каретки
 
 volatile uint8_t X_POLAR_DYNAMIC = 0;        // Полярность при движении/треке
 volatile uint8_t X_POLAR_STATIC = 0;         // Полярность при статике/позиции
 volatile uint8_t X_START_STATIC_ACTIVE = 0;  // Флаг начала статического позиционирования
 
-// Полярность управления мотором X
+// Полярность управления мотором
 volatile uint8_t W_X_POL_DIR = 0;  // Полярность направления
 volatile uint8_t W_X_POL_PWM = 0;  // Полярность ШИМ
 
-// Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
-volatile int32_t X_START_POS = 0;   // Начальная позиция X
-volatile int32_t X_HALF_POS = 0;    // Половина пути X
-volatile uint8_t X_PIN = 0;         // Состояние "виртуального" STEP (0/1)
-volatile uint16_t X_REAL_SPED = 0;  // Реальная скорость X (период таймера)
-volatile int16_t X_MIN_POW = 0;     // Минимальная мощность (период) для X
-volatile int16_t X_ACCL = 0;        // Ускорение (длина разгона/торможения в шагах)
+// ============================================================================
+// Переменные для режима STEP (шаговый мотор)
+// ============================================================================
 
-// Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
-volatile uint8_t X_DIR_HI = 0;   // Направление X (высокий уровень)
-volatile uint8_t X_DIR_LO = 0;   // Направление X (низкий уровень)
-volatile uint8_t X_STEP_HI = 0;  // Шаг X (высокий уровень)
-volatile uint8_t X_STEP_LO = 0;  // Шаг X (низкий уровень)
+volatile int32_t X_START_POS = 0;   // Начальная позиция
+volatile int32_t X_HALF_POS = 0;    // Половина пути
+volatile uint8_t X_PIN = 0;         // Виртуальный STEP (0/1)
+volatile uint16_t X_REAL_SPED = 0;  // Реальная скорость (период таймера)
+volatile int16_t X_MIN_POW = 0;     // Минимальная мощность
+volatile int16_t X_ACCL = 0;        // Ускорение (длина разгона/торможения)
 
-uint16_t TUNING_X[1000] = {0};  // Массив тюнинга ускорения/торможения X
+volatile uint8_t X_DIR_HI = 0;   // Направление X (HIGH)
+volatile uint8_t X_DIR_LO = 0;   // Направление X (LOW)
+volatile uint8_t X_STEP_HI = 0;  // Шаг X (HIGH)
+volatile uint8_t X_STEP_LO = 0;  // Шаг X (LOW)
 
-volatile X_MOTION_T X_MOTION = X_MOTION_NONE;  // Текущее направление движения X
-volatile uint8_t X_RETURN_DONE = 0;          // Флаг завершения возврата в начальную позицию
+uint16_t TUNING_X[1000] = {0};  // Массив тюнинга ускорения/торможения
+
+volatile X_MOTION_T X_MOTION = X_MOTION_NONE;  // Текущее направление движения
+volatile uint8_t X_RETURN_DONE = 0;            // Флаг завершения возврата
 
 // ============================================================================
-// Управление осью Y
+// Вспомогательные переменные управления
+// ============================================================================
+// static int32_t X_ERROR_ACCUM          = 0;			// Накопитель интегральной ошибки для позиционного
+// регулятора
+static int32_t X_LAST_POSITION = 0;   // Последняя позиция для расчёта дельты (скорость, залипание)
+static int32_t X_POWER_ACCUM = 0;     // Накопление мощности для разблокировки мотора при залипании
+static uint32_t X_STUCK_COUNTER = 0;  // Счётчик залипания мотора (увеличивается при отсутствии движения)
+
+// ============================================================================
+// ПЕРЕМЕННЫЕ УПРАВЛЕНИЯ ОСЬЮ Y
 // ============================================================================
 
 volatile Y_STATUS_T Y_STATUS = Y_STATUS_READY;  // Текущий статус готовности Y
@@ -266,8 +250,8 @@ void JumpToApplication(uint32_t addr) {
     Jump_To_Application = (pFunction)JumpAddress;  // приводим его к пользовательскому типу
     __set_MSP(*(__IO uint32_t*)addr);  // Инициализировать указатель стека пользовательского приложения
                                        // /устанавливаем SP приложения
-    HAL_DeInit();  // Сброс всей переферии
-    Jump_To_Application();  // Прыгаем по адресу
+    HAL_DeInit();                      // Сброс всей переферии
+    Jump_To_Application();             // Прыгаем по адресу
 }
 
 void flash_write(uint32_t Address, uint32_t Data) {
@@ -393,11 +377,11 @@ void XEncoder_Update(int8_t pos_d) {
     // Обновление глобальных переменных
     W_X_SPEED = raw_interval;
     W_X_EN_DIRECT = (pos_d > 0) ? 1 : -1;
-//		if (pos_d > 0) {
-//				W_X_EN_DIRECT = 1;
-//		} else if (pos_d < 0) {
-//				W_X_EN_DIRECT = -1;
-//		}		
+    //		if (pos_d > 0) {
+    //				W_X_EN_DIRECT = 1;
+    //		} else if (pos_d < 0) {
+    //				W_X_EN_DIRECT = -1;
+    //		}
     g_encoder_timeout_active = 0;
 }
 
@@ -432,7 +416,8 @@ volatile TYPE_FIFO_DATA FIFO_DATA = {0};    // Глобальный FIFO для 
 // ============================================================================
 
 void FifoPosY_Init(void) {
-////////////////////////////////////////////////////////////////    __disable_irq();       // Отключаем прерывания для атомарной операции
+    ////////////////////////////////////////////////////////////////    __disable_irq();       // Отключаем
+    /// прерывания для атомарной операции
     FIFO_POS_Y.head = 0;   // Сброс индекса головы очереди
     FIFO_POS_Y.tail = 0;   // Сброс индекса хвоста очереди
     FIFO_POS_Y.count = 0;  // Сброс счетчика элементов
@@ -441,11 +426,13 @@ void FifoPosY_Init(void) {
     for (uint32_t i = 0; i < FIFO_POS_Y_SIZE; i++) {
         FIFO_POS_Y.POS_Y[i] = 0;  // Инициализация нулями
     }
-////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
+    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
+    /// прерывания
 }
 
 uint8_t FifoPosY_Push(volatile int32_t value) {
-////////////////////////////////////////////////////////////////    __disable_irq();                            // Отключаем прерывания
+    ////////////////////////////////////////////////////////////////    __disable_irq(); // Отключаем
+    /// прерывания
     if (FIFO_POS_Y.count >= FIFO_POS_Y_SIZE) {  // Проверка переполнения
         __enable_irq();                         // Включаем прерывания
         return 0;                               // Очередь заполнена
@@ -455,12 +442,14 @@ uint8_t FifoPosY_Push(volatile int32_t value) {
     FIFO_POS_Y.head = (FIFO_POS_Y.head + 1) % FIFO_POS_Y_SIZE;  // Сдвиг головы
     FIFO_POS_Y.count++;                                         // Увеличение счетчика
 
-////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
-    return 1;        // Успешная запись
+    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
+    /// прерывания
+    return 1;  // Успешная запись
 }
 
 uint8_t FifoPosY_Pop(volatile int32_t* value) {
-////////////////////////////////////////////////////////////////    __disable_irq();              // Отключаем прерывания
+    ////////////////////////////////////////////////////////////////    __disable_irq();              //
+    /// Отключаем прерывания
     if (FIFO_POS_Y.count == 0) {  // Проверка пустоты очереди
         __enable_irq();           // Включаем прерывания
         return 0;                 // Очередь пуста
@@ -470,8 +459,9 @@ uint8_t FifoPosY_Pop(volatile int32_t* value) {
     FIFO_POS_Y.tail = (FIFO_POS_Y.tail + 1) % FIFO_POS_Y_SIZE;  // Сдвиг хвоста
     FIFO_POS_Y.count--;                                         // Уменьшение счетчика
 
-////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
-    return 1;        // Успешное чтение
+    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
+    /// прерывания
+    return 1;  // Успешное чтение
 }
 
 uint8_t FifoPosY_IsEmpty(void) {
@@ -491,7 +481,8 @@ uint8_t FifoPosY_FreeSpace(void) {
 // ============================================================================
 
 void FifoData_Init(void) {
-////////////////////////////////////////////////////////////////    __disable_irq();                            // Отключаем прерывания для атомарной инициализации
+    ////////////////////////////////////////////////////////////////    __disable_irq(); // Отключаем
+    /// прерывания для атомарной инициализации
     FIFO_DATA.head = 0;                         // Сброс индекса головы
     FIFO_DATA.tail = 0;                         // Сброс индекса хвоста
     FIFO_DATA.count = 0;                        // Сброс счетчика элементов
@@ -506,7 +497,8 @@ void FifoData_Init(void) {
             FIFO_DATA.BLOCKS[i][j] = 0;  // Инициализация нулями
         }
     }
-////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем прерывания
+    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
+    /// прерывания
 }
 
 uint8_t FifoData_IsEmpty(void) {
@@ -582,124 +574,124 @@ void XStartTracking(int32_t left_pos, int32_t right_pos) {
 // БЕЗОПАСНАЯ ОСТАНОВКА ТРЕКИНГА
 // ============================================================================
 void XStopTracking(void) {
+		// Проверка в начале функции
+		if (X_STOPPING || !X_TRACKING_ACTIVE) {
+				return;  // Уже в процессе остановки или не активен
+		}	
+	
     X_STOPPING = 1;
+		X_RETURN_DONE = 0; // Двинутся к позиции
     // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
-    if (XMotorMode != X_MOTOR_MODE_STEP) {
+    if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
         // Деактивируем трекинг
         X_TRACKING_ACTIVE = 0;
-    
+
         // Обнуляем PID/PI части
         W_X_POWER_REAL = 0;
         W_X_SPEED_ERROR_INTEGRAL = 0;
-    
+
         // Сбрасываем направление для обоих режимов
         X_POLAR_DYNAMIC = 0;
         X_POLAR_STATIC = 0;
-    
+
         // Сбрасываем флаги активации
         X_START_STATIC_ACTIVE = 0;
-    
-        // Останавливаем мотор
-        XMotorSet(0);;
 
-    }
+        // Останавливаем мотор
+        XMotorSet(0);
+			
+				// Возврат на заданную позицию после трекинга
+				X_GO_POS = SET_X.DAT.W_X_MOV_POS;   	
+        
+    }	
 }
 
 // ============================================================================
 // Основной обработчик энкодера по X и логики печати
 // ============================================================================
 void XEncoderCallback(uint16_t GPIO_Pin) {
-
     uint16_t gpio_state = ReadEncoderPins();  // Чтение пинов энкодера
 
     // Таблица направлений энкодера (Грей-код)
-    static const int8_t increment[16] = {
-        0, -1,  1,  0,
-        1,  0,  0, -1,
-       -1,  0,  0,  1,
-        0,  1, -1,  0
-    };
+    static const int8_t increment[16] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
 
     // ---------- ОБЩЕЕ СОСТОЯНИЕ ----------
     uint8_t curr_state =
-        ((gpio_state & ENCODER_B_PIN) ? 1 : 0) |
-        (((gpio_state & ENCODER_A_PIN) ? 1 : 0) << 1); 
+        ((gpio_state & ENCODER_B_PIN) ? 1 : 0) | (((gpio_state & ENCODER_A_PIN) ? 1 : 0) << 1);
 
-    // ---------- ОСНОВНАЯ ЛОГИКА (КАК БЫЛО) ----------
-    if (curr_state == X_POS_LAST_STATE)
-        return;
-
+    // ---------- ОСНОВНАЯ ЛОГИКА ----------
     int8_t pos_delta = increment[curr_state | (X_POS_LAST_STATE << 2)];
-    X_POS += pos_delta;
-    X_POS_LAST_STATE = curr_state;
 
+    if (curr_state != X_POS_LAST_STATE) {
+        X_POS_LAST_STATE = curr_state;
+        X_POS += pos_delta;
+    }
+    if (pos_delta == 0) return;  // дальше не печатаем и не читаем пиксел
+    XEncoder_Update(pos_delta);  // Обновление времени в логике
 
+//// 1002
+// #define TEST_START_X   960
+// #define TEST_PIXELS    5   // 2…5
 
+// static uint8_t test_pixel_cnt = 0;
 
-// Тестовая индикация
-if (X_POS == 1038) {
-    SetLaserPWM(100);
-} else {
-    SetLaserPWM(0);
-}
-	
+// if (X_POS == TEST_START_X) {
+//     test_pixel_cnt = TEST_PIXELS;
+// }
 
+// if (test_pixel_cnt > 0) {
+//     SetLaserPWM(99);
+//     test_pixel_cnt--;
+// } else {
+//     SetLaserPWM(0);
+// }
 
-	
-			
-    if (pos_delta != 0) {
-        XEncoder_Update(pos_delta);  // Обновление времени в логике 
-        // --- Старт печати при достижении левой границы и движении вправо и 3 проходов---
-        if (pos_delta > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) { 
-            PRINT_ACTIVE_COUNT++;  // Счетчик активных шагов
-            if (PRINT_ACTIVE_COUNT >= PRINT_ACTIVE_COUNT_THRESHOLD) {
-                PRINT_ACTIVE = 0;  // Сброс активности
-                START_PRINT = 1;   // Разрешение старта печати
+    // --- Старт печати при достижении левой границы и движении вправо и 3 проходов---
+    if (pos_delta > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) {
+        PRINT_ACTIVE_COUNT++;  // Счетчик активных шагов
+        if (PRINT_ACTIVE_COUNT >= PRINT_ACTIVE_COUNT_THRESHOLD) {
+            PRINT_ACTIVE = 0;  // Сброс активности
+            START_PRINT = 1;   // Разрешение старта печати
 
-                activeBuffer = 0;  // Сброс активного буфера
-                NextBuffer = 0;    // Сброс следующего буфера
-                // Предзагрузка первого буфера битов
-                for (uint8_t i = 0; i < INTERPOL_X; i++) {
-                    nextPrintBit[activeBuffer][i] = FifoData_ReadBit();
-                }
-                // Извлечение следующей координаты Y
-                if (FifoPosY_Pop(&Y_FINISH_POS)) {
-                    Y_IMAGE_POSITION = 0;  // Сброс позиции изображения
-                } else {
-                    PrintStopJob(PRINT_STATUS_END);  // Завершить печать при отсутствии данных
-                    return;
-                }
+            activeBuffer = 0;  // Сброс активного буфера
+            NextBuffer = 0;    // Сброс следующего буфера
+            // Предзагрузка первого буфера битов
+            for (uint8_t i = 0; i < INTERPOL_X; i++) {
+                nextPrintBit[activeBuffer][i] = FifoData_ReadBit();
+            }
+            // Извлечение следующей координаты Y
+            if (FifoPosY_Pop(&Y_FINISH_POS)) {
+                Y_IMAGE_POSITION = 0;  // Сброс позиции изображения
+            } else {
+                PrintStopJob(PRINT_STATUS_END);  // Завершить печать при отсутствии данных
+                return;
             }
         }
     }
 
     // --- Основной процесс печати ---
     if (START_PRINT) {
-			
-			
-//        // Проверка нахождения в зоне печати
-//        if (X_POS >= PRINT_LEFT_BORDER && X_POS <= PRINT_RIGHT_BORDER) {
-//										
-//            activeBuffer = NextBuffer;  // Переключение буфера
-//            // Управление лазером по текущему биту
-//            SetLaserPWM(nextPrintBit[activeBuffer][0] ? PRINT_CONFIG.DAT.W_SET_LAZER : 0);
-//            // Запуск интерполяции (дробных шагов)
-//            if (INTERPOL_X > 1) {
-//                interp_counter = 1;
-//                XInterpTimerStart(W_X_SPEED / INTERPOL_X);
-//            }
-//            // Подготовка следующего буфера битов
-//            NextBuffer = activeBuffer ^ 1;
-//            for (uint8_t i = 0; i < INTERPOL_X; i++) {
-//                nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
-//            }
-//        } else {
-//            // Вне зоны печати: выключить лазер и сбросить интерполяцию
-//            SetLaserPWM(0);
-//            interp_counter = 0;
-//        }
-				
-				
+        // Проверка нахождения в зоне печати
+        if (X_POS >= PRINT_LEFT_BORDER && X_POS <= PRINT_RIGHT_BORDER) {
+            activeBuffer = NextBuffer;  // Переключение буфера
+            // Управление лазером по текущему биту
+            SetLaserPWM(nextPrintBit[activeBuffer][0] ? PRINT_CONFIG.DAT.W_SET_LAZER : 0);
+            // Запуск интерполяции (дробных шагов)
+            if (INTERPOL_X > 1) {
+                interp_counter = 1;
+                XInterpTimerStart(W_X_SPEED / INTERPOL_X);
+            }
+            // Подготовка следующего буфера битов
+            NextBuffer = activeBuffer ^ 1;
+            for (uint8_t i = 0; i < INTERPOL_X; i++) {
+                nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
+            }
+        } 
+				else {
+            // Вне зоны печати: выключить лазер и сбросить интерполяцию
+            SetLaserPWM(0);
+            interp_counter = 0;
+        }
 
         // --- Смена направления движения (вправо → влево) ---
         if ((W_X_EN_DIRECT == 1) && (X_POS > PRINT_RIGHT_BORDER) && (CURRENT_PRINT_DIRECTION == 0)) {
@@ -708,7 +700,7 @@ if (X_POS == 1038) {
                 Y_IMAGE_POSITION++;           // Переход к следующей строке
                 CURRENT_PRINT_DIRECTION = 1;  // Изменение направления
             } else {
-                PrintStopJob(PRINT_STATUS_END);  // Нет данных — останов
+                PrintStopJob(PRINT_STATUS_END);  // Конец данных
                 return;
             }
         }
@@ -725,14 +717,13 @@ if (X_POS == 1038) {
             }
         }
     }
-		
 }
 
 // ============================================================================
 // Обработчик печати для STEPPER режима (без энкодера)
 // ============================================================================
 void XStepperStepCallback(int8_t direction) {
-    XEncoder_Update(direction);  // Обновление времени в логике 
+    XEncoder_Update(direction);  // Обновление времени в логике
     // --- Старт печати при достижении левой границы и движении вправо ---
     if (direction > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) {
         PRINT_ACTIVE_COUNT++;
@@ -863,30 +854,30 @@ void PacketReceive(uint8_t* buffer) {
         // ============================================================================
         // Обработка состояния FIFO данных и запуск DMA для новых данных
         // ============================================================================
-////////////////////////////////////////////////////////////////        __disable_irq();
+        ////////////////////////////////////////////////////////////////        __disable_irq();
         if ((FIFO_DATA.count >= FIFO_DATA.capacity) || (PRINT_DAT->DAT.R_FIFO_FUL == 1)) {
-            PRINT_DAT->DAT.R_FIFO_FUL = 1; //FIFO не принял данные, пакет нужно повторить
-            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count; // Текущее количество блоков в FIFO
+            PRINT_DAT->DAT.R_FIFO_FUL = 1;                  // FIFO не принял данные, пакет нужно повторить
+            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count;  // Текущее количество блоков в FIFO
             __enable_irq();
         } else {
             uint16_t next_tail = (FIFO_DATA.tail + 1) % FIFO_DATA.capacity;
-////////////////////////////////////////////////////////////////            __enable_irq();
+            ////////////////////////////////////////////////////////////////            __enable_irq();
             // Передаём
             FIFO_DATA_StartDma((uint32_t)PRINT_DAT->DAT.W_BUFFER, (uint32_t)FIFO_DATA.BLOCKS[FIFO_DATA.tail],
                                sizeof(FIFO_DATA.BLOCKS[0])  // или FIFO_DATA_BLOCK_SIZE, если определено
             );
-            PRINT_DAT->DAT.R_FIFO_FUL = 0; //FIFO принял данные, можно отправлять следующий пакет
-            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count; // Текущее количество блоков в FIFO
+            PRINT_DAT->DAT.R_FIFO_FUL = 0;  // FIFO принял данные, можно отправлять следующий пакет
+            PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count;  // Текущее количество блоков в FIFO
         }
         // ============================================================================
         // Обработка FIFO координат Y
         // ============================================================================
-////////////////////////////////////////////////////////////////        __disable_irq();
+        ////////////////////////////////////////////////////////////////        __disable_irq();
         if (PRINT_DAT->DAT.R_FIFO_Y_COUNT == 1) {
             FifoPosY_Push(PRINT_DAT->DAT.W_Y_BUFFER);
         }
         PRINT_DAT->DAT.R_FIFO_Y_COUNT = FifoPosY_FreeSpace();
-////////////////////////////////////////////////////////////////        __enable_irq();
+        ////////////////////////////////////////////////////////////////        __enable_irq();
 
         // Обновление параметров управления
         PRINT_CONFIG.DAT.W_SET_LAZER = PRINT_DAT->DAT.W_SET_LAZER;
@@ -1085,17 +1076,6 @@ void PacketReceive(uint8_t* buffer) {
             X_GO_POS = 0;
             SET_X.DAT.W_X_MOV_POS = 0;
             SET_X.DAT.W_X_RESET = 0;
-					
-					
-X_TEST_POS = 0;
-X_POS_LAST_STATE = 0;
-X_TEST_LAST_STATE = 0;
-test_inited = 0;
-
-X_ENC_STATE = 0;
-X_ENC_LAST_STATE = 0;
-X_ENC_INITED = 0;					
-					
         }
 
         // === ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА ===
@@ -1103,19 +1083,17 @@ X_ENC_INITED = 0;
             // Запуск трекинга
             W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
             W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
-            X_Kp = SET_X.DAT.W_X_KP;
-            X_Ki = SET_X.DAT.W_X_KI;
-            X_Kd = SET_X.DAT.W_X_KD;
-
+            X_KP = SET_X.DAT.W_X_KP;
+            X_KI = SET_X.DAT.W_X_KI;
+            X_KD = SET_X.DAT.W_X_KD;
+					
             XStartTracking(SET_X.DAT.W_X_L_POS, SET_X.DAT.W_X_R_POS);
         } else {
             // Трекинг был включен - останавливаем безопасно
-            X_STOPPING = 1;
-            // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
-            if (XMotorMode != X_MOTOR_MODE_STEP) {
-                // Деактивируем трекинг
-                X_TRACKING_ACTIVE = 0;
-            }
+
+					  // Вызываем функцию остановки (она сама один раз сработает)
+						XStopTracking();
+
 
             W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
             W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
@@ -1231,13 +1209,15 @@ X_ENC_INITED = 0;
 // Функция завершения DMA (вызов из main.c при окончании копирования блока)
 // ============================================================================
 void FIFO_DATA_EndDma(void) {
-////////////////////////////////////////////////////////////////    __disable_irq();  // Отключение прерываний для атомарного обновления FIFO
+    ////////////////////////////////////////////////////////////////    __disable_irq();  // Отключение
+    /// прерываний для атомарного обновления FIFO
     // Обновление индексов FIFO после успешной DMA передачи
     if (FIFO_DATA.count < FIFO_DATA.capacity) {                      // Проверка, есть ли место в FIFO
         FIFO_DATA.tail = (FIFO_DATA.tail + 1) % FIFO_DATA.capacity;  // Сдвиг хвоста
         FIFO_DATA.count++;                                           // Увеличение счетчика элементов
     }
-////////////////////////////////////////////////////////////////    __enable_irq();  // Включение прерываний
+    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включение
+    /// прерываний
     // Активация печати при получении данных
     if (PRINT_CONFIG.DAT.R_PRINT_STATUS == PRINT_STATUS_PRINT &&  // Проверка, что идет печать
         PRINT_ACTIVE == 0 && START_PRINT == 0) {                  // Проверка флагов активности
@@ -1257,7 +1237,7 @@ void Lpp_Init(void) {
         JumpToApplication(BASE_BOOT_START_ADDR);
     }
 
-    XMotorMode = 255;  // Принудительная инициализация при первом вызове
+    X_MOTOR_MODE = 255;  // Принудительная инициализация при первом вызове
     // Инициализация параметров печати
     PRINT_CONFIG.DAT.R_PRINT_STATUS = PRINT_STATUS_END;
     // Инициализация подсистем SDK
@@ -1348,7 +1328,7 @@ void Lpp_MainLoop(void) {
             CURRENT_PRINT_DIRECTION = 0;
             FifoData_ReadBitReset();  // Сброс состояния чтения битов
 
-            if (XMotorMode == X_MOTOR_MODE_STEP) {
+            if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
                 // ========================================================
                 // ИНИЦИАЛИЗАЦИЯ ДЛЯ СТЕППЕРА
                 // ========================================================
@@ -1372,9 +1352,9 @@ void Lpp_MainLoop(void) {
                 // ========================================================
                 W_X_POWER_MAX = PRINT_CONFIG.DAT.W_X_POWER_MAX;  // Максимальная мощность
                 W_X_SPEED_SET = PRINT_CONFIG.DAT.W_X_SPEED_SET;  // Скорость движения
-                X_Kp = PRINT_CONFIG.DAT.W_X_KP;                  // Коэффициент P
-                X_Ki = PRINT_CONFIG.DAT.W_X_KI;                  // Коэффициент I
-                X_Kd = PRINT_CONFIG.DAT.W_X_KD;                  // Коэффициент D
+                X_KP = PRINT_CONFIG.DAT.W_X_KP;                  // Коэффициент P
+                X_KI = PRINT_CONFIG.DAT.W_X_KI;                  // Коэффициент I
+                X_KD = PRINT_CONFIG.DAT.W_X_KD;                  // Коэффициент D
 
                 // Установка крайних позиций с учетом зоны разгона/торможения
                 SET_X.DAT.W_X_L_POS =
@@ -1478,7 +1458,7 @@ void XMove(int direction) {
     if (X_PIN == 1) {
         X_PIN = 0;
         XSetStep(X_STEP_HI);  // Фронт STEP
-        X_POS += direction; 
+        X_POS += direction;
 
         // Обработка печати после каждого шага
         XStepperStepCallback(direction);
@@ -1528,7 +1508,7 @@ void XTimerCallback(void) {
     // ========================================================
     // РЕЖИМ ШАГОВОГО МОТОРА
     // ========================================================
-    if (XMotorMode == X_MOTOR_MODE_STEP) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
         // --- Определяем стартовую позицию при начале движения ---
         if (X_POS == X_START_POS || X_POS == X_GO_POS) X_START_POS = X_POS;
 
@@ -1552,11 +1532,11 @@ void XTimerCallback(void) {
                 // --- Выполнить возврат только один раз ---
                 if (X_RETURN_DONE == 0) {
                     X_GO_POS = SET_X.DAT.W_X_MOV_POS;
-                    X_RETURN_DONE = 1;           // ← больше не выполняем
+                    X_RETURN_DONE = 1;  // ← больше не выполняем
                 }
             }
-        }
-
+        }			
+								
         // ========================================================
         // РЕЖИМ ЦИКЛИЧЕСКОГО БЕГА (ТРЕКИНГ)
         // ========================================================
@@ -1608,7 +1588,7 @@ void XTimerCallback(void) {
 
             // --- 4. PID-регулятор ---
             W_X_SPEED_ERROR = W_X_SPEED_SET_POLAR - W_X_SPEED_FILTERED;
-            W_X_P_component = (int32_t)W_X_SPEED_ERROR * (int32_t)X_Kp;
+            W_X_P_component = (int32_t)W_X_SPEED_ERROR * (int32_t)X_KP;
 
             W_X_SPEED_ERROR_INTEGRAL += W_X_SPEED_ERROR;
             if (W_X_SPEED_ERROR_INTEGRAL > X_INTEGRAL_MAX)
@@ -1616,7 +1596,7 @@ void XTimerCallback(void) {
             else if (W_X_SPEED_ERROR_INTEGRAL < X_INTEGRAL_MIN)
                 W_X_SPEED_ERROR_INTEGRAL = X_INTEGRAL_MIN;
 
-            W_X_I_component = (W_X_SPEED_ERROR_INTEGRAL * (int32_t)X_Ki) / 100;
+            W_X_I_component = (W_X_SPEED_ERROR_INTEGRAL * (int32_t)X_KI) / 100;
             W_X_PI_sum = W_X_P_component + W_X_I_component;
 
             if (W_X_PI_sum > 32767)
@@ -1632,55 +1612,113 @@ void XTimerCallback(void) {
                 W_X_POWER_REAL = -W_X_POWER_MAX;
 
             XMotorSet(W_X_POWER_REAL);
-        }
-
-        // ========================================================
-        // Режим позиционирования
-        // ========================================================
-        else {
-
-            #define JOG_OFFSET 5   // на 5 шагов всегда в переди
+        } else {
             // ========================================================
-            // JOG MODE — движение по удержанию
-            // ========================================================
-            if (X_MOTION == X_MOTION_RIGHT) {
-                X_GO_POS = X_POS + JOG_OFFSET;
-            }
-            else if (X_MOTION == X_MOTION_LEFT) {
-                X_GO_POS = X_POS - JOG_OFFSET;
-            }
+            // Режим позиционирования + скорость (JOG)
             // ========================================================
             if (SET_X.DAT.W_X_ENABLED == 1) {
-                if (W_X_SPEED == 0 || W_X_SPEED == 0xFFFF)
-                    W_X_SPEED_FILTERED = 0;
-                else
-                    W_X_SPEED_FILTERED = 65535 / (int32_t)W_X_SPEED;
-
-                int32_t position_error = X_GO_POS - X_POS;
-                if (position_error == 0) {
-                    W_X_POWER_REAL = 0;
-                } else {
-                    uint8_t target_polar = (position_error > 0) ? 1 : 0;
-
-                    if ((X_START_STATIC_ACTIVE == 1) || (X_POLAR_STATIC != target_polar)) {
-                        X_POLAR_STATIC = target_polar;
-                        W_X_POWER_REAL = 0;
-                        X_START_STATIC_ACTIVE = 0;
+                // =================================================
+                // JOG MODE — скоростное управление
+                // Позиция используется как виртуальная цель
+                // =================================================
+                if (X_MOTION == X_MOTION_RIGHT || X_MOTION == X_MOTION_LEFT) {
+								// ------------------------------------------------
+								// Формирование виртуальной позиции
+								// Цель всегда немного впереди текущей
+								// ------------------------------------------------
+								#define X_JOG_OFFSET 2  // Смещение виртуальной цели (шаги)
+								#define X_JOG_POWER_STEP 20  // Шагов мощности
+                    if (X_MOTION == X_MOTION_RIGHT) {
+                        X_GO_POS = X_POS + X_JOG_OFFSET;
+                    } else {
+                        X_GO_POS = X_POS - X_JOG_OFFSET;
                     }
 
-                    if (X_POLAR_STATIC == 0) {
-                        W_X_POWER_REAL += (W_X_SPEED_FILTERED > W_X_SPEED_SET) ? SET_X.DAT.W_X_POWER_STEP
-                                                                               : -SET_X.DAT.W_X_POWER_STEP;
+                    // ------------------------------------------------
+                    // Фильтрация скорости
+                    // ------------------------------------------------
+                    if (W_X_SPEED == 0 || W_X_SPEED == 0xFFFF)
+                        W_X_SPEED_FILTERED = 0;
+                    else
+                        W_X_SPEED_FILTERED = 65535 / (int32_t)W_X_SPEED;
+
+										// ------------------------------------------------
+										// Определение направления движения: -1 для "-", +1 для "+"
+										// ------------------------------------------------
+										int8_t dir = ((X_GO_POS - X_POS) > 0) ? 1 : -1;
+
+										// ------------------------------------------------
+										// Регулирование мощности по скорости и полярности
+										// ------------------------------------------------
+										W_X_POWER_REAL += ((W_X_SPEED_FILTERED > W_X_SPEED_SET) ? -X_JOG_POWER_STEP : X_JOG_POWER_STEP) * dir;
+
+                }
+
+                // =================================================
+                // POSITION MODE — позиционное управление
+                // =================================================
+                else {
+                    int32_t position_error = X_GO_POS - X_POS;
+
+                    if (position_error != 0) {
+                        // ------------------------------------------------
+                        // Контроль движения (обнаружение залипания)
+                        // ------------------------------------------------
+                        int32_t position_delta = X_POS - X_LAST_POSITION;
+                        X_LAST_POSITION = X_POS;
+
+                        // ------------------------------------------------
+                        // Пропорциональная составляющая (P)
+                        // ------------------------------------------------
+                        int32_t Kp = 20;
+                        int32_t base_power = position_error * Kp;
+
+                        // ------------------------------------------------
+                        // Если позиция не меняется — наращиваем усилие
+                        // ------------------------------------------------
+                        if (position_delta == 0) {
+                            int32_t power_step = SET_X.DAT.W_X_POWER_STEP;
+
+                            if (position_error > 0)
+                                X_POWER_ACCUM += power_step;
+                            else
+                                X_POWER_ACCUM -= power_step;
+
+                        } else {
+                            // Движение есть — сброс компенсации
+                            X_STUCK_COUNTER = 0;
+                            X_POWER_ACCUM = 0;
+                        }
+
+                        // ------------------------------------------------
+                        // Итоговая мощность
+                        // ------------------------------------------------
+                        W_X_POWER_REAL = base_power + X_POWER_ACCUM;
+
                     } else {
-                        W_X_POWER_REAL += (W_X_SPEED_FILTERED > W_X_SPEED_SET) ? -SET_X.DAT.W_X_POWER_STEP
-                                                                               : SET_X.DAT.W_X_POWER_STEP;
+                        // ------------------------------------------------
+                        // Цель достигнута — сброс регулятора
+                        // ------------------------------------------------
+                        W_X_POWER_REAL = 0;
+                        X_POWER_ACCUM = 0;
+                        X_STUCK_COUNTER = 0;
+                        X_LAST_POSITION = X_POS;
                     }
                 }
 
+                // =================================================
+                // Ограничение мощности
+                // =================================================
                 if (W_X_POWER_REAL > W_X_POWER_MAX) W_X_POWER_REAL = W_X_POWER_MAX;
                 if (W_X_POWER_REAL < -W_X_POWER_MAX) W_X_POWER_REAL = -W_X_POWER_MAX;
+
+                // =================================================
+                // Вывод на драйвер мотора
+                // =================================================
                 XMotorSet(W_X_POWER_REAL);
+
             } else {
+                // Ось отключена
                 XMotorSet(0);
             }
         }

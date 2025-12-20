@@ -158,7 +158,7 @@
 10  | PA15 | PA15 | PA15 | GPIO / JTDI
 11  | PB3  | PB3  | PB3  | GPIO / SWO
 12  | PB4  | PB4  | PB4  | GPIO / NJTRST
-22  | PC13 | PC13 | PC13 | GPIO
+22  | PC13 | PC13 | PC13 | GPIO / Выведен как CP контрольная точка
 ```
 
 ---

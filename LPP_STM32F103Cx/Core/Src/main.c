@@ -133,10 +133,6 @@ int main(void)
     HAL_NVIC_SetPriority(TIM1_CC_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
 
-    // Инициализация мотора X
-
-//    XMotorInit(X_MOTOR_MODE_START);
-
     // Запуск PWM для лазера и подсветки
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);  // Лазер
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);  // Подсветка
@@ -147,12 +143,10 @@ int main(void)
     // Инициализация задержки и периферии
     HAL_Delay(2000);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);    // Включение USB
-/////////////////////////////////////////////////////////////////    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);  // Выключение контроллера Y
 
     // Настройка DMA callback
     HAL_DMA_RegisterCallback(&hdma_memtomem_dma1_channel1, HAL_DMA_XFER_CPLT_CB_ID, XferCpltCallback);
 		
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -163,14 +157,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
 			
 			Lpp_MainLoop();
-			
-//		if (GPIOB->IDR & ENCODER_B_PIN)
-//        GPIOA->BSRR = GPIO_BSRR_BS6;   // PA6 = 1
-//    else
-//        GPIOA->BSRR = GPIO_BSRR_BR6;   // PA6 = 0
-
-
-
     }
   /* USER CODE END 3 */
 }
@@ -462,7 +448,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);//////////////////////////////////////////
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0); 
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
@@ -486,7 +472,7 @@ void XMotorSet(int power) {
     if (power < -5000) power = -5000;
 
     // Режим ONE_PWM: один ШИМ + DIR
-    if (XMotorMode == X_MOTOR_MODE_ONE_PWM) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
         TIM1->CCR1 = (W_X_POL_PWM == 0) ? abs(power) : (5000 - abs(power));
         
         HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14,
@@ -495,7 +481,7 @@ void XMotorSet(int power) {
     }
 
     // Режим TWO_PWM: два ШИМ канала
-    if (XMotorMode == X_MOTOR_MODE_TWO_PWM) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
         if (W_X_POL_PWM == 0) {
             TIM1->CCR1 = 5000 + power;
             TIM1->CCR2 = 5000 - power;
@@ -518,7 +504,7 @@ void XMotorSet(int power) {
 
 void XMotorInit(X_MOTOR_MODE_T mode)
 {
-    if (XMotorMode == mode) return; // если режим уже установлен — выходим
+    if (X_MOTOR_MODE == mode) return; // если режим уже установлен — выходим
 	
 		__HAL_RCC_TIM1_FORCE_RESET();     // полный аппаратный сброс TIM1 (как после включения MCU)
 		__HAL_RCC_TIM1_RELEASE_RESET();   // выход из сброса — таймер в чистом состоянии
@@ -537,7 +523,7 @@ void XMotorInit(X_MOTOR_MODE_T mode)
         GPIO_InitStruct.Pull = GPIO_NOPULL;
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-        XMotorMode = mode;
+        X_MOTOR_MODE = mode;
         return;
     }
 
@@ -695,7 +681,7 @@ void XMotorInit(X_MOTOR_MODE_T mode)
     }
 
     // Сохраняем текущий режим
-    XMotorMode = mode;
+    X_MOTOR_MODE = mode;
 }
 
 // ============================================================================
@@ -720,18 +706,17 @@ void YSetStep(uint8_t step_state)
 }
 
 /**
- * @brief  Управляет сигналом ENABLE для оси Y.
- * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
+ * @brief  Управляет сигналом ENABLE для шаговых драйверов осей X, Y, Z.
+ * @param  enabled: 1 — включить драйверы (ENA = HIGH),
+ *                  0 — выключить драйверы (ENA = LOW).
  */
 void YSetEnable(uint8_t enabled)
 {
-	
     GPIO_PinState st = enabled ? GPIO_PIN_SET : GPIO_PIN_RESET;
 
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, st);
-////////////////////////////////////////////////////////////////////////////////    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, st);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, st);	
-	
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, st); // Ось X
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,  st); // Ось Y
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6,  st); // Ось Z
 }
 
 // установка периода и запуск таймера YTimer
@@ -744,9 +729,6 @@ void YTimerSet(uint16_t period)
 // ============================================================================
 // Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
 // ============================================================================
-
-
-
 
 /**
  * @brief  Устанавливает направление DIR для оси X.
@@ -915,7 +897,7 @@ void SetLaserLightPWMFrequency(uint32_t freq_hz)
 
 void XInterpTimerStart(uint32_t period) {
     // Старт интерполяционого таймера
-	  TIM3->ARR = period;          // Установка периода
+	TIM3->ARR = period;          // Установка периода
     TIM3->SR &= ~TIM_SR_UIF;     // Сброс флага прерывания
     TIM3->DIER |= TIM_DIER_UIE;  // Разрешение прерывания
     TIM3->CR1 |= TIM_CR1_CEN;    // Запуск таймера
@@ -932,23 +914,18 @@ uint16_t ReadEncoderPins(void) {
  * @retval None
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-
-
+//__disable_irq(); 
     XEncoderCallback(GPIO_Pin);
-	
-	
-uint16_t enc = ReadEncoderPins();
+//__enable_irq();	
+//uint16_t enc = ReadEncoderPins();
 
-if (enc & ENCODER_A_PIN)
-    GPIOA->BSRR = GPIO_BSRR_BS6;   // PA6 = 1
-else
-    GPIOA->BSRR = GPIO_BSRR_BR6;   // PA6 = 0
+//if (enc & ENCODER_A_PIN)
+//    GPIOA->BSRR = GPIO_BSRR_BS6;   // PA6 = 1
+//else
+//    GPIOA->BSRR = GPIO_BSRR_BR6;   // PA6 = 0
 
 	
 }
-
-
-
 
 // ============================================================================
 // Отправка 64-байтного пакета хосту (используется SDK)

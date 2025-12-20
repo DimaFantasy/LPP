@@ -477,7 +477,7 @@ typedef struct {
 extern volatile uint8_t W_X_POL_DIR;  // Полярность направления
 extern volatile uint8_t W_X_POL_PWM;  // Полярность ШИМ
 
-extern X_MOTOR_MODE_T XMotorMode;
+extern X_MOTOR_MODE_T X_MOTOR_MODE;
 
 void DWT_Init(void);
 void DWT_1kHz_Handler(void);
