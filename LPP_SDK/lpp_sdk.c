@@ -28,9 +28,8 @@
  */
 
 #include "lpp_sdk.h"
-
 #include <string.h>
-
+#include <string.h>  // для memset
 // ============================================================================
 // Переменные управления осью X
 // ============================================================================
@@ -91,7 +90,7 @@ TYPE_SET_Y SET_Y = {0};
 TYPE_SET_PARAM SET_PARAM = {0};
 TYPE_LIGHT LIGHT = {0};
 TYPE_LAZER LAZER = {0};
-TYPE_APP_JAMP_TO APP_JAMP_TO = {0};
+TYPE_APP_JAMP_TO_BOOT APP_JAMP_TO_BOOT = {0};
 TYPE_APP_SPEED_TEST APP_SPEED_TEST = {0};
 TYPE_APP_WRITE APP_WRITE = {0};
 TYPE_APP_ERASE APP_ERASE = {0};
@@ -129,9 +128,7 @@ X_MOTOR_MODE_T X_MOTOR_MODE = X_MOTOR_MODE_START;  // Режим работы м
 volatile int32_t X_GO_POS = 0;                     // Целевая позиция каретки
 volatile int32_t X_POS = 0;                        // Текущая позиция каретки
 
-volatile uint8_t X_POLAR_DYNAMIC = 0;        // Полярность при движении/треке
-volatile uint8_t X_POLAR_STATIC = 0;         // Полярность при статике/позиции
-volatile uint8_t X_START_STATIC_ACTIVE = 0;  // Флаг начала статического позиционирования
+volatile uint8_t X_POLAR_DYNAMIC = 0;  // Полярность при движении/треке
 
 // Полярность управления мотором
 volatile uint8_t W_X_POL_DIR = 0;  // Полярность направления
@@ -222,9 +219,96 @@ static uint32_t last_time_cycles = 0;           // Время последнег
 volatile uint8_t g_encoder_timeout_active = 0;  // Флаг таймаута энкодера
 
 // ============================================================================
+// Функции работы с BOOT-флагом (RTC Backup domain)
+// ----------------------------------------------------------------------------
+// Назначение:
+//   Универсальный механизм передачи состояния между APP и BOOT.
+//
+// Свойства:
+//   - Хранит ровно 1 байт в Backup-домене (RTC/BKP)
+//   - Сохраняется при программном и аппаратном reset
+//   - Теряется при отключении питания (если VBAT не подключён)
+//   - Не использует Flash и SRAM
+//   - Работает одинаково на STM32F103 / STM32F411 / STM32G431
+// ============================================================================
+
+// ============================================================================
+// Magic значение для перехода в BOOTloader через RTC backup register
+// ============================================================================ 
+#define LPP_BOOT_MAGIC 0x42  // произвольное, редко встречающееся значение
+
+void LPP_BootFlag_EnableAccess(void)
+{
+    __HAL_RCC_PWR_CLK_ENABLE();
+    HAL_PWR_EnableBkUpAccess();
+}
+
+uint8_t LPP_BootFlag_Read(void)
+{
+    LPP_BootFlag_EnableAccess();
+#if defined(STM32F1)
+    return (uint8_t)(BKP->DR1 & 0xFF);
+#elif defined(STM32F4)
+    return (uint8_t)(RTC->BKP0R & 0xFF);
+#elif defined(STM32G4)
+    return (uint8_t)(TAMP->BKP0R & 0xFF);
+#elif defined(STM32F0) || defined(STM32G0)
+    return (uint8_t)(RTC->BKP0R & 0xFF);
+#else
+    #error "Unsupported MCU"
+#endif
+}
+
+void LPP_BootFlag_Write(uint8_t value)
+{
+    LPP_BootFlag_EnableAccess();
+#if defined(STM32F1)
+    BKP->DR1 = (uint32_t)value;
+#elif defined(STM32F4) 
+    RTC->BKP0R = (uint32_t)value;
+#elif defined(STM32G4) 
+    TAMP->BKP0R = (uint32_t)value;
+#elif defined(STM32F0)
+    RTC->BKP0R = (uint32_t)value;
+#else
+    #error "Unsupported MCU"
+#endif
+}
+// ============================================================================
+// Проверка cold power-on reset и очистка RTC-флага при необходимости
+// ============================================================================ 
+static inline void LPP_BootFlag_ColdPowerClear(void)
+{
+#if defined(STM32F1)
+    // F1: читаем RCC->CSR
+    if (RCC->CSR & RCC_CSR_PORRSTF) {
+        LPP_BootFlag_Write(0x00);
+    }
+    __HAL_RCC_CLEAR_RESET_FLAGS();
+    
+#elif defined(STM32F4) 
+    // F4: RCC->CSR
+    if (RCC->CSR & RCC_CSR_PORRSTF) {
+        LPP_BootFlag_Write(0x00);
+    }
+    __HAL_RCC_CLEAR_RESET_FLAGS();
+    
+#elif defined(STM32G4)
+    // G4: RCC->CSR
+    if (RCC->CSR & RCC_CSR_BORRSTF) {  // G4 использует BORRSTF вместо PORRSTF
+        LPP_BootFlag_Write(0x00);
+    }
+    __HAL_RCC_CLEAR_RESET_FLAGS();
+    
+#else
+    #error "Unsupported MCU"
+#endif
+}
+
+
+// ============================================================================
 // Функции работы с флеш
 // ============================================================================
-#include <string.h>  // Добавьте этот include для memset
 
 // Определения для разных серий
 #if defined(STM32F411xE)
@@ -241,22 +325,188 @@ static uint32_t GET_SECTOR(uint32_t address) {  // Добавьте static
 }
 #endif
 
-void JumpToApplication(uint32_t addr) {
+void JumpToApplication(uint32_t app_addr) {
+    //    uint32_t JumpAddress;
+    //    typedef void (*pFunction)(void);
+    //    pFunction Jump_To_Application;
+    //
+    //    // 1. Отключить все прерывания
+    //    __disable_irq();
+    //
+    //    // 2. Деинициализация HAL и периферии
+    //    HAL_DeInit();
+    //
+    //    // 3. Отключить SysTick
+    //    SysTick->CTRL = 0;
+    //    SysTick->LOAD = 0;
+    //    SysTick->VAL = 0;
+    //
+    //    // 4. Очистить все флаги прерываний
+    //    for (uint8_t i = 0; i < 8; i++) {
+    //        NVIC->ICER[i] = 0xFFFFFFFF;  // Отключить все прерывания
+    //        NVIC->ICPR[i] = 0xFFFFFFFF;  // Очистить pending флаги
+    //    }
+    //
+    //    // 5. КРИТИЧНО для G4: Переназначить вектор прерываний
+    //    SCB->VTOR = app_addr;
+    //
+    //    // 6. Установить MSP
+    //    __set_MSP(*(__IO uint32_t*)app_addr);
+    //
+    //    // 7. Получить адрес Reset Handler
+    //    JumpAddress = *(__IO uint32_t*)(app_addr + 4);
+    //    Jump_To_Application = (pFunction)JumpAddress;
+    //
+    //    // 8. Включить прерывания и прыгать
+    //    __enable_irq();
+    //    Jump_To_Application();
+
     uint32_t JumpAddress;
+    typedef void (*pFunction)(void);
+    pFunction reset_vector;
 
-    typedef void (*pFunction)(void);  // объявляем пользовательский тип
-    pFunction Jump_To_Application;    // и создаём переменную этого типа
+    // 1. Отключить все прерывания
+    __disable_irq();
 
-    JumpAddress = *(__IO uint32_t*)(addr + 4);     // извлекаем адрес перехода из вектора Reset
-    Jump_To_Application = (pFunction)JumpAddress;  // приводим его к пользовательскому типу
-    __set_MSP(*(__IO uint32_t*)addr);  // Инициализировать указатель стека пользовательского приложения
-                                       // /устанавливаем SP приложения
-    HAL_DeInit();                      // Сброс всей переферии
-    Jump_To_Application();             // Прыгаем по адресу
+    // 2. Деинициализация HAL и периферии
+    HAL_DeInit();
+
+    // 3. Отключить SysTick
+    SysTick->CTRL = 0;
+    SysTick->LOAD = 0;
+    SysTick->VAL = 0;
+
+    // 4. Очистить все флаги прерываний
+    for (uint8_t i = 0; i < 8; i++) {
+        NVIC->ICER[i] = 0xFFFFFFFF;  // Отключить все прерывания
+        NVIC->ICPR[i] = 0xFFFFFFFF;  // Очистить pending флаги
+    }
+
+    // 5. Барьеры памяти ПЕРЕД переназначением векторов
+    __DSB();
+    __ISB();
+
+    // 6. Переназначить вектор прерываний
+    SCB->VTOR = app_addr;
+
+    // 7. Барьеры памяти ПОСЛЕ переназначения векторов
+    __DSB();
+    __ISB();
+
+    // 8. Установить MSP
+    __set_MSP(*(volatile uint32_t*)app_addr);
+
+    // 9. Получить адрес Reset Handler
+    JumpAddress = *(volatile uint32_t*)(app_addr + 4);
+    reset_vector = (pFunction)JumpAddress;
+
+    // 10. Включить прерывания и прыгать
+    __enable_irq();
+    reset_vector();
 }
 
-void flash_write(uint32_t Address, uint32_t Data) {
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, Address, Data);
+/**
+ * @brief  Запись буфера данных во Flash-память
+ *
+ * Выполняет запись данных во Flash с учётом требований разных серий STM32:
+ * STM32F1/F4 — запись 32-битными словами,
+ * STM32G4 — запись 64-битными словами с сохранением соседних данных.
+ *
+ * @param  addr: начальный адрес (выровнен по 4 байтам)
+ * @param  data: буфер данных
+ * @param  len:  размер данных в байтах
+ *
+ * @retval  0   — OK
+ * @retval -1   — неверные параметры
+ * @retval -2   — ошибка записи Flash
+ */
+int flash_write_buffer(uint32_t addr, const uint8_t* data, uint32_t len) {
+    // Проверка входных параметров:
+    // адрес должен быть выровнен по 4 байтам,
+    // длина не нулевая,
+    // указатель данных валиден
+    if ((addr & 3) != 0 || (len == 0) || data == NULL) return -1;
+
+    // Разблокируем контроллер Flash для записи
+    HAL_FLASH_Unlock();
+
+#if defined(STM32F103xB) || defined(STM32F411xE)
+
+    // STM32F1 / STM32F4:
+    // запись производится 32-битными словами (WORD)
+    for (uint32_t i = 0; i < len; i += 4) {
+        // Формируем 32-битное слово из буфера данных
+        uint32_t word = *(uint32_t*)(data + i);
+
+        // Записываем слово во Flash по адресу addr + i
+        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, addr + i, word) != HAL_OK) {
+            // При ошибке сразу блокируем Flash и выходим
+            HAL_FLASH_Lock();
+            return -2;
+        }
+    }
+
+#elif defined(STM32G431xx)
+
+    // STM32G4:
+    // запись возможна только 64-битными двойными словами (DOUBLEWORD)
+
+    // Конечный адрес записи
+    uint32_t end = addr + len;
+
+    // Адрес начала, выровненный по 8 байтам
+    uint32_t aligned_start = addr & ~7U;
+
+    // Адрес конца, выровненный по 8 байтам (в большую сторону)
+    uint32_t aligned_end = (end + 7) & ~7U;
+
+    // Проходим по Flash блоками по 8 байт
+    for (uint32_t a = aligned_start; a < aligned_end; a += 8) {
+        // Читаем текущее 64-битное значение из Flash
+        uint64_t current = *(volatile uint64_t*)a;
+
+        // Подготавливаем новое значение (изначально текущее)
+        uint64_t new_val = current;
+
+        // -------------------------------
+        // Младшие 32 бита (адрес a)
+        // -------------------------------
+        // Если этот участок попадает в диапазон записи —
+        // подменяем младшее слово данными из буфера
+        if (a >= addr && a < end) {
+            uint32_t lo = *(uint32_t*)(data + (a - addr));
+            new_val = (new_val & 0xFFFFFFFF00000000ULL) | lo;
+        }
+
+        // -------------------------------
+        // Старшие 32 бита (адрес a + 4)
+        // -------------------------------
+        // Аналогично для старшего слова
+        if ((a + 4) >= addr && (a + 4) < end) {
+            uint32_t hi = *(uint32_t*)(data + (a + 4 - addr));
+            new_val = (new_val & 0x00000000FFFFFFFFULL) | ((uint64_t)hi << 32);
+        }
+
+        // Если новое значение отличается от текущего —
+        // выполняем запись во Flash
+        if (new_val != current) {
+            if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, a, new_val) != HAL_OK) {
+                // При ошибке блокируем Flash и выходим
+                HAL_FLASH_Lock();
+                return -2;
+            }
+        }
+    }
+
+#else
+#error "Unsupported STM32 series"
+#endif
+
+    // Блокируем Flash после завершения записи
+    HAL_FLASH_Lock();
+
+    // Успешное завершение
+    return 0;
 }
 
 /**
@@ -277,7 +527,7 @@ int flash_erase_area(uint32_t start_address, uint32_t size) {
     memset(&pEraseInit, 0, sizeof(pEraseInit));
     uint32_t end_address = start_address + size;
 
-#if defined(STM32F1)
+#if defined(STM32F103xB)
     // F103 - страницы по 1КБ
     uint32_t start_page = (start_address - FLASH_BASE) / FLASH_PAGE_SIZE;
     uint32_t end_page = (end_address - FLASH_BASE + FLASH_PAGE_SIZE - 1) / FLASH_PAGE_SIZE;
@@ -286,7 +536,7 @@ int flash_erase_area(uint32_t start_address, uint32_t size) {
     pEraseInit.PageAddress = FLASH_BASE + (start_page * FLASH_PAGE_SIZE);
     pEraseInit.NbPages = end_page - start_page;
 
-#elif defined(STM32F4)
+#elif defined(STM32F411xE)
     // F411 - сектора разного размера
     uint32_t start_sector = GET_SECTOR(start_address);
     uint32_t end_sector = GET_SECTOR(end_address - 1);  // -1 чтобы не выйти за границу
@@ -296,14 +546,14 @@ int flash_erase_area(uint32_t start_address, uint32_t size) {
     pEraseInit.NbSectors = end_sector - start_sector + 1;
     pEraseInit.VoltageRange = FLASH_VOLTAGE_RANGE_3;
 
-#elif defined(STM32G4)
+#elif defined(STM32G431xx)
     // G431 - страницы по 2КБ
     uint32_t start_page = (start_address - FLASH_BASE) / FLASH_PAGE_SIZE;
-    uint32_t end_page = (end_address - FLASH_BASE + FLASH_PAGE_SIZE - 1) / FLASH_PAGE_SIZE;
+    uint32_t end_page = (end_address - 1 - FLASH_BASE) / FLASH_PAGE_SIZE;  // вычитаем 1
 
+    pEraseInit.NbPages = end_page - start_page + 1;
     pEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
     pEraseInit.Page = start_page;
-    pEraseInit.NbPages = end_page - start_page;
     pEraseInit.Banks = FLASH_BANK_1;
 #endif
 
@@ -313,6 +563,7 @@ int flash_erase_area(uint32_t start_address, uint32_t size) {
 }
 
 uint32_t flash_read(uint32_t address) { return (*(__IO uint32_t*)address); }
+
 // ============================================================================
 // Функции работы с флеш END
 // ============================================================================
@@ -333,41 +584,29 @@ void DWT_Init(void) {
  * @param cycles: количество тактов
  * @retval Время в микросекундах
  */
-static uint16_t CyclesToMicroseconds(uint32_t cycles) {
-#if defined(STM32F1)
-    // F103 @ 72 MHz: cycles * 1000000 / 72000000 = cycles / 72
-    // Fixed-point: cycles * 0x38E38E39UL >> 35
-    return (uint16_t)(((uint64_t)cycles * 0x38E38E39UL) >> 35);
-
-#elif defined(STM32F4)
-    // F411 @ 100 MHz: cycles / 100
-    return (uint16_t)(cycles / 100);
-
-#elif defined(STM32G4)
-    // G431 @ 170 MHz: cycles * 1000000 / 170000000 = cycles / 170
-    // Fixed-point: cycles * 0xF0F0F0F1UL >> 36
-    return (uint16_t)(((uint64_t)cycles * 0xF0F0F0F1UL) >> 36);
-
+static inline uint32_t CyclesToMicroseconds(uint32_t cycles) {
+#if defined(STM32F103xB)
+    return (uint32_t)(((uint64_t)cycles * 3817748427ULL) >> 38);  // 72 MHz:
+#elif defined(STM32F411xE)
+    return (uint32_t)(((uint64_t)cycles * 2748779069ULL) >> 38);  // 100 MHz:
+#elif defined(STM32G431xx)
+    return (uint32_t)(((uint64_t)cycles * 1616722929ULL) >> 38);  // 170 MHz:
 #else
-    // Универсальная версия
-    return (uint16_t)(((uint64_t)cycles * 1000000ULL) / SystemCoreClock);
+    return (uint32_t)(((uint64_t)cycles * 1000000ULL) / SystemCoreClock);
 #endif
 }
 
 /**
- * @brief Обновление данных энкодера с fixed-point арифметикой
- * @param pos_delta Изменение позиции (-1, 0, +1)
- * @retval None
+ * @brief Обновление данных энкодера
  */
 void XEncoder_Update(int8_t pos_d) {
     uint32_t now_cycles = DWT->CYCCNT;
     uint32_t elapsed_cycles = now_cycles - last_time_cycles;
     last_time_cycles = now_cycles;
 
-    // УНИВЕРСАЛЬНОЕ преобразование тактов в микросекунды
-    uint16_t raw_interval = CyclesToMicroseconds(elapsed_cycles);
+    uint32_t raw_interval = CyclesToMicroseconds(elapsed_cycles);  // ← uint32_t!
 
-    // Проверка таймаута
+    // Проверка таймаута ИЛИ переполнения uint16_t
     if (raw_interval >= ENCODER_TIMEOUT_US) {
         W_X_SPEED = 0xFFFF;
         W_X_EN_DIRECT = 0;
@@ -375,14 +614,8 @@ void XEncoder_Update(int8_t pos_d) {
         return;
     }
 
-    // Обновление глобальных переменных
-    W_X_SPEED = raw_interval;
+    W_X_SPEED = (uint16_t)raw_interval;  // Безопасное приведение
     W_X_EN_DIRECT = (pos_d > 0) ? 1 : -1;
-    //		if (pos_d > 0) {
-    //				W_X_EN_DIRECT = 1;
-    //		} else if (pos_d < 0) {
-    //				W_X_EN_DIRECT = -1;
-    //		}
     g_encoder_timeout_active = 0;
 }
 
@@ -395,8 +628,7 @@ void DWT_1kHz_Handler(void) {
     uint32_t now_cycles = DWT->CYCCNT;
     uint32_t elapsed_cycles = now_cycles - last_time_cycles;
 
-    // Fixed-point преобразование в микросекунды
-    uint16_t elapsed_us = CyclesToMicroseconds(elapsed_cycles);
+    uint32_t elapsed_us = CyclesToMicroseconds(elapsed_cycles);  // ← uint32_t!
 
     if (elapsed_us > ENCODER_TIMEOUT_US) {
         g_encoder_timeout_active = 1;
@@ -417,7 +649,6 @@ volatile TYPE_FIFO_DATA FIFO_DATA = {0};    // Глобальный FIFO для 
 // ============================================================================
 
 void FifoPosY_Init(void) {
-    ////////////////////////////////////////////////////////////////    __disable_irq();       // Отключаем
     /// прерывания для атомарной операции
     FIFO_POS_Y.head = 0;   // Сброс индекса головы очереди
     FIFO_POS_Y.tail = 0;   // Сброс индекса хвоста очереди
@@ -427,13 +658,9 @@ void FifoPosY_Init(void) {
     for (uint32_t i = 0; i < FIFO_POS_Y_SIZE; i++) {
         FIFO_POS_Y.POS_Y[i] = 0;  // Инициализация нулями
     }
-    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
-    /// прерывания
 }
 
 uint8_t FifoPosY_Push(volatile int32_t value) {
-    ////////////////////////////////////////////////////////////////    __disable_irq(); // Отключаем
-    /// прерывания
     if (FIFO_POS_Y.count >= FIFO_POS_Y_SIZE) {  // Проверка переполнения
         __enable_irq();                         // Включаем прерывания
         return 0;                               // Очередь заполнена
@@ -443,14 +670,10 @@ uint8_t FifoPosY_Push(volatile int32_t value) {
     FIFO_POS_Y.head = (FIFO_POS_Y.head + 1) % FIFO_POS_Y_SIZE;  // Сдвиг головы
     FIFO_POS_Y.count++;                                         // Увеличение счетчика
 
-    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
-    /// прерывания
     return 1;  // Успешная запись
 }
 
 uint8_t FifoPosY_Pop(volatile int32_t* value) {
-    ////////////////////////////////////////////////////////////////    __disable_irq();              //
-    /// Отключаем прерывания
     if (FIFO_POS_Y.count == 0) {  // Проверка пустоты очереди
         __enable_irq();           // Включаем прерывания
         return 0;                 // Очередь пуста
@@ -460,8 +683,6 @@ uint8_t FifoPosY_Pop(volatile int32_t* value) {
     FIFO_POS_Y.tail = (FIFO_POS_Y.tail + 1) % FIFO_POS_Y_SIZE;  // Сдвиг хвоста
     FIFO_POS_Y.count--;                                         // Уменьшение счетчика
 
-    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
-    /// прерывания
     return 1;  // Успешное чтение
 }
 
@@ -482,8 +703,6 @@ uint8_t FifoPosY_FreeSpace(void) {
 // ============================================================================
 
 void FifoData_Init(void) {
-    ////////////////////////////////////////////////////////////////    __disable_irq(); // Отключаем
-    /// прерывания для атомарной инициализации
     FIFO_DATA.head = 0;                         // Сброс индекса головы
     FIFO_DATA.tail = 0;                         // Сброс индекса хвоста
     FIFO_DATA.count = 0;                        // Сброс счетчика элементов
@@ -498,8 +717,6 @@ void FifoData_Init(void) {
             FIFO_DATA.BLOCKS[i][j] = 0;  // Инициализация нулями
         }
     }
-    ////////////////////////////////////////////////////////////////    __enable_irq();  // Включаем
-    /// прерывания
 }
 
 uint8_t FifoData_IsEmpty(void) {
@@ -575,13 +792,11 @@ void XStartTracking(int32_t left_pos, int32_t right_pos) {
 // БЕЗОПАСНАЯ ОСТАНОВКА ТРЕКИНГА
 // ============================================================================
 void XStopTracking(void) {
-		// Проверка в начале функции
-		if (X_STOPPING || !X_TRACKING_ACTIVE) {
-				return;  // Уже в процессе остановки или не активен
-		}	
-	
-    X_STOPPING = 1;
-		X_RETURN_DONE = 0; // Двинутся к позиции
+    // Проверка в начале функции
+    if (X_STOPPING) return;  // Уже в процессе остановки или не активен
+    X_STOPPING = 1;          // Начали процес
+
+    X_RETURN_DONE = 0;  // Двинутся к позиции
     // Для DC-мотора (dual PWM) – останавливаем трекинг сразу
     if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
         // Деактивируем трекинг
@@ -593,24 +808,21 @@ void XStopTracking(void) {
 
         // Сбрасываем направление для обоих режимов
         X_POLAR_DYNAMIC = 0;
-        X_POLAR_STATIC = 0;
 
-        // Сбрасываем флаги активации
-        X_START_STATIC_ACTIVE = 0;
-
-        // Останавливаем мотор
-        XMotorSet(0);
-			
-				// Возврат на заданную позицию после трекинга
-				X_GO_POS = SET_X.DAT.W_X_MOV_POS;   	
-        
-    }	
+        // Возврат на заданную позицию после трекинга
+        X_GO_POS = SET_X.DAT.W_X_MOV_POS;
+    }
 }
 
 // ============================================================================
 // Основной обработчик энкодера по X и логики печати
 // ============================================================================
 void XEncoderCallback(uint16_t GPIO_Pin) {
+    // Выход, если используется шаговый двигатель (STEPPER режим)
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
+        return;
+    }
+
     uint16_t gpio_state = ReadEncoderPins();  // Чтение пинов энкодера
 
     // Таблица направлений энкодера (Грей-код)
@@ -630,22 +842,22 @@ void XEncoderCallback(uint16_t GPIO_Pin) {
     if (pos_delta == 0) return;  // дальше не печатаем и не читаем пиксел
     XEncoder_Update(pos_delta);  // Обновление времени в логике
 
-//// 1002
-// #define TEST_START_X   960
-// #define TEST_PIXELS    5   // 2…5
+    //// 1002
+    // #define TEST_START_X   960
+    // #define TEST_PIXELS    5   // 2…5
 
-// static uint8_t test_pixel_cnt = 0;
+    // static uint8_t test_pixel_cnt = 0;
 
-// if (X_POS == TEST_START_X) {
-//     test_pixel_cnt = TEST_PIXELS;
-// }
+    // if (X_POS == TEST_START_X) {
+    //     test_pixel_cnt = TEST_PIXELS;
+    // }
 
-// if (test_pixel_cnt > 0) {
-//     SetLaserPWM(99);
-//     test_pixel_cnt--;
-// } else {
-//     SetLaserPWM(0);
-// }
+    // if (test_pixel_cnt > 0) {
+    //     SetLaserPWM(99);
+    //     test_pixel_cnt--;
+    // } else {
+    //     SetLaserPWM(0);
+    // }
 
     // --- Старт печати при достижении левой границы и движении вправо и 3 проходов---
     if (pos_delta > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) {
@@ -687,8 +899,7 @@ void XEncoderCallback(uint16_t GPIO_Pin) {
             for (uint8_t i = 0; i < INTERPOL_X; i++) {
                 nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
             }
-        } 
-				else {
+        } else {
             // Вне зоны печати: выключить лазер и сбросить интерполяцию
             SetLaserPWM(0);
             interp_counter = 0;
@@ -807,6 +1018,12 @@ void XStepperStepCallback(int8_t direction) {
 // Возвращает 1 — если серия интерполированных шагов завершена
 // ============================================================================
 uint8_t XInterpTimerCallback(void) {
+		// Выключаем лазер, если X вышел за пределы рабочей области
+    if (X_POS < PRINT_LEFT_BORDER || X_POS > PRINT_RIGHT_BORDER) {
+        SetLaserPWM(0);  // Вне зоны - гасим лазер
+        interp_counter = 0;
+        return 1;  // Прерываем интерполяцию
+    }		
     // Установка мощности лазера в зависимости от текущего бита
     if (nextPrintBit[activeBuffer][interp_counter]) {
         SetLaserPWM(PRINT_CONFIG.DAT.W_SET_LAZER);
@@ -855,14 +1072,12 @@ void PacketReceive(uint8_t* buffer) {
         // ============================================================================
         // Обработка состояния FIFO данных и запуск DMA для новых данных
         // ============================================================================
-        ////////////////////////////////////////////////////////////////        __disable_irq();
         if ((FIFO_DATA.count >= FIFO_DATA.capacity) || (PRINT_DAT->DAT.R_FIFO_FUL == 1)) {
             PRINT_DAT->DAT.R_FIFO_FUL = 1;                  // FIFO не принял данные, пакет нужно повторить
             PRINT_DAT->DAT.R_FIFO_COUNT = FIFO_DATA.count;  // Текущее количество блоков в FIFO
             __enable_irq();
         } else {
             uint16_t next_tail = (FIFO_DATA.tail + 1) % FIFO_DATA.capacity;
-            ////////////////////////////////////////////////////////////////            __enable_irq();
             // Передаём
             FIFO_DATA_StartDma((uint32_t)PRINT_DAT->DAT.W_BUFFER, (uint32_t)FIFO_DATA.BLOCKS[FIFO_DATA.tail],
                                sizeof(FIFO_DATA.BLOCKS[0])  // или FIFO_DATA_BLOCK_SIZE, если определено
@@ -873,21 +1088,16 @@ void PacketReceive(uint8_t* buffer) {
         // ============================================================================
         // Обработка FIFO координат Y
         // ============================================================================
-        ////////////////////////////////////////////////////////////////        __disable_irq();
         if (PRINT_DAT->DAT.R_FIFO_Y_COUNT == 1) {
             FifoPosY_Push(PRINT_DAT->DAT.W_Y_BUFFER);
         }
         PRINT_DAT->DAT.R_FIFO_Y_COUNT = FifoPosY_FreeSpace();
-        ////////////////////////////////////////////////////////////////        __enable_irq();
-
         // Обновление параметров управления
         PRINT_CONFIG.DAT.W_SET_LAZER = PRINT_DAT->DAT.W_SET_LAZER;
-
         // Параметры скорости для колектрного
         W_X_SPEED_SET = PRINT_DAT->DAT.W_X_SPEED;
         // Параметры скорости для степпера
         X_MIN_POW = PRINT_DAT->DAT.W_X_SPEED;  // Минимальный период (максимальная скорость)
-
         // Обратная связь
         PRINT_DAT->DAT.W_X_SPEED = W_X_SPEED;
         PRINT_DAT->DAT.RW_Y_IMAGE_POSITION = Y_IMAGE_POSITION;
@@ -936,7 +1146,6 @@ void PacketReceive(uint8_t* buffer) {
     // СБРОС СИСТЕМЫ (IDX_RESET)
     // ============================================================================
     else if (event_idx == IDX_RESET) {
-        memcpy(APP_RESET.BIN + 1, buffer, 63);
         HAL_NVIC_SystemReset();
     }
     // ============================================================================
@@ -945,38 +1154,39 @@ void PacketReceive(uint8_t* buffer) {
     else if (event_idx == IDX_APP_ID) {
         APP_ID.DAT.R_IDX = IDX_APP_ID;
         APP_ID.DAT.W_CURENT = 0;
-        // Чтение и проверка BOOT прошивки
-        uint32_t KEY0 = flash_read(BASE_BOOT_VER);
-        uint32_t KEY1 = flash_read(BASE_BOOT_VER + 4);
-        uint32_t KEY2 = flash_read(BASE_BOOT_VER + 8);
-        uint32_t KEY3 = flash_read(BASE_BOOT_VER + 12);
-        uint32_t _VER = flash_read(BASE_BOOT_VER + 16);
+
+        // Чтение BOOT
+        uint32_t KEY0 = flash_read(BOOT_SIG_BLOCK_ADDR + 0);
+        uint32_t KEY1 = flash_read(BOOT_SIG_BLOCK_ADDR + 4);
+        uint32_t KEY2 = flash_read(BOOT_SIG_BLOCK_ADDR + 8);
+        uint32_t KEY3 = flash_read(BOOT_SIG_BLOCK_ADDR + 12);
+        uint32_t _VER = flash_read(BOOT_SIG_BLOCK_ADDR + 16);
+
         APP_ID.DAT.W_B_NAME[0] = KEY0;
         APP_ID.DAT.W_B_NAME[1] = KEY1;
         APP_ID.DAT.W_B_NAME[2] = KEY2;
         APP_ID.DAT.W_B_NAME[3] = KEY3;
-        if ((KEY0 == BOOT_SIG_KEY0) && (KEY1 == BOOT_SIG_KEY1) && (KEY2 == BOOT_SIG_KEY2) &&
-            (KEY3 == BOOT_SIG_KEY3)) {
-            APP_ID.DAT.W_B_VER = _VER;
-        } else {
-            APP_ID.DAT.W_B_VER = 0;
-        }
-        // Чтение и проверка APP прошивки
-        KEY0 = flash_read(BASE_APP_VER);
-        KEY1 = flash_read(BASE_APP_VER + 4);
-        KEY2 = flash_read(BASE_APP_VER + 8);
-        KEY3 = flash_read(BASE_APP_VER + 12);
-        _VER = flash_read(BASE_APP_VER + 16);
+        APP_ID.DAT.W_B_VER =
+            (KEY0 == BOOT_SIG_KEY0 && KEY1 == BOOT_SIG_KEY1 && KEY2 == BOOT_SIG_KEY2 && KEY3 == BOOT_SIG_KEY3)
+                ? _VER
+                : 0;
+
+        // Чтение APP
+        KEY0 = flash_read(APP_SIG_BLOCK_ADDR + 0);   // 0x08007FEC
+        KEY1 = flash_read(APP_SIG_BLOCK_ADDR + 4);   // 0x08007FF0
+        KEY2 = flash_read(APP_SIG_BLOCK_ADDR + 8);   // 0x08007FF4
+        KEY3 = flash_read(APP_SIG_BLOCK_ADDR + 12);  // 0x08007FF8
+        _VER = flash_read(APP_SIG_BLOCK_ADDR + 16);  // 0x08007FFC
+
         APP_ID.DAT.W_A_NAME[0] = KEY0;
         APP_ID.DAT.W_A_NAME[1] = KEY1;
         APP_ID.DAT.W_A_NAME[2] = KEY2;
         APP_ID.DAT.W_A_NAME[3] = KEY3;
-        if ((KEY0 == APP_SIG_KEY0) && (KEY1 == APP_SIG_KEY1) && (KEY2 == APP_SIG_KEY2) &&
-            (KEY3 == APP_SIG_KEY3)) {
-            APP_ID.DAT.W_A_VER = _VER;
-        } else {
-            APP_ID.DAT.W_A_VER = 0;
-        }
+        APP_ID.DAT.W_A_VER =
+            (KEY0 == APP_SIG_KEY0 && KEY1 == APP_SIG_KEY1 && KEY2 == APP_SIG_KEY2 && KEY3 == APP_SIG_KEY3)
+                ? _VER
+                : 0;
+
         // Уникальный ID микроконтроллера
         APP_ID.DAT.W_ID[0] = HAL_GetUIDw0();
         APP_ID.DAT.W_ID[1] = HAL_GetUIDw1();
@@ -1003,13 +1213,20 @@ void PacketReceive(uint8_t* buffer) {
     // ============================================================================
     else if (event_idx == IDX_WRITE) {
         memcpy(APP_WRITE.BIN + 1, buffer, 63);
-        uint8_t COUNT = (APP_WRITE.DAT.W_COUNT + 3) >> 2;  // байты → 32-битные слова
 
-        HAL_FLASH_Unlock();
-        for (int i = 0; i < COUNT; i++) {
-            flash_write(APP_WRITE.DAT.W_ADRES + (i * 4), APP_WRITE.DAT.W_INFO[i]);
+        // Проверка: W_COUNT не должен превышать доступные данные (макс 56 байт)
+        if (APP_WRITE.DAT.W_COUNT == 0 || APP_WRITE.DAT.W_COUNT > 56) {
+            // Можно отправить ошибку, но для совместимости просто ограничим
+            APP_WRITE.DAT.W_COUNT = (APP_WRITE.DAT.W_COUNT > 56) ? 56 : APP_WRITE.DAT.W_COUNT;
         }
-        HAL_FLASH_Lock();
+
+        // Выравнивание адреса по 4 байта — обязательно
+        if ((APP_WRITE.DAT.W_ADRES & 3) != 0) {
+            // Опционально: отправить ошибку
+        } else {
+            // Запись всего блока за один вызов
+            flash_write_buffer(APP_WRITE.DAT.W_ADRES, (uint8_t*)APP_WRITE.DAT.W_INFO, APP_WRITE.DAT.W_COUNT);
+        }
 
         PacketSend(APP_WRITE.BIN);
     }
@@ -1025,13 +1242,15 @@ void PacketReceive(uint8_t* buffer) {
     // ============================================================================
     // ПЕРЕХОД В BOOTLOADER (IDX_JAMP_TO)
     // ============================================================================
-    else if (event_idx == IDX_JAMP_TO) {
-        memcpy(APP_JAMP_TO.BIN + 1, buffer, 63);
-        HAL_FLASH_Unlock();
-        flash_write(BASE_BOOT_JUMP_FLAG_ADDR, BOOT_JUMP_FLAG_SET);  // Флаг перехода в BOOT
-        HAL_FLASH_Lock();
-        HAL_NVIC_SystemReset();
-    }
+		else if (event_idx == IDX_JAMP_TO_BOOT) {
+				memcpy(APP_JAMP_TO_BOOT.BIN + 1, buffer, 63);
+
+				// === Записываем флаг в RTC backup (1 байт) ===
+				LPP_BootFlag_Write(LPP_BOOT_MAGIC);
+
+				// Сброс MCU
+				HAL_NVIC_SystemReset();
+		}
     // ============================================================================
     // УПРАВЛЕНИЕ ЛАЗЕРОМ (IDX_LAZER)
     // ============================================================================
@@ -1064,12 +1283,13 @@ void PacketReceive(uint8_t* buffer) {
         W_X_POL_PWM = SET_X.DAT.W_X_POL_PWM;
         XMotorInit(SET_X.DAT.W_X_MODE);
 
+        // Настраиваем пины энкодера с учётом инверсии
         if (SET_X.DAT.W_X_POL_EN == 0) {
-            ENCODER_A_PIN = 0x0040;
-            ENCODER_B_PIN = 0x0100;
+            ENCODER_A_PIN = X_ENCODER_CFG_PIN_A;
+            ENCODER_B_PIN = X_ENCODER_CFG_PIN_B;
         } else {
-            ENCODER_A_PIN = 0x0100;
-            ENCODER_B_PIN = 0x0040;
+            ENCODER_A_PIN = X_ENCODER_CFG_PIN_B;
+            ENCODER_B_PIN = X_ENCODER_CFG_PIN_A;
         }
 
         if (SET_X.DAT.W_X_RESET == 1) {
@@ -1078,8 +1298,8 @@ void PacketReceive(uint8_t* buffer) {
             SET_X.DAT.W_X_MOV_POS = 0;
             SET_X.DAT.W_X_RESET = 0;
         }
-				
-				X_KP_POS = SET_X.DAT.X_KP_POS; 
+
+        X_KP_POS = SET_X.DAT.X_KP_POS;
 
         // === ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА ===
         if (SET_X.DAT.W_X_TRECK == 1) {
@@ -1088,14 +1308,12 @@ void PacketReceive(uint8_t* buffer) {
             W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
             X_KP = SET_X.DAT.W_X_KP;
             X_KI = SET_X.DAT.W_X_KI;
-					
+
             XStartTracking(SET_X.DAT.W_X_L_POS, SET_X.DAT.W_X_R_POS);
         } else {
             // Трекинг был включен - останавливаем безопасно
-
-					  // Вызываем функцию остановки (она сама один раз сработает)
-						XStopTracking();
-
+            // Вызываем функцию остановки (она сама один раз сработает)
+            XStopTracking();
 
             W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
             W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
@@ -1186,6 +1404,7 @@ void PacketReceive(uint8_t* buffer) {
         SetLaserLightPWMFrequency(SET_PARAM.DAT.W_SET_L_FREQ);
         // Установка уровня подсветки
         SetLightPWM(SET_PARAM.DAT.W_SET_LIGHT);
+        PacketSend(SET_PARAM.BIN);
     }
     // ============================================================================
     // ДАННЫЕ ТРЕКИНГА (IDX_TRACK)
@@ -1232,10 +1451,13 @@ void FIFO_DATA_EndDma(void) {
 // Инициализация SDK (вызов из main.c один раз при старте системы)
 // ============================================================================
 void Lpp_Init(void) {
-    // Проверка флага перехода в BOOTloader.
-    // Если приложение (APP) установило BOOT_JUMP_FLAG_SET,
-    // выполняем прямой переход на старт BOOT (BASE_BOOT_START_ADDR)
-    if ((*(__IO uint32_t*)BASE_BOOT_JUMP_FLAG_ADDR) == BOOT_JUMP_FLAG_SET) {
+    // Очистка флага при cold power-on, если подали питание то сбросим
+    LPP_BootFlag_ColdPowerClear();
+    // Проверяем RTC-флаг
+    if (LPP_BootFlag_Read() == LPP_BOOT_MAGIC) {
+        // Очищаем флаг, чтобы не зациклиться
+        LPP_BootFlag_Write(0x00);
+        // Прыжок в BOOTloader
         JumpToApplication(BASE_BOOT_START_ADDR);
     }
 
@@ -1502,6 +1724,16 @@ int XCalculatePower(void) {
 }
 
 // ============================================================================
+// Ограничение значения с защитой от переполнения
+// Используется при переходе int32_t → int16_t (мощность, аккумуляторы)
+// ============================================================================
+static inline int16_t clamp16(int32_t v, int16_t min, int16_t max) {
+    if (v > max) return max;
+    if (v < min) return min;
+    return (int16_t)v;
+}
+
+// ============================================================================
 // ОБРАБОТЧИК ЛОГИКИ ОСИ X - секция трекинга
 // По сути сам ПИД X
 // ============================================================================
@@ -1536,8 +1768,8 @@ void XTimerCallback(void) {
                     X_RETURN_DONE = 1;  // ← больше не выполняем
                 }
             }
-        }			
-								
+        }
+
         // ========================================================
         // РЕЖИМ ЦИКЛИЧЕСКОГО БЕГА (ТРЕКИНГ)
         // ========================================================
@@ -1600,19 +1832,10 @@ void XTimerCallback(void) {
             W_X_I_component = (W_X_SPEED_ERROR_INTEGRAL * (int32_t)X_KI) / 100;
             W_X_PI_sum = W_X_P_component + W_X_I_component;
 
-            if (W_X_PI_sum > 32767)
-                W_X_PI_sum = 32767;
-            else if (W_X_PI_sum < -32768)
-                W_X_PI_sum = -32768;
-
-            W_X_POWER_REAL = (int16_t)W_X_PI_sum;
-
-            if (W_X_POWER_REAL > W_X_POWER_MAX)
-                W_X_POWER_REAL = W_X_POWER_MAX;
-            else if (W_X_POWER_REAL < -W_X_POWER_MAX)
-                W_X_POWER_REAL = -W_X_POWER_MAX;
+            W_X_POWER_REAL = clamp16(W_X_PI_sum, -W_X_POWER_MAX, W_X_POWER_MAX);
 
             XMotorSet(W_X_POWER_REAL);
+
         } else {
             // ========================================================
             // Режим позиционирования + скорость (JOG)
@@ -1620,39 +1843,44 @@ void XTimerCallback(void) {
             if (SET_X.DAT.W_X_ENABLED == 1) {
                 // =================================================
                 // JOG MODE — скоростное управление
-                // Позиция используется как виртуальная цель
                 // =================================================
                 if (X_MOTION == X_MOTION_RIGHT || X_MOTION == X_MOTION_LEFT) {
-								// ------------------------------------------------
-								// Формирование виртуальной позиции
-								// Цель всегда немного впереди текущей
-								// ------------------------------------------------
-								#define X_JOG_OFFSET 2  // Смещение виртуальной цели (шаги)
-								#define X_JOG_POWER_STEP 20  // Шагов мощности
-                    if (X_MOTION == X_MOTION_RIGHT) {
+// ------------------------------------------------
+// Формирование виртуальной позиции
+// ------------------------------------------------
+#define X_JOG_OFFSET 2
+#define X_JOG_POWER_STEP 20
+
+                    if (X_MOTION == X_MOTION_RIGHT)
                         X_GO_POS = X_POS + X_JOG_OFFSET;
-                    } else {
+                    else
                         X_GO_POS = X_POS - X_JOG_OFFSET;
+
+                    // ------------------------------------------------
+                    // Фильтрация скорости (с защитой)
+                    // ------------------------------------------------
+                    if (W_X_SPEED == 0 || W_X_SPEED == 0xFFFF) {
+                        W_X_SPEED_FILTERED = 0;
+                    } else {
+                        int32_t tmp_speed = 65535 / W_X_SPEED;
+                        if (tmp_speed > INT16_MAX) tmp_speed = INT16_MAX;
+                        W_X_SPEED_FILTERED = (int16_t)tmp_speed;
                     }
 
                     // ------------------------------------------------
-                    // Фильтрация скорости
+                    // Определение направления
                     // ------------------------------------------------
-                    if (W_X_SPEED == 0 || W_X_SPEED == 0xFFFF)
-                        W_X_SPEED_FILTERED = 0;
-                    else
-                        W_X_SPEED_FILTERED = 65535 / (int32_t)W_X_SPEED;
+                    int8_t dir = ((X_GO_POS - X_POS) > 0) ? 1 : -1;
 
-										// ------------------------------------------------
-										// Определение направления движения: -1 для "-", +1 для "+"
-										// ------------------------------------------------
-										int8_t dir = ((X_GO_POS - X_POS) > 0) ? 1 : -1;
+                    // ------------------------------------------------
+                    // Регулирование мощности (БЕЗ переполнения)
+                    // ------------------------------------------------
+                    int16_t step =
+                        (W_X_SPEED_FILTERED > W_X_SPEED_SET) ? -X_JOG_POWER_STEP : X_JOG_POWER_STEP;
 
-										// ------------------------------------------------
-										// Регулирование мощности по скорости и полярности
-										// ------------------------------------------------
-										W_X_POWER_REAL += ((W_X_SPEED_FILTERED > W_X_SPEED_SET) ? -X_JOG_POWER_STEP : X_JOG_POWER_STEP) * dir;
+                    int32_t tmp_power = (int32_t)W_X_POWER_REAL + (step * dir);
 
+                    W_X_POWER_REAL = clamp16(tmp_power, -W_X_POWER_MAX, W_X_POWER_MAX);
                 }
 
                 // =================================================
@@ -1663,7 +1891,7 @@ void XTimerCallback(void) {
 
                     if (position_error != 0) {
                         // ------------------------------------------------
-                        // Контроль движения (обнаружение залипания)
+                        // Контроль движения
                         // ------------------------------------------------
                         int32_t position_delta = X_POS - X_LAST_POSITION;
                         X_LAST_POSITION = X_POS;
@@ -1679,22 +1907,20 @@ void XTimerCallback(void) {
                         if (position_delta == 0) {
                             int32_t power_step = SET_X.DAT.W_X_POWER_STEP;
 
-                            if (position_error > 0)
-                                X_POWER_ACCUM += power_step;
-                            else
-                                X_POWER_ACCUM -= power_step;
+                            int32_t acc = X_POWER_ACCUM + ((position_error > 0) ? power_step : -power_step);
 
+                            X_POWER_ACCUM = clamp16(acc, -W_X_POWER_MAX, W_X_POWER_MAX);
                         } else {
-                            // Движение есть — сброс компенсации
                             X_STUCK_COUNTER = 0;
                             X_POWER_ACCUM = 0;
                         }
 
                         // ------------------------------------------------
-                        // Итоговая мощность
+                        // Итоговая мощность (с защитой)
                         // ------------------------------------------------
-                        W_X_POWER_REAL = base_power + X_POWER_ACCUM;
+                        int32_t total_power = base_power + X_POWER_ACCUM;
 
+                        W_X_POWER_REAL = clamp16(total_power, -W_X_POWER_MAX, W_X_POWER_MAX);
                     } else {
                         // ------------------------------------------------
                         // Цель достигнута — сброс регулятора
@@ -1705,12 +1931,6 @@ void XTimerCallback(void) {
                         X_LAST_POSITION = X_POS;
                     }
                 }
-
-                // =================================================
-                // Ограничение мощности
-                // =================================================
-                if (W_X_POWER_REAL > W_X_POWER_MAX) W_X_POWER_REAL = W_X_POWER_MAX;
-                if (W_X_POWER_REAL < -W_X_POWER_MAX) W_X_POWER_REAL = -W_X_POWER_MAX;
 
                 // =================================================
                 // Вывод на драйвер мотора

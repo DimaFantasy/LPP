@@ -1,1 +1,0 @@
-lpp_stm32g431cx\startup_stm32g431xx.o: startup_stm32g431xx.s

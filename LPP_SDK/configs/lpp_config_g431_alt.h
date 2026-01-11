@@ -26,3 +26,62 @@
  * Community chat:    https://t.me/LPP_Printer_Chat
  ******************************************************************************
  */
+ 
+#ifndef LPP_CONFIG_G431_ALT_H
+#define LPP_CONFIG_G431_ALT_H
+
+#include "stm32g4xx.h"
+#include "stm32g4xx_hal.h"
+
+
+// ============================================================================
+// Пины и порт энкодера
+// ============================================================================
+#define X_ENCODER_PORT    GPIOA
+#define X_ENCODER_CFG_PIN_A   GPIO_PIN_8   // PA8
+#define X_ENCODER_CFG_PIN_B   GPIO_PIN_9   // PA9
+
+// ============================================================================
+// Память и адреса версий
+// ============================================================================
+#define BASE_BOOT_VER  0x0800FFF8U
+#define BASE_APP_VER   0x08007FFCU
+
+#define BOOT_SIG_BLOCK_ADDR  0x0800FFE8U  // BOOT_KEY0
+#define APP_SIG_BLOCK_ADDR   0x08007FECU  // APP KEY0
+
+// ============================================================================
+// Уникальные сигнатуры (ALT hardware)
+// ============================================================================
+// --- BOOT ---
+#define BOOT_SIG_KEY0  0x431A0000U   // <— A = ALT
+#define BOOT_SIG_KEY1  0xA1B2C3D4U
+#define BOOT_SIG_KEY2  0x55667788U
+#define BOOT_SIG_KEY3  0x90ABCDEFU
+
+// --- APP ---
+#define APP_SIG_KEY0   0x431A0000U
+#define APP_SIG_KEY1   0x0FEDCBA9U
+#define APP_SIG_KEY2   0x88776655U
+#define APP_SIG_KEY3   0x44332211U
+
+// Базовые адреса
+#define BASE_APP_START_ADDR        0x08000000U
+#define BASE_BOOT_START_ADDR       0x08008000U   // ← бут теперь в 32 КБ
+
+// Адреса метаданных — последние 24 байта приложения (0x7FE8–0x7FFF)
+#define APP_RESETI_SECTION    ".ARM.__at_0x08007FE8"
+#define APP_KEY0_SECTION      ".ARM.__at_0x08007FEC"
+#define APP_KEY1_SECTION      ".ARM.__at_0x08007FF0"
+#define APP_KEY2_SECTION      ".ARM.__at_0x08007FF4"
+#define APP_KEY3_SECTION      ".ARM.__at_0x08007FF8"
+#define APP_VER_F_SECTION     ".ARM.__at_0x08007FFC"
+
+// ===== СИГНАТУРЫ БУТЛОАДЕРА (в конце 32–64 КБ) =====
+#define BOOT_KEY0_SECTION     ".ARM.__at_0x0800FFE8"
+#define BOOT_KEY1_SECTION     ".ARM.__at_0x0800FFEC"
+#define BOOT_KEY2_SECTION     ".ARM.__at_0x0800FFF0"
+#define BOOT_KEY3_SECTION     ".ARM.__at_0x0800FFF4"
+#define BOOT_VER_F_SECTION    ".ARM.__at_0x0800FFF8"
+
+#endif // LPP_CONFIG_G431_ALT_H

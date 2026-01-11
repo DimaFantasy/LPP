@@ -3,7 +3,7 @@
  * @file    lpp_sdk.h
  * @brief   Laser Printer Platform (LPP) — SDK global declarations
  *
- * This file is part of the LPP (Laser Printer Platform) SDK — 
+ * This file is part of the LPP (Laser Printer Platform) SDK —
  * a software development kit for embedded laser printer control,
  * designed for STM32 microcontrollers (Blue Pill, Black Pill, G4 series).
  *
@@ -27,7 +27,6 @@
  ******************************************************************************
  */
 
-
 #ifndef LPP_SDK_H
 #define LPP_SDK_H
 
@@ -41,7 +40,11 @@ extern "C" {
 #if defined(STM32F103xB)
 #include "configs/lpp_config_f103.h"
 #elif defined(STM32G431xx)
+#if defined(USE_LPP_G431_ALT)
+#include "configs/lpp_config_g431_alt.h"
+#else
 #include "configs/lpp_config_g431.h"
+#endif
 #elif defined(STM32F411xE)
 #include "configs/lpp_config_f411.h"
 #else
@@ -72,9 +75,9 @@ typedef enum {
 
 // Направление движения оси X
 typedef enum {
-    X_MOTION_NONE  = 0,   // Нет движения
-    X_MOTION_RIGHT = 1,   // Движение вправо
-    X_MOTION_LEFT  = 2    // Движение влево
+    X_MOTION_NONE = 0,   // Нет движения
+    X_MOTION_RIGHT = 1,  // Движение вправо
+    X_MOTION_LEFT = 2    // Движение влево
 } X_MOTION_T;
 
 // Состояния движения по оси Y
@@ -110,7 +113,6 @@ typedef enum {
     Y_MOTION_DOWN = 2   // Движение вниз
 } Y_MOTION_T;
 
-
 #define IDX_PRINT_CONFIG 35  // Идентификатор пакета конфигурации печати
 // Структура конфигурации параметров печати
 typedef union {
@@ -134,7 +136,7 @@ typedef union {
         uint8_t W_INTERPOL_X;    // Коэффициент интерполяции X
         uint32_t W_Y_LINES;      // Число строк по Y
         // Настройки частоты
-//        uint16_t W_SET_L_PRESCALER;  // Установка частоты, предделитель
+        //        uint16_t W_SET_L_PRESCALER;  // Установка частоты, предделитель
         // Параметры управления осью X
         uint16_t W_X_POWER_MAX;  // Максимальная мощность X (0..500)
         uint16_t W_X_SPEED_SET;  // Скорость движения каретки
@@ -208,7 +210,6 @@ typedef union {
         uint8_t R_IDX;     // ID пакета
         uint8_t W_WRITE;   // Режим записи
         uint8_t W_CURENT;  // Режим работы
-        uint32_t W_ADRES;  // Адрес для сброса
     } DAT;
     uint8_t BIN[64];
 } TYPE_APP_RESET;
@@ -275,11 +276,11 @@ typedef union {
         uint8_t W_X_POL_PWM;     // Полярность H-моста
         uint8_t W_X_POL_DIR;     // Полярность DIR
         uint8_t W_X_MODE;        // Режим энкодера
-				
-        int16_t W_X_ACCL;        // Ускорение X						
-        int16_t W_X_MIN_POW;     // Минимальная мощность X
-        uint8_t W_X_ENABLED_PIN; // Включить контролер	
-				uint8_t W_X_MOTION;     // Постояное движение 0=стоп, 1=вправо, 2=влево				
+
+        int16_t W_X_ACCL;         // Ускорение X
+        int16_t W_X_MIN_POW;      // Минимальная мощность X
+        uint8_t W_X_ENABLED_PIN;  // Включить контролер
+        uint8_t W_X_MOTION;       // Постояное движение 0=стоп, 1=вправо, 2=влево
     } DAT;
     uint8_t BIN[64];
 } TYPE_SET_X;
@@ -312,13 +313,13 @@ typedef union {
 // Структура общих параметров системы
 typedef union {
     struct {
-        uint8_t ID;                  // Идентификатор
-        uint8_t R_IDX;               // ID пакета
-        uint8_t W_WRITE;             // Режим записи
-        uint8_t W_ANSVER;            // Флаг ответа
-        uint16_t W_SET_LIGHT;        // Установка тока подсветки
-        uint16_t W_SET_LAZER;        // Установка тока лазера
-        uint32_t W_SET_L_FREQ;  			// Установка частоты, предделитель
+        uint8_t ID;             // Идентификатор
+        uint8_t R_IDX;          // ID пакета
+        uint8_t W_WRITE;        // Режим записи
+        uint8_t W_ANSVER;       // Флаг ответа
+        uint16_t W_SET_LIGHT;   // Установка тока подсветки
+        uint16_t W_SET_LAZER;   // Установка тока лазера
+        uint32_t W_SET_L_FREQ;  // Установка частоты, предделитель
     } DAT;
     uint8_t BIN[64];
 } TYPE_SET_PARAM;
@@ -340,28 +341,27 @@ typedef union {
 // Структура управления лазером
 typedef union {
     struct {
-        uint8_t ID;                  // Идентификатор
-        uint8_t R_IDX;               // ID пакета
-        uint8_t W_WRITE;             // Режим записи
-        uint8_t W_CURENT;            // Режим работы
-        uint16_t W_SET_L;            // Мощность лазера
+        uint8_t ID;             // Идентификатор
+        uint8_t R_IDX;          // ID пакета
+        uint8_t W_WRITE;        // Режим записи
+        uint8_t W_CURENT;       // Режим работы
+        uint16_t W_SET_L;       // Мощность лазера
         uint32_t W_SET_L_FREQ;  // Установка частоты, предделитель
     } DAT;
     uint8_t BIN[64];
 } TYPE_LAZER;
 
-#define IDX_JAMP_TO 25  // Идентификатор пакета перехода
-// Структура перехода по адресу
+#define IDX_JAMP_TO_BOOT 25  // Идентификатор пакета перехода в BOOT
+// Структура перехода в BOOT
 typedef union {
     struct {
         uint8_t ID;        // Идентификатор
         uint8_t R_IDX;     // ID пакета
         uint8_t W_WRITE;   // Режим записи
         uint8_t W_CURENT;  // Режим работы
-        uint8_t W_ADRES;   // Адрес назначения
     } DAT;
     uint8_t BIN[64];
-} TYPE_APP_JAMP_TO;
+} TYPE_APP_JAMP_TO_BOOT;
 
 #define IDX_APP_SPEED_TEST 24  // Идентификатор пакета теста скорости
 // Структура теста скорости
@@ -416,8 +416,8 @@ typedef union {
         uint32_t W_B_VER;      // Версия BOOT
         uint32_t W_A_NAME[4];  // Имя APP
         uint32_t W_B_NAME[4];  // Имя BOOT
-				int32_t W_X_POS; // Позиция X
-				int32_t W_Y_POS; // Позиция Y
+        int32_t W_X_POS;       // Позиция X
+        int32_t W_Y_POS;       // Позиция Y
     } DAT;
     uint8_t BIN[64];
 } TYPE_APP_ID;
@@ -432,7 +432,6 @@ typedef union {
     } DAT;
     uint8_t BIN[64];
 } TYPE_SPEED_TEST;
-
 
 // Константы работы с энкодером (DWT-based)
 #define ENCODER_TIMEOUT_US 60000  // Таймаут энкодера в микросекундах
@@ -484,12 +483,12 @@ void DWT_1kHz_Handler(void);
 void XEncoder_Update(int8_t pos_delta);
 
 // Управление лазером и подсветкой (реализуется в main.c)
-extern void SetLaserPWM(uint16_t pwm_value);      // Установка мощности лазера (ШИМ)
-extern void SetLightPWM(uint16_t pwm_value);      // Установка мощности подсветки (ШИМ)
-extern void SetLaserLightPWMFrequency(uint32_t prescaler);  // Установка делителя частоты PWM лазера и подсветки
+extern void SetLaserPWM(uint16_t pwm_value);              // Установка мощности лазера (ШИМ)
+extern void SetLightPWM(uint16_t pwm_value);              // Установка мощности подсветки (ШИМ)
+extern void SetLaserLightPWMFrequency(uint32_t freq_hz);  // Установка делителя частоты PWM лазера и подсветки
 
 // Остановка задания печати и сброс параметров
-void PrintStopJob(PRINT_STATUS_T PRINT_STATUS);  
+void PrintStopJob(PRINT_STATUS_T PRINT_STATUS);
 
 // Отправка 64-байтного пакета хосту (реализуется в main.c, но вызывается из SDK)
 extern uint8_t PacketSend(uint8_t* buffer);
@@ -512,18 +511,18 @@ void Lpp_MainLoop(void);
 // Рассчитывает скорость, управляет шагами и ускорением
 // Логика реализована в SDK
 void YTimerCallback(void);
-// Установить период таймера Y, управляет частотой вызова YTimerCallback()
+// Управление сигналом ENABLE (включение/выключение драйвера)
 // **Реализовать в main.c**
-extern void YTimerSet(uint16_t period);
+extern void YSetEnable(uint8_t enabled);
 // Установить физическое направление мотора Y (DIR)
 // **Реализовать в main.c**
 extern void YSetDir(uint8_t dir_pin_state);
 // Сгенерировать импульс STEP для мотора Y
 // **Реализовать в main.c**
 extern void YSetStep(uint8_t step_pin_state);
-// Управление сигналом ENABLE (включение/выключение драйвера)
+// Установить период таймера Y, управляет частотой вызова YTimerCallback()
 // **Реализовать в main.c**
-extern void YSetEnable(uint8_t enabled);
+extern void YTimerSet(uint16_t period);
 
 // Управление мотором X
 // Запуск таймера интерполяции оси X
@@ -531,8 +530,7 @@ extern void YSetEnable(uint8_t enabled);
 extern void XInterpTimerStart(uint32_t period);  // Запуск таймера интерполяции
 // Callback таймера интерполяции оси X (TIM3)
 // Выполняет один интерполированный шаг, возвращает 1 при завершении серии
-extern uint8_t XInterpTimerCallback(void);  
-
+extern uint8_t XInterpTimerCallback(void);
 
 // Пины энкодера оси X
 // Используются для чтения квадратурного энкодера (каналы A и B)
@@ -540,11 +538,11 @@ extern volatile uint16_t ENCODER_A_PIN;  // Пин энкодера A
 extern volatile uint16_t ENCODER_B_PIN;  // Пин энкодера B
 // Чтение состояния пинов энкодера (каналы A и B)
 // Возвращает маску ENCODER_A_PIN | ENCODER_B_PIN
-extern uint16_t ReadEncoderPins(void); // Чтение состояния выводов энкодера
+extern uint16_t ReadEncoderPins(void);  // Чтение состояния выводов энкодера
 // Callback энкодера оси X (вызывается из EXTI по фронтам A/B)
 // Считывает состояние энкодера и обновляет позицию X
-// Может инициировать логику печати при движении каретки 
-void XEncoderCallback(uint16_t GPIO_Pin); 
+// Может инициировать логику печати при движении каретки
+void XEncoderCallback(uint16_t GPIO_Pin);
 
 // Таймерный обработчик X, вызывается циклически (примерно, 1 кГц)
 // Рассчитывает PID, позицию и управляет реальной мощностью
@@ -567,7 +565,7 @@ extern void XSetDir(uint8_t dir_pin_state);
 // Сгенерировать импульс STEP для мотора X (в режиме X_MOTOR_MODE_STEP)
 // **Реализовать в main.c**
 extern void XSetStep(uint8_t step_pin_state);
-// Управление сигналом ENABLE (включение/выключение драйвера)
+// Управление сигналом ENABLE (включение/выключение драйвера X)
 // **Реализовать в main.c**
 extern void XSetEnable(uint8_t enabled);
 
