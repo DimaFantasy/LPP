@@ -61,13 +61,13 @@
 # 📂 Файлы проекта (DipTrace)
 
 ### *.dip — платы
-- **LPP_MainBoard_Gen_1_Ver_3.dip** — основная плата управления (разводка готова, не тестирована).
+- **LPP_MainBoard_Gen_1_Ver_4.dip** — основная плата управления.
 - **LPP_Carriage_Module_Gen_1_Ver_1.dip** — рабочая версия.
 - **LPP_Carriage_Module_Gen_2_Ver_1.dip** — лазер 3 А (не тестировано).
 - **LPP_Stepper_Shield_Gen_1_Ver_1.dip** — в разработке.
 
 ### *.dch — схемы
-- **LPP_MainBoard_Gen_1_Ver_3.dch**
+- **LPP_MainBoard_Gen_1_Ver_4.dch**
 - **LPP_Carriage_Module_Gen_1_Ver_1.dch**
 - **LPP_Carriage_Module_Gen_2_Ver_1.dch**
 - **LPP_Stepper_Shield_Gen_1_Ver_1.dch**
