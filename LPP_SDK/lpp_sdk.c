@@ -237,15 +237,10 @@ volatile uint8_t g_encoder_timeout_active = 0;  // Флаг таймаута э�
 // ============================================================================ 
 #define LPP_BOOT_MAGIC 0x42  // произвольное, редко встречающееся значение
 
-void LPP_BootFlag_EnableAccess(void)
-{
-    __HAL_RCC_PWR_CLK_ENABLE();
-    HAL_PWR_EnableBkUpAccess();
-}
-
 uint8_t LPP_BootFlag_Read(void)
 {
-    LPP_BootFlag_EnableAccess();
+    __HAL_RCC_PWR_CLK_ENABLE();
+    HAL_PWR_EnableBkUpAccess();    	
 #if defined(STM32F1)
     return (uint8_t)(BKP->DR1 & 0xFF);
 #elif defined(STM32F4)
@@ -261,7 +256,8 @@ uint8_t LPP_BootFlag_Read(void)
 
 void LPP_BootFlag_Write(uint8_t value)
 {
-    LPP_BootFlag_EnableAccess();
+    __HAL_RCC_PWR_CLK_ENABLE();
+    HAL_PWR_EnableBkUpAccess();
 #if defined(STM32F1)
     BKP->DR1 = (uint32_t)value;
 #elif defined(STM32F4) 
@@ -326,40 +322,6 @@ static uint32_t GET_SECTOR(uint32_t address) {  // Добавьте static
 #endif
 
 void JumpToApplication(uint32_t app_addr) {
-    //    uint32_t JumpAddress;
-    //    typedef void (*pFunction)(void);
-    //    pFunction Jump_To_Application;
-    //
-    //    // 1. Отключить все прерывания
-    //    __disable_irq();
-    //
-    //    // 2. Деинициализация HAL и периферии
-    //    HAL_DeInit();
-    //
-    //    // 3. Отключить SysTick
-    //    SysTick->CTRL = 0;
-    //    SysTick->LOAD = 0;
-    //    SysTick->VAL = 0;
-    //
-    //    // 4. Очистить все флаги прерываний
-    //    for (uint8_t i = 0; i < 8; i++) {
-    //        NVIC->ICER[i] = 0xFFFFFFFF;  // Отключить все прерывания
-    //        NVIC->ICPR[i] = 0xFFFFFFFF;  // Очистить pending флаги
-    //    }
-    //
-    //    // 5. КРИТИЧНО для G4: Переназначить вектор прерываний
-    //    SCB->VTOR = app_addr;
-    //
-    //    // 6. Установить MSP
-    //    __set_MSP(*(__IO uint32_t*)app_addr);
-    //
-    //    // 7. Получить адрес Reset Handler
-    //    JumpAddress = *(__IO uint32_t*)(app_addr + 4);
-    //    Jump_To_Application = (pFunction)JumpAddress;
-    //
-    //    // 8. Включить прерывания и прыгать
-    //    __enable_irq();
-    //    Jump_To_Application();
 
     uint32_t JumpAddress;
     typedef void (*pFunction)(void);
