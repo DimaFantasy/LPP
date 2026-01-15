@@ -142,7 +142,7 @@ volatile int32_t X_START_POS = 0;   // Начальная позиция
 volatile int32_t X_HALF_POS = 0;    // Половина пути
 volatile uint8_t X_PIN = 0;         // Виртуальный STEP (0/1)
 volatile uint16_t X_REAL_SPED = 0;  // Реальная скорость (период таймера)
-volatile int16_t X_MIN_POW = 0;     // Минимальная мощность
+volatile int16_t X_MIN_POW = 1;     // Минимальная мощность
 volatile int16_t X_ACCL = 0;        // Ускорение (длина разгона/торможения)
 
 volatile uint8_t X_DIR_HI = 0;   // Направление X (HIGH)
@@ -184,7 +184,7 @@ volatile uint8_t Y_DIR_LO = 0;   // Направление Y (низкий ур�
 volatile uint8_t Y_STEP_HI = 0;  // Шаг Y (высокий уровень)
 volatile uint8_t Y_STEP_LO = 0;  // Шаг Y (низкий уровень)
 
-volatile int16_t Y_MIN_POW = 0;  // Минимальная мощность Y
+volatile int16_t Y_MIN_POW = 1;  // Минимальная мощность Y 
 volatile int16_t Y_ACCL = 0;     // Ускорение Y
 
 volatile uint16_t ENCODER_A_PIN = 0;
@@ -1322,8 +1322,11 @@ void PacketReceive(uint8_t* buffer) {
         Y_MOTION = SET_Y.DAT.W_Y_MOTION;
 
         if (SET_Y.DAT.W_Y_POS_WRITE == 1) {
+					if (Y_FINISH_POS == Y_POS) {// только если доехали к позиции
             Y_FINISH_POS = SET_Y.DAT.W_Y_MOV_POS;
-            SET_Y.DAT.W_Y_POS_WRITE = 0;
+            SET_Y.DAT.W_Y_POS_WRITE = 0;					
+					}
+
         } else {
             SET_Y.DAT.W_Y_MOV_POS = Y_FINISH_POS;
         }
@@ -1627,7 +1630,7 @@ void YTimerCallback(void) {
     // Обновляем статус: 0 = BUSY, 1 = READY
     Y_STATUS = (Y_FINISH_POS == Y_POS) ? 1 : 0;
     // Если движение продолжается — вычисляем скорость/мощность, иначе ставим минимальную
-    Y_REAL_SPED = (Y_FINISH_POS != Y_POS) ? YCalculatePower() : 1;
+    Y_REAL_SPED = (Y_FINISH_POS != Y_POS) ? YCalculatePower() : Y_MIN_POW; 		
     // Если мы только начали или закончили движение — обновляем стартовую точку
     Y_START_POS = ((Y_POS == Y_START_POS) || (Y_POS == Y_FINISH_POS)) ? Y_POS : Y_START_POS;
     // Настраиваем таймер на новый период (зависит от скорости)
@@ -1743,7 +1746,7 @@ void XTimerCallback(void) {
         // ========================================================
         // РАСЧЕТ СКОРОСТИ + УСТАНОВКА ТАЙМЕРА
         // ========================================================
-        X_REAL_SPED = (X_GO_POS != X_POS) ? XCalculatePower() : 1;
+        X_REAL_SPED = (X_GO_POS != X_POS) ? XCalculatePower() : X_MIN_POW;
         XTimerSet(X_REAL_SPED);
     }
 

@@ -676,6 +676,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
         if (XInterpTimerCallback() == 0) {
             // Возврат 0 означает, что серия интерполяции завершена
             HAL_TIM_Base_Stop_IT(&htim3);
+// __HAL_TIM_SET_COUNTER(&htim3, 0);	// TODO Потом заменить по сути одно и тоже что TIM3->CNT = 0;			
             TIM3->CNT = 0;  // Сброс счетчика
         }
     }
