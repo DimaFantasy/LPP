@@ -31,6 +31,7 @@
 "lpp_stm32g431cbtx\usbd_ioreq.o"
 "lpp_stm32g431cbtx\usbd_customhid.o"
 "lpp_stm32g431cbtx\lpp_sdk.o"
+"lpp_stm32g431cbtx\lpp_core_gpio.o"
 --strict --scatter "LPP_STM32G431CBTx\LPP_STM32G431CBTx.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -28,8 +28,24 @@
  */
 
 #include "lpp_sdk.h"
-#include <string.h>
-#include <string.h>  // для memset
+#include <string.h>  
+
+// ============================================================================
+// ВНУТРЕННИЕ ПРОТОТИПЫ (Internal SDK Prototypes)
+// Объявлены здесь для видимости внутри lpp_sdk.c
+// ============================================================================
+
+void XSetStep(uint8_t state);
+void XSetDir(uint8_t state);
+void XSetEnableStepper(uint8_t state);
+void XSetEnableDCBLDC(uint8_t state);
+void XMotorSet(int power);
+
+void YSetStep(uint8_t state);
+void YSetDir(uint8_t state);
+void YSetEnable(uint8_t state);
+
+void Hardware_Init_System_Pins();
 // ============================================================================
 // Переменные управления осью X
 // ============================================================================
@@ -133,6 +149,7 @@ volatile uint8_t X_POLAR_DYNAMIC = 0;  // Полярность при движе
 // Полярность управления мотором
 volatile uint8_t W_X_POL_DIR = 0;  // Полярность направления
 volatile uint8_t W_X_POL_PWM = 0;  // Полярность ШИМ
+volatile uint8_t W_X_POL_EN = 0;  // Полярность энкодера
 
 // ============================================================================
 // Переменные для режима STEP (шаговый мотор)
@@ -155,11 +172,12 @@ uint16_t TUNING_X[1000] = {0};  // Массив тюнинга ускорени�
 volatile X_MOTION_T X_MOTION = X_MOTION_NONE;  // Текущее направление движения
 volatile uint8_t X_RETURN_DONE = 0;            // Флаг завершения возврата
 
+
+
 // ============================================================================
 // Вспомогательные переменные управления
 // ============================================================================
-// static int32_t X_ERROR_ACCUM          = 0;			// Накопитель интегральной ошибки для позиционного
-// регулятора
+// static int32_t X_ERROR_ACCUM          = 0;			// Накопитель интегральной ошибки для позиционного регулятора
 static int32_t X_LAST_POSITION = 0;   // Последняя позиция для расчёта дельты (скорость, залипание)
 static int32_t X_POWER_ACCUM = 0;     // Накопление мощности для разблокировки мотора при залипании
 static uint32_t X_STUCK_COUNTER = 0;  // Счётчик залипания мотора (увеличивается при отсутствии движения)
@@ -204,12 +222,17 @@ volatile uint8_t SetupPrintJob = 0;     // Настройка задания п�
 volatile int32_t Y_LINES = 0;           // Число строк
 volatile int32_t Y_IMAGE_POSITION = 0;  // Следующая позиция Y для передачи
 
+// Глобальная переменная в main.c
+volatile uint8_t LASER_SAFETY_LOCK = 0; //////////////////////////////////////////////////////////////////
+
 // ============================================================================
 // Системные переменные
 // ============================================================================
 
 volatile uint8_t X_POS_LAST_STATE = 0;  // Последнее состояние энкодера (0...255)
 volatile uint8_t Y_PIN = 0;             // Состояние пина Y (1 или 0)
+
+uint32_t LedStatusChangeMS = 0; // Время последнего переключения LED_STATUS
 
 // ============================================================================
 // Функции работы с энкодером (DWT-based)
@@ -237,35 +260,43 @@ volatile uint8_t g_encoder_timeout_active = 0;  // Флаг таймаута э�
 // ============================================================================ 
 #define LPP_BOOT_MAGIC 0x42  // произвольное, редко встречающееся значение
 
-uint8_t LPP_BootFlag_Read(void)
+void LPP_BootFlag_Write(uint8_t value)
 {
     __HAL_RCC_PWR_CLK_ENABLE();
-    HAL_PWR_EnableBkUpAccess();    	
+    
+    #if defined(STM32F1)
+    __HAL_RCC_BKP_CLK_ENABLE();   // Специфично для F103
+    #endif
+
+    HAL_PWR_EnableBkUpAccess();
+
 #if defined(STM32F1)
-    return (uint8_t)(BKP->DR1 & 0xFF);
-#elif defined(STM32F4)
-    return (uint8_t)(RTC->BKP0R & 0xFF);
+    BKP->DR1 = (uint32_t)value;
+#elif defined(STM32F4) || defined(STM32F0) || defined(STM32G0)
+    RTC->BKP0R = (uint32_t)value;
 #elif defined(STM32G4)
-    return (uint8_t)(TAMP->BKP0R & 0xFF);
-#elif defined(STM32F0) || defined(STM32G0)
-    return (uint8_t)(RTC->BKP0R & 0xFF);
+    TAMP->BKP0R = (uint32_t)value;
 #else
     #error "Unsupported MCU"
 #endif
 }
 
-void LPP_BootFlag_Write(uint8_t value)
+uint8_t LPP_BootFlag_Read(void)
 {
     __HAL_RCC_PWR_CLK_ENABLE();
+
+    #if defined(STM32F1)
+    __HAL_RCC_BKP_CLK_ENABLE();   // Специфично для F103
+    #endif
+
     HAL_PWR_EnableBkUpAccess();
+
 #if defined(STM32F1)
-    BKP->DR1 = (uint32_t)value;
-#elif defined(STM32F4) 
-    RTC->BKP0R = (uint32_t)value;
-#elif defined(STM32G4) 
-    TAMP->BKP0R = (uint32_t)value;
-#elif defined(STM32F0)
-    RTC->BKP0R = (uint32_t)value;
+    return (uint8_t)(BKP->DR1 & 0xFF);
+#elif defined(STM32F4) || defined(STM32F0) || defined(STM32G0)
+    return (uint8_t)(RTC->BKP0R & 0xFF);
+#elif defined(STM32G4)
+    return (uint8_t)(TAMP->BKP0R & 0xFF);
 #else
     #error "Unsupported MCU"
 #endif
@@ -546,11 +577,14 @@ void DWT_Init(void) {
  * @param cycles: количество тактов
  * @retval Время в микросекундах
  */
-static inline uint32_t CyclesToMicroseconds(uint32_t cycles) {
+static inline uint32_t CyclesToMicroseconds(uint32_t cycles) {	
 #if defined(STM32F103xB)
     return (uint32_t)(((uint64_t)cycles * 3817748427ULL) >> 38);  // 72 MHz:
 #elif defined(STM32F411xE)
-    return (uint32_t)(((uint64_t)cycles * 2748779069ULL) >> 38);  // 100 MHz:
+		// Если частота 96 MHz
+    return (uint32_t)(((uint64_t)cycles * 2863311531ULL) >> 38); 
+    // Если частота 100 MHz
+    // return (uint32_t)(((uint64_t)cycles * 2748779069ULL) >> 38);	
 #elif defined(STM32G431xx)
     return (uint32_t)(((uint64_t)cycles * 1616722929ULL) >> 38);  // 170 MHz:
 #else
@@ -622,30 +656,77 @@ void FifoPosY_Init(void) {
     }
 }
 
-uint8_t FifoPosY_Push(volatile int32_t value) {
-    if (FIFO_POS_Y.count >= FIFO_POS_Y_SIZE) {  // Проверка переполнения
-        __enable_irq();                         // Включаем прерывания
-        return 0;                               // Очередь заполнена
+//uint8_t FifoPosY_Push(volatile int32_t value) {
+//    if (FIFO_POS_Y.count >= FIFO_POS_Y_SIZE) {  // Проверка переполнения
+//        __enable_irq();                         // Включаем прерывания
+//        return 0;                               // Очередь заполнена
+//    }
+
+//    FIFO_POS_Y.POS_Y[FIFO_POS_Y.head] = value;                  // Запись значения
+//    FIFO_POS_Y.head = (FIFO_POS_Y.head + 1) % FIFO_POS_Y_SIZE;  // Сдвиг головы
+//    FIFO_POS_Y.count++;                                         // Увеличение счетчика
+
+//    return 1;  // Успешная запись
+//}
+
+/**
+ * @brief Добавляет значение координаты Y в FIFO буфер.
+ * @param value Значение для записи.
+ * @return 1 - успешно, 0 - буфер полон.
+ *
+ * Примечания:
+ * - Функция вызывается из одного места, без параллельного доступа.
+ * - Используется быстрая циклическая адресация без оператора '%'.
+ */
+uint8_t FifoPosY_Push(int32_t value)
+{
+    // Проверка на переполнение буфера
+    if (FIFO_POS_Y.count >= FIFO_POS_Y_SIZE) {
+        return 0;
     }
 
-    FIFO_POS_Y.POS_Y[FIFO_POS_Y.head] = value;                  // Запись значения
-    FIFO_POS_Y.head = (FIFO_POS_Y.head + 1) % FIFO_POS_Y_SIZE;  // Сдвиг головы
-    FIFO_POS_Y.count++;                                         // Увеличение счетчика
+    // Записываем данные и инкрементируем индекс головы
+    FIFO_POS_Y.POS_Y[FIFO_POS_Y.head++] = value;
 
-    return 1;  // Успешная запись
+    // Зацикливаем буфер (быстрее чем оператор %)
+    if (FIFO_POS_Y.head >= FIFO_POS_Y_SIZE) {
+        FIFO_POS_Y.head = 0;
+    }
+
+    // Увеличиваем счётчик элементов
+    FIFO_POS_Y.count++;
+
+    return 1;
 }
 
-uint8_t FifoPosY_Pop(volatile int32_t* value) {
-    if (FIFO_POS_Y.count == 0) {  // Проверка пустоты очереди
-        __enable_irq();           // Включаем прерывания
-        return 0;                 // Очередь пуста
+/**
+ * @brief Извлекает значение координаты Y из FIFO буфера.
+ * @param value Указатель для записи извлечённого значения.
+ * @return 1 - успешно, 0 - буфер пуст.
+ *
+ * Примечания:
+ * - Функция вызывается из одного места, без параллельного доступа.
+ * - Используется быстрая циклическая адресация без оператора '%'.
+ */
+uint8_t FifoPosY_Pop(volatile int32_t* value)
+{
+    // Проверка на пустоту FIFO
+    if (FIFO_POS_Y.count == 0) {
+        return 0;
     }
 
-    *value = FIFO_POS_Y.POS_Y[FIFO_POS_Y.tail];                 // Чтение значения
-    FIFO_POS_Y.tail = (FIFO_POS_Y.tail + 1) % FIFO_POS_Y_SIZE;  // Сдвиг хвоста
-    FIFO_POS_Y.count--;                                         // Уменьшение счетчика
+    // Чтение значения
+    *value = FIFO_POS_Y.POS_Y[FIFO_POS_Y.tail++];
 
-    return 1;  // Успешное чтение
+    // Зацикливание буфера
+    if (FIFO_POS_Y.tail >= FIFO_POS_Y_SIZE) {
+        FIFO_POS_Y.tail = 0;
+    }
+
+    // Уменьшение счётчика
+    FIFO_POS_Y.count--;
+
+    return 1;
 }
 
 uint8_t FifoPosY_IsEmpty(void) {
@@ -753,7 +834,7 @@ void XStartTracking(int32_t left_pos, int32_t right_pos) {
 // ============================================================================
 // БЕЗОПАСНАЯ ОСТАНОВКА ТРЕКИНГА
 // ============================================================================
-void XStopTracking(void) {
+void XStopTracking(void) { 	
     // Проверка в начале функции
     if (X_STOPPING) return;  // Уже в процессе остановки или не активен
     X_STOPPING = 1;          // Начали процес
@@ -776,69 +857,43 @@ void XStopTracking(void) {
     }
 }
 
-// ============================================================================
-// Основной обработчик энкодера по X и логики печати
-// ============================================================================
-void XEncoderCallback(uint16_t GPIO_Pin) {
-    // Выход, если используется шаговый двигатель (STEPPER режим)
-    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
-        return;
-    }
+//// ============================================================================
+//// Основной обработчик энкодера по X и логики печати
+//// ============================================================================
+void XEncoderCallback(uint16_t pin_mask) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
 
-    uint16_t gpio_state = ReadEncoderPins();  // Чтение пинов энкодера
+    uint8_t pinA = F_GET_PIN(&g_pins[PIN_X_ENC_A]);
+    uint8_t pinB = F_GET_PIN(&g_pins[PIN_X_ENC_B]);
+    uint8_t curr_state = pinB | (pinA << 1);
 
-    // Таблица направлений энкодера (Грей-код)
     static const int8_t increment[16] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
-
-    // ---------- ОБЩЕЕ СОСТОЯНИЕ ----------
-    uint8_t curr_state =
-        ((gpio_state & ENCODER_B_PIN) ? 1 : 0) | (((gpio_state & ENCODER_A_PIN) ? 1 : 0) << 1);
-
-    // ---------- ОСНОВНАЯ ЛОГИКА ----------
     int8_t pos_delta = increment[curr_state | (X_POS_LAST_STATE << 2)];
 
-    if (curr_state != X_POS_LAST_STATE) {
-        X_POS_LAST_STATE = curr_state;
-        X_POS += pos_delta;
-    }
-    if (pos_delta == 0) return;  // дальше не печатаем и не читаем пиксел
-    XEncoder_Update(pos_delta);  // Обновление времени в логике
+    if (pos_delta == 0) return;
 
-    //// 1002
-    // #define TEST_START_X   960
-    // #define TEST_PIXELS    5   // 2…5
+    if (W_X_POL_EN) { pos_delta = -pos_delta; }
 
-    // static uint8_t test_pixel_cnt = 0;
+    X_POS_LAST_STATE = curr_state;
+    X_POS += pos_delta;
 
-    // if (X_POS == TEST_START_X) {
-    //     test_pixel_cnt = TEST_PIXELS;
-    // }
+    XEncoder_Update(pos_delta);
 
-    // if (test_pixel_cnt > 0) {
-    //     SetLaserPWM(99);
-    //     test_pixel_cnt--;
-    // } else {
-    //     SetLaserPWM(0);
-    // }
-
-    // --- Старт печати при достижении левой границы и движении вправо и 3 проходов---
+    // --- Старт печати (подготовка первого буфера перед зоной) ---
     if (pos_delta > 0 && PRINT_ACTIVE && X_POS == PRINT_LEFT_BORDER - 1 && CURRENT_PRINT_DIRECTION == 0) {
-        PRINT_ACTIVE_COUNT++;  // Счетчик активных шагов
+        PRINT_ACTIVE_COUNT++;
         if (PRINT_ACTIVE_COUNT >= PRINT_ACTIVE_COUNT_THRESHOLD) {
-            PRINT_ACTIVE = 0;  // Сброс активности
-            START_PRINT = 1;   // Разрешение старта печати
-
-            activeBuffer = 0;  // Сброс активного буфера
-            NextBuffer = 0;    // Сброс следующего буфера
-            // Предзагрузка первого буфера битов
+            PRINT_ACTIVE = 0;
+            START_PRINT = 1;
+            activeBuffer = 0;
+            NextBuffer = 0;
             for (uint8_t i = 0; i < INTERPOL_X; i++) {
                 nextPrintBit[activeBuffer][i] = FifoData_ReadBit();
             }
-            // Извлечение следующей координаты Y
             if (FifoPosY_Pop(&Y_FINISH_POS)) {
-                Y_IMAGE_POSITION = 0;  // Сброс позиции изображения
+                Y_IMAGE_POSITION = 0;
             } else {
-                PrintStopJob(PRINT_STATUS_END);  // Завершить печать при отсутствии данных
+                PrintStopJob(PRINT_STATUS_END);
                 return;
             }
         }
@@ -846,47 +901,57 @@ void XEncoderCallback(uint16_t GPIO_Pin) {
 
     // --- Основной процесс печати ---
     if (START_PRINT) {
-        // Проверка нахождения в зоне печати
+        // ПРОВЕРКА ЗОНЫ ПЕЧАТИ
         if (X_POS >= PRINT_LEFT_BORDER && X_POS <= PRINT_RIGHT_BORDER) {
-            activeBuffer = NextBuffer;  // Переключение буфера
-            // Управление лазером по текущему биту
+            
+            // ВХОД В ЗОНУ: Если лазер заблокирован, делаем "горячий" старт
+            if (LASER_SAFETY_LOCK) {
+                Laser_Ready(); // Сброс фазы ШИМ и таймера интерполяции
+            }
+
+            activeBuffer = NextBuffer;
+            
+            // Вывод бита (вызовется SetLaserPWM, который уже знает про LASER_SAFETY_LOCK)
             SetLaserPWM(nextPrintBit[activeBuffer][0] ? PRINT_CONFIG.DAT.W_SET_LAZER : 0);
-            // Запуск интерполяции (дробных шагов)
+
             if (INTERPOL_X > 1) {
                 interp_counter = 1;
                 XInterpTimerStart(W_X_SPEED / INTERPOL_X);
             }
-            // Подготовка следующего буфера битов
+
             NextBuffer = activeBuffer ^ 1;
             for (uint8_t i = 0; i < INTERPOL_X; i++) {
                 nextPrintBit[NextBuffer][i] = FifoData_ReadBit();
             }
-        } else {
-            // Вне зоны печати: выключить лазер и сбросить интерполяцию
-            SetLaserPWM(0);
+        } 
+        else {
+            // ВЫХОД ИЗ ЗОНЫ: Мгновенное гашение аппаратным сбросом
+            if (!LASER_SAFETY_LOCK) {
+                Laser_Off(); // Чистит "хвосты" DMA и ШИМ
+            }
             interp_counter = 0;
         }
 
-        // --- Смена направления движения (вправо → влево) ---
+        // --- Смена направления (Вправо → Влево) ---
         if ((W_X_EN_DIRECT == 1) && (X_POS > PRINT_RIGHT_BORDER) && (CURRENT_PRINT_DIRECTION == 0)) {
-            SetLaserPWM(0);
+            Laser_Off(); 
             if (FifoPosY_Pop(&Y_FINISH_POS)) {
-                Y_IMAGE_POSITION++;           // Переход к следующей строке
-                CURRENT_PRINT_DIRECTION = 1;  // Изменение направления
+                Y_IMAGE_POSITION++;
+                CURRENT_PRINT_DIRECTION = 1;
             } else {
-                PrintStopJob(PRINT_STATUS_END);  // Конец данных
+                PrintStopJob(PRINT_STATUS_END);
                 return;
             }
         }
 
-        // --- Смена направления движения (влево → вправо) ---
+        // --- Смена направления (Влево → Вправо) ---
         if ((W_X_EN_DIRECT == -1) && (X_POS < PRINT_LEFT_BORDER) && (CURRENT_PRINT_DIRECTION == 1)) {
-            SetLaserPWM(0);
+            Laser_Off();
             if (FifoPosY_Pop(&Y_FINISH_POS)) {
-                Y_IMAGE_POSITION++;           // Следующая строка
-                CURRENT_PRINT_DIRECTION = 0;  // Изменение направления
+                Y_IMAGE_POSITION++;
+                CURRENT_PRINT_DIRECTION = 0;
             } else {
-                PrintStopJob(PRINT_STATUS_END);  // Конец данных
+                PrintStopJob(PRINT_STATUS_END);
                 return;
             }
         }
@@ -1003,16 +1068,18 @@ uint8_t XInterpTimerCallback(void) {
 // Остановка задания печати и сброс параметров
 // ============================================================================
 void PrintStopJob(PRINT_STATUS_T PRINT_STATUS) {
-    // Выключение лазера
-    SetLaserPWM(0);
-
+		 // ПЕРВЫМ ДЕЛОМ — безопасность. Гасим лазер мгновенно.
+    // Если он уже выключен, Laser_Off просто подтвердит блокировку.
+    Laser_Off(); 
+		LASER_SAFETY_LOCK = 1; // Запрещаем лазеру включаться    
+    SetLaserPWM(0);// Выключение лазера
+    // Немедленный сброс флага печати
+    PRINT_ACTIVE = 0;       // ← Сбросить активность печати	
     // Сброс активных флагов процесса печати
     START_PRINT = 0;
     SetupPrintJob = 0;
 
-    // ========================================================
     // БЕЗОПАСНАЯ ОСТАНОВКА ТРЕКИНГА
-    // ========================================================
     XStopTracking();
 
     // Обновление статуса печати
@@ -1079,6 +1146,7 @@ void PacketReceive(uint8_t* buffer) {
             PrintStopJob(PRINT_CONFIG.DAT.R_PRINT_STATUS);
         }
     }
+		
     // ============================================================================
     // ОБРАБОТКА ТЮНИНГА ОСИ X (IDX_USB_TUNING_X)
     // ============================================================================
@@ -1216,42 +1284,62 @@ void PacketReceive(uint8_t* buffer) {
     // ============================================================================
     // УПРАВЛЕНИЕ ЛАЗЕРОМ (IDX_LAZER)
     // ============================================================================
-    else if (event_idx == IDX_LAZER) {
+		else if (event_idx == IDX_LAZER) {
         memcpy(LAZER.BIN + 1, buffer, 63);
-        SetLaserPWM(LAZER.DAT.W_SET_L);
+        
+        if (LAZER.DAT.W_SET_L > 0) {
+            Laser_Ready(); // Подготовит таймеры и откроет LASER_SAFETY_LOCK
+            SetLaserPWM(LAZER.DAT.W_SET_L);
+        } else {
+            Laser_Off();   // Все выключит и закроет замок
+        }
     }
     // ============================================================================
     // УПРАВЛЕНИЕ ПОДСВЕТКОЙ (IDX_LIGHT)
     // ============================================================================
     else if (event_idx == IDX_LIGHT) {
         memcpy(LIGHT.BIN + 1, buffer, 63);
-        SetLightPWM(LIGHT.DAT.W_SET_L);
+        SetLight1PWM(LIGHT.DAT.W_SET_L);
     }
     // ============================================================================
     // НАСТРОЙКА ОСИ X (IDX_SET_X)
     // ============================================================================
-    else if (event_idx == IDX_SET_X) {
+		else if (event_idx == IDX_SET_X) {
+        // Копируем данные (убедись, что смещение +1 совпадает с протоколом на ПК)
         memcpy(SET_X.BIN + 1, buffer, 63);
 
         X_MOTION = SET_X.DAT.W_X_MOTION;
 
-        // === позиционирование по запросу хоста ===
+        // 1. Сначала обновляем все настройки полярности
+        W_X_POL_DIR = SET_X.DAT.W_X_POL_DIR;
+        W_X_POL_PWM = SET_X.DAT.W_X_POL_PWM;
+        W_X_POL_EN  = SET_X.DAT.W_X_POL_EN; 
+
+        // Установка уровней для DIR
+        if (W_X_POL_DIR == 1) {
+            X_DIR_HI = 1; X_DIR_LO = 0;
+        } else {
+            X_DIR_HI = 0; X_DIR_LO = 1;
+        }
+
+        // Установка уровней для STEP/PWM
+        if (W_X_POL_PWM == 1) {
+            X_STEP_HI = 1; X_STEP_LO = 0;
+        } else {
+            X_STEP_HI = 0; X_STEP_LO = 1;
+        }
+
+        // 2. Инициализируем режим мотора (теперь он знает правильные HI/LO уровни)
+        XMotorInit(SET_X.DAT.W_X_MODE);
+
+        // 3. Управление питанием (безопасно, так как режим уже инициализирован)
+        XSetEnableStepper(SET_X.DAT.W_X_EN_STEPPER);
+        XSetEnableDCBLDC(SET_X.DAT.W_X_EN_DCBLDC);
+
+        // 4. Логика позиций и сброса
         if (SET_X.DAT.W_X_POS_WRITE == 1) {
             X_GO_POS = SET_X.DAT.W_X_MOV_POS;
             SET_X.DAT.W_X_POS_WRITE = 0;
-        }
-
-        W_X_POL_DIR = SET_X.DAT.W_X_POL_DIR;
-        W_X_POL_PWM = SET_X.DAT.W_X_POL_PWM;
-        XMotorInit(SET_X.DAT.W_X_MODE);
-
-        // Настраиваем пины энкодера с учётом инверсии
-        if (SET_X.DAT.W_X_POL_EN == 0) {
-            ENCODER_A_PIN = X_ENCODER_CFG_PIN_A;
-            ENCODER_B_PIN = X_ENCODER_CFG_PIN_B;
-        } else {
-            ENCODER_A_PIN = X_ENCODER_CFG_PIN_B;
-            ENCODER_B_PIN = X_ENCODER_CFG_PIN_A;
         }
 
         if (SET_X.DAT.W_X_RESET == 1) {
@@ -1261,50 +1349,23 @@ void PacketReceive(uint8_t* buffer) {
             SET_X.DAT.W_X_RESET = 0;
         }
 
-        X_KP_POS = SET_X.DAT.X_KP_POS;
-
-        // === ЛОГИКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ТРЕКИНГА ===
+        X_KP_POS = SET_X.DAT.X_KP_POS;				
+				
+				W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
+				W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
+        // 5. Логика Трекинга
         if (SET_X.DAT.W_X_TRECK == 1) {
-            // Запуск трекинга
-            W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
-            W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
             X_KP = SET_X.DAT.W_X_KP;
             X_KI = SET_X.DAT.W_X_KI;
-
             XStartTracking(SET_X.DAT.W_X_L_POS, SET_X.DAT.W_X_R_POS);
         } else {
-            // Трекинг был включен - останавливаем безопасно
-            // Вызываем функцию остановки (она сама один раз сработает)
-            XStopTracking();
-
-            W_X_POWER_MAX = SET_X.DAT.W_X_POWER_MAX;
-            W_X_SPEED_SET = SET_X.DAT.W_X_SPEED_SET;
+						XStopTracking();
         }
 
-        // === Управление ENABLE пином оси X ===
-        XSetEnable(SET_X.DAT.W_X_ENABLED_PIN);
-
-        // Для степпера
         X_MIN_POW = SET_X.DAT.W_X_MIN_POW;
         X_ACCL = SET_X.DAT.W_X_ACCL;
 
-        if (SET_X.DAT.W_X_POL_DIR == 1) {
-            X_DIR_HI = 1;
-            X_DIR_LO = 0;
-        } else {
-            X_DIR_HI = 0;
-            X_DIR_LO = 1;
-        }
-
-        if (SET_X.DAT.W_X_POL_PWM == 1) {
-            X_STEP_HI = 1;
-            X_STEP_LO = 0;
-        } else {
-            X_STEP_HI = 0;
-            X_STEP_LO = 1;
-        }
-
-        // === Отправляем пакет подтверждения ===
+        // 6. Подтверждение хосту
         SET_X.DAT.W_X_EN_POS = X_POS;
         SET_X.DAT.W_X_EN_SPEED = W_X_SPEED;
         SET_X.DAT.W_WRITE = 0;
@@ -1363,14 +1424,44 @@ void PacketReceive(uint8_t* buffer) {
     // ============================================================================
     // НАСТРОЙКА ОБЩИХ ПАРАМЕТРОВ (IDX_SET_PARAM)
     // ============================================================================
-    else if (event_idx == IDX_SET_PARAM) {
-        memcpy(SET_PARAM.BIN + 1, buffer, 63);
-        // Установка делителя частоты PWM
-        SetLaserLightPWMFrequency(SET_PARAM.DAT.W_SET_L_FREQ);
-        // Установка уровня подсветки
-        SetLightPWM(SET_PARAM.DAT.W_SET_LIGHT);
-        PacketSend(SET_PARAM.BIN);
-    }
+		else if (event_idx == IDX_SET_PARAM) {
+				// 1. Копируем данные из буфера (пропускаем Report ID)
+				memcpy(SET_PARAM.BIN + 1, buffer, 63);
+			
+				// 2. Обработка системного светодиода (Heartbeat)
+				// СБРАСЫВАЕМ ВОЧДОГ ЗДЕСЬ, потому что пакет пришел!
+				LedStatusChangeMS = 0;
+				// ========================================================
+				if (SET_PARAM.DAT.W_LED_STATUS) {
+						F_SET_PIN(&g_pins[PIN_LED_STATUS]);
+				} else {
+						F_RESET_PIN(&g_pins[PIN_LED_STATUS]);
+				}			
+			
+				// 3. Глобальные настройки (ШИМ и частота) — они не касаются конкретных пинов
+			
+				SetLaserLightPWMFrequency(SET_PARAM.DAT.W_SET_L_FREQ);
+				//SetLaserPWM(SET_PARAM.DAT.W_SET_LAZER); // В отделном пакете
+				SetLight1PWM(SET_PARAM.DAT.W_SET_LIGHT1);
+				SetLight2PWM(SET_PARAM.DAT.W_SET_LIGHT2);		
+						
+				// 4. ВСЯ логика с пинами :
+				// Она сама проверит, изменился ли порт, сделает DeInit и InitPin
+				SetPinConfiguration(
+						SET_PARAM.DAT.W_PIN_ID,
+						SET_PARAM.DAT.W_PIN_PORT,
+						SET_PARAM.DAT.W_PIN_NUM,
+						SET_PARAM.DAT.W_PIN_MODE,
+						SET_PARAM.DAT.W_PIN_OUT,
+						SET_PARAM.DAT.W_PIN_PULL,
+						SET_PARAM.DAT.W_PIN_USED
+				);
+			
+				// 5. Ответ хосту
+				if (SET_PARAM.DAT.W_ANSWER) {
+						PacketSend(SET_PARAM.BIN);
+				}
+		}
     // ============================================================================
     // ДАННЫЕ ТРЕКИНГА (IDX_TRACK)
     // ============================================================================
@@ -1416,16 +1507,20 @@ void FIFO_DATA_EndDma(void) {
 // Инициализация SDK (вызов из main.c один раз при старте системы)
 // ============================================================================
 void Lpp_Init(void) {
-    // Очистка флага при cold power-on, если подали питание то сбросим
+    // СНАЧАЛА читаем флаг
+    uint8_t boot_flag = LPP_BootFlag_Read();
+    
+    // ПОТОМ чистим cold-power флаг (иначе он может затереть magic!)
     LPP_BootFlag_ColdPowerClear();
-    // Проверяем RTC-флаг
-    if (LPP_BootFlag_Read() == LPP_BOOT_MAGIC) {
-        // Очищаем флаг, чтобы не зациклиться
+    
+    // Теперь проверяем
+    if (boot_flag == LPP_BOOT_MAGIC) {
         LPP_BootFlag_Write(0x00);
-        // Прыжок в BOOTloader
         JumpToApplication(BASE_BOOT_START_ADDR);
     }
 
+		Hardware_Init_System_Pins(); // Инициализация системных пинов	
+		
     X_MOTOR_MODE = 255;  // Принудительная инициализация при первом вызове
     // Инициализация параметров печати
     PRINT_CONFIG.DAT.R_PRINT_STATUS = PRINT_STATUS_END;
@@ -1449,6 +1544,27 @@ void Lpp_Init(void) {
 void Lpp_MainLoop(void) {
     HAL_Delay(1);
     DWT_1kHz_Handler();
+	
+		// ========================================================
+    // WATCHDOG ДЛЯ PIN_LED_STATUS
+    // ========================================================
+    // Просто наращиваем счетчик каждую миллисекунду
+    if (LedStatusChangeMS < 1100) { 
+        LedStatusChangeMS++;
+    }
+
+    // Если пакетов не было больше 1 секунды (1000 мс)
+    if (LedStatusChangeMS > 1000) {
+        // Проверяем флаг инверсии, который пришел в offset 10
+        if (SET_PARAM.DAT.W_LED_STATUS_INV) {
+            // Если инверсный (LED к Плюсу): гасим подачей единицы (SET)
+            F_SET_PIN(&g_pins[PIN_LED_STATUS]); 
+        } else {
+            // Если прямой (LED к Земле): гасим подачей нуля (RESET)
+            F_RESET_PIN(&g_pins[PIN_LED_STATUS]); 
+        } 
+    }
+    // WATCHDOG ДЛЯ PIN_LED_STATUS END
 
     // Обработка отправки статуса печати
     if (needSendStatusReport) {
@@ -1909,3 +2025,116 @@ void XTimerCallback(void) {
         }
     }
 }
+
+// ============================================================================
+// Функции управления физическими пинами (Hardware Layer)
+// Эти функции обеспечивают абстракцию логики принтера от конкретных ножек МК.
+// ============================================================================
+/**
+ * @brief Инициализация системных пинов
+ */
+void Hardware_Init_System_Pins(void) {
+    // Только USB_EN (PA8)
+    PIN_CFG_T* cfg = &g_pins[SYS_PIN_USB_EN];
+
+    cfg->used   = 1;
+    cfg->pin    = (1U << 8); 
+    cfg->mode   = PIN_MODE_OUTPUT;
+    cfg->outcfg = PIN_OUT_PP;
+    cfg->pull   = PIN_NOPULL;
+    cfg->bsrr   = (volatile uint32_t*)&GPIOA->BSRR;
+    cfg->idr    = (volatile uint32_t*)&GPIOA->IDR;
+
+    InitPinEx(cfg, false); 
+}
+
+/**
+ * @brief Управление шагом оси X (STEP).
+ * Физика: Устанавливает уровень на PB13 (драйвер платы) и PB2 (выход DB25).
+ */
+void XSetStep(uint8_t state) 
+{
+    if (state) {    
+        F_SET_PIN(&g_pins[PIN_X_STEP_DB25]); 			
+    } else {
+        F_RESET_PIN(&g_pins[PIN_X_STEP_DB25]);			
+    }
+}
+
+/**
+ * @brief Управление направлением оси X (DIR).
+ */
+void XSetDir(uint8_t state) 
+{
+    if (state) {     
+        F_SET_PIN(&g_pins[PIN_X_DIR_DB25]);       
+    } else {
+        F_RESET_PIN(&g_pins[PIN_X_DIR_DB25]); 
+    }
+}
+
+/**
+ * @brief Управление включением шагового двигателя X (Stepper Enable).
+ * Активирует линии драйвера шаговика на плате и через DB25.
+ */
+void XSetEnableStepper(uint8_t state) 
+{
+    if (state) {
+        F_SET_PIN(&g_pins[PIN_X_EN_DB25]);   
+    } else {  
+        F_RESET_PIN(&g_pins[PIN_X_EN_DB25]); 
+    }
+}
+
+/**
+ * @brief Управление питанием DC/BLDC мотора X (Power Enable).
+ * Активирует силовые выходы для режимов постоянного тока или бесщеточных двигателей.
+ */
+void XSetEnableDCBLDC(uint8_t state) 
+{
+    if (state) {
+        // Здесь используем твои другие пины, предназначенные для DC/BLDC
+				F_SET_PIN(&g_pins[PIN_X_MO_EN]); 
+    } else {
+				F_RESET_PIN(&g_pins[PIN_X_MO_EN]);
+    }
+}
+
+/**
+ * @brief Управление шагом оси Y (STEP).
+ */
+void YSetStep(uint8_t state) 
+{
+    if (state) F_SET_PIN(&g_pins[PIN_Y_STEP]); // PB0
+    else       F_RESET_PIN(&g_pins[PIN_Y_STEP]);
+}
+
+/**
+ * @brief Управление направлением оси Y (DIR).
+ */
+void YSetDir(uint8_t state) 
+{
+    if (state) F_SET_PIN(&g_pins[PIN_Y_DIR]); // PB1
+    else       F_RESET_PIN(&g_pins[PIN_Y_DIR]);
+}
+
+/**
+ * @brief Глобальное управление ENABLE для всех осей (Y, Z).
+ * Синхронно управляет пинами через массив g_pins.
+ */
+void YSetEnable(uint8_t state) 
+{
+    if (state) {
+        // --- ВКЛЮЧАЕМ МОТОРЫ (Active Low) ---
+        F_RESET_PIN(&g_pins[PIN_Y_EN]);
+        F_RESET_PIN(&g_pins[PIN_Z_EN]);
+    } 
+    else {
+        // --- ВЫКЛЮЧАЕМ МОТОРЫ ---
+        F_SET_PIN(&g_pins[PIN_Y_EN]);
+        F_SET_PIN(&g_pins[PIN_Z_EN]);
+    }       
+}
+
+
+

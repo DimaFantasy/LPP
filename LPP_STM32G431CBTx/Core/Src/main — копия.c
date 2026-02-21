@@ -1,0 +1,951 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "usb_device.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include <math.h>
+#include <stdbool.h>
+
+#include "counter.h"
+#include "lpp_sdk.h"
+#include "lpp_core_gpio.h"
+#include "stdio.h"
+
+#include "stm32g4xx_ll_dmamux.h" // Обязательно для LL_DMAMUX_SetRequestID
+#include "stm32g4xx_ll_dma.h"    // Для приоритетов DMA
+
+// Заглушка для пустых пинов
+static volatile uint32_t GPIO_NULL_REG = 0;
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
+
+/* USER CODE BEGIN PV */
+
+// ============================================================================
+// Сигнатура и версия прошивки (APP)
+// ============================================================================
+const uint32_t APP_KEY0 __attribute__((section(APP_KEY0_SECTION))) = APP_SIG_KEY0;
+const uint32_t APP_KEY1 __attribute__((section(APP_KEY1_SECTION))) = APP_SIG_KEY1;
+const uint32_t APP_KEY2 __attribute__((section(APP_KEY2_SECTION))) = APP_SIG_KEY2;
+const uint32_t APP_KEY3 __attribute__((section(APP_KEY3_SECTION))) = APP_SIG_KEY3;
+
+const uint32_t APP_VER_F __attribute__((section(APP_VER_F_SECTION))) = APP_VERSION;
+
+// Глобальные определения таймеров и режимов
+TIM_HandleTypeDef htim1;  
+TIM_HandleTypeDef htim2; 
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM4_Init(void);
+/* USER CODE BEGIN PFP */
+
+void DMA_M2M_Init();
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+	
+//Приоритет 0: EXTI (Энкодер) — Ловит физический шаг.
+//Приоритет 1: TIM3 (Интерполяция) — Рассчитывает момент внутри шага.
+//Приоритет 2: DMA (PWM Laser) — Тот самый DMA, который «включает порт». Он должен отработать мгновенно, как только интерполятор или таймер дали отшку.
+//Приоритет 3: DMA1_CH1 (M2M Data) — Перекачка данных из буфера. Она может подождать пару тактов, пока лазер выстрелит.
+//Приоритет 4: USB — Связь.
+//Приоритет 5: TIM2, TIM4  (PID) — Моторы Степеры управление.	
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+	// 16 уровней вытеснения (без субприоритетов) для гарантии жесткого Real-time	
+	HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_USB_Device_Init();
+  MX_TIM3_Init();
+  MX_TIM4_Init();
+  /* USER CODE BEGIN 2 */
+	DMA_M2M_Init();	
+		
+    // Инициализация
+    Lpp_Init();	
+	
+    // Запуск таймеров
+    HAL_TIM_Base_Start_IT(&htim4);
+		
+		// Инициализация USB
+		#if defined(STM32F401xE) || defined(STM32F401xC) || \
+				defined(STM32F411xE)
+				// F401, F411: используют OTG_FS_GCCFG для управления PHY и pull-up
+				USB_OTG_FS->GCCFG &= ~USB_OTG_GCCFG_PWRDWN;  // Отключаем PHY (и pull-up)
+				HAL_Delay(10);
+		#elif defined(STM32G431xx)
+				// G431: использует регистр BCDR
+				USB->BCDR &= ~USB_BCDR_DPPU;
+				HAL_Delay(10);
+		#endif
+
+				// Выключаем питание USB
+				F_RESET_PIN(&g_pins[SYS_PIN_USB_EN]);
+				HAL_Delay(2000);  // достаточная задержка
+				
+				// Включаем питание USB
+				F_SET_PIN(&g_pins[SYS_PIN_USB_EN]);
+				HAL_Delay(50);   // стабилизация
+
+		#if defined(STM32F401xE) || defined(STM32F401xC) || \
+				defined(STM32F411xE)
+				// F401, F411: включаем PHY (и pull-up)
+				USB_OTG_FS->GCCFG |= USB_OTG_GCCFG_PWRDWN;
+		#elif defined(STM32G431xx)
+				// G431: включаем pull-up
+				USB->BCDR |= USB_BCDR_DPPU;
+		#endif
+		// F103 использует внешний pull-up резистор 1.5кΩ
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+		 Lpp_MainLoop();
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Configure the main internal regulator output voltage
+  */
+  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
+  RCC_OscInitStruct.PLL.PLLN = 42;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 168;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 65535;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
+  * @brief TIM4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM4_Init(void)
+{
+
+  /* USER CODE BEGIN TIM4_Init 0 */
+
+  /* USER CODE END TIM4_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM4_Init 1 */
+
+  /* USER CODE END TIM4_Init 1 */
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 168;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 10000;
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM4_Init 2 */
+
+  /* USER CODE END TIM4_Init 2 */
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+//	__HAL_RCC_GPIOB_CLK_ENABLE();   // Тактирование порта B (моторы, энкодер)
+  __HAL_RCC_SYSCFG_CLK_ENABLE();  // КРИТИЧНО: включает мультиплексор прерываний EXTI
+  __HAL_RCC_PWR_CLK_ENABLE();     // Тактирование модуля питания (для G4)
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
+// ============================================================================
+// Отправка 64-байтного пакета хосту (используется SDK)
+// ============================================================================
+extern uint8_t USBD_CUSTOM_HID_SendReport(USBD_HandleTypeDef* pdev, uint8_t* report, uint16_t len);
+extern USBD_HandleTypeDef hUsbDeviceFS;
+
+uint8_t PacketSend(uint8_t* buffer) {
+    // Отправка HID отчёта (64 байта)
+    return USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, buffer, 64);
+}
+
+// ============================================================================
+// СЕКЦИЯ: МОТОР ОСИ X (TIM2 - Аппаратный DMA PWM)
+// ============================================================================
+
+volatile int32_t X_PWM_CURRENT = 0; // Уставка мощности/тока для ШИМ-контроллера
+
+/**
+ * @brief Инициализация таймера TIM2 для управления мотором X
+ * @param mode: Режим работы (STEP, ONE_PWM или TWO_PWM)
+ */
+void XMotorInit(X_MOTOR_MODE_T mode) {
+    // Если режим не изменился, ничего не делаем
+    if (X_MOTOR_MODE == mode) return;
+
+    // Полный сброс периферии таймера 2 и включение тактирования
+    __HAL_RCC_TIM2_FORCE_RESET();
+    __HAL_RCC_TIM2_RELEASE_RESET();
+    __HAL_RCC_TIM2_CLK_ENABLE();
+
+    // Базовая конфигурация таймера
+    htim2.Instance = TIM2;
+    htim2.Init.CounterMode = TIM_COUNTERMODE_UP;      // Счет вверх
+    htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    htim2.Init.RepetitionCounter = 0;
+    htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+
+    if (mode == X_MOTOR_MODE_STEP) {
+        // --- РЕЖИМ STEP (Шаговый двигатель) ---
+        // Прескалер 169: частоту 170МГц делим на 170 -> получаем тик 1 микросекунда
+        htim2.Init.Prescaler = 169; 
+        htim2.Init.Period = 10000; // Период по умолчанию
+        
+        // One Pulse Mode: таймер сделает один цикл счета и остановится (для шага)
+        HAL_TIM_OnePulse_Init(&htim2, TIM_OPMODE_SINGLE); 
+        
+        // Настройка NVIC
+        HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
+        HAL_NVIC_EnableIRQ(TIM2_IRQn);
+        
+        // Включаем прерывание только по обновлению (конец шага)
+        __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);
+    } 
+    else {
+        // --- РЕЖИМ PWM (Коллекторный мотор через H-мост) ---
+        // Частота ШИМ: 170МГц / 34 / 5000 = 1 кГц
+        htim2.Init.Prescaler = 33; 
+        htim2.Init.Period = 5000; 
+        HAL_TIM_Base_Init(&htim2);
+        
+        // Для постоянного ШИМ отключаем One Pulse Mode
+        TIM2->CR1 &= ~TIM_CR1_OPM; 
+
+        // Настройка канала сравнения в режиме Timing (программный ШИМ)
+        TIM_OC_InitTypeDef sConfigOC = {0};
+        sConfigOC.OCMode = TIM_OCMODE_TIMING;
+        HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
+
+        // Настройка прерываний
+        HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
+        HAL_NVIC_EnableIRQ(TIM2_IRQn);
+        __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE | TIM_IT_CC1);
+        
+        // Генерация Update события для применения настроек и запуск таймера
+        TIM2->EGR |= TIM_EGR_UG; 
+        TIM2->CR1 |= TIM_CR1_CEN; 
+    }
+    
+    // Сохраняем текущий режим
+    X_MOTOR_MODE = mode;
+}
+
+/**
+ * @brief Программная задержка для защиты силовых ключей (DeadTime)
+ * Предотвращает сквозной ток при переключении плеч моста.
+ */
+__STATIC_INLINE void XMotorDeadTime(void) {
+    // Примерно 1 мкс при 170 МГц (зависит от оптимизации компилятора)
+    for (volatile int i = 0; i < 100; i++) { __NOP(); } 
+}
+
+/**
+ * @brief Единый обработчик прерываний TIM2
+ * Обрабатывает и начало периода (UIF), и момент выключения импульса (CC1IF).
+ */
+void TIM2_IRQHandler(void) {
+    // Читаем регистр статуса один раз для скорости
+    uint32_t sr = TIM2->SR;
+
+    // --- ОБРАБОТКА НАЧАЛА ТАКТА (Update Event) ---
+    if (sr & TIM_SR_UIF) {
+        TIM2->SR = ~TIM_SR_UIF; // Сбрасываем флаг прерывания
+        
+        // Вызов основной логики планировщика шагов (важно для режима STEP)
+        XTimerCallback(); 
+        
+        // Если мы в режиме ШИМ (не шаговик), управляем ключами
+        if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
+            // БЕЗОПАСНОСТЬ: В начале каждого такта принудительно закрываем все ключи
+						F_RESET_PIN(&g_pins[PIN_X_MO_L]);   
+						F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+						F_RESET_PIN(&g_pins[PIN_X_MO_L_H]); 
+						F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+
+            // Если задана мощность (мотор должен вращаться)
+            if (X_PWM_CURRENT != 0) {
+                // Ждем закрытия транзисторов перед открытием противоположных
+                XMotorDeadTime();
+                
+                // Учет полярности ШИМ из настроек
+                int32_t raw_pwr = (W_X_POL_PWM == 0) ? X_PWM_CURRENT : -X_PWM_CURRENT;
+                uint32_t abs_pwr = abs(raw_pwr);
+                
+                // Программное ограничение (не более Period)
+                if (abs_pwr > 5000) abs_pwr = 5000;
+                
+                // Установка точки "спада" импульса в регистр сравнения
+                TIM2->CCR1 = abs_pwr; 
+
+                // Выбор схемы активации пинов в зависимости от железа
+                if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) { 
+                    // Режим полного H-моста (переключение диагоналей)
+                    if (raw_pwr > 0) { 
+                        F_SET_PIN(&g_pins[PIN_X_MO_L]);   F_SET_PIN(&g_pins[PIN_X_MO_R_H]); 
+                    } else { 
+                        F_SET_PIN(&g_pins[PIN_X_MO_R]);   F_SET_PIN(&g_pins[PIN_X_MO_L_H]); 
+                    }
+                } 
+                else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) { 
+                    // Режим PWM + DIR (один пин шимит, второй задает направление)
+                    F_SET_PIN(&g_pins[PIN_X_MO_L]); // Силовой выход
+                    uint8_t dir = (raw_pwr >= 0) ? 0 : 1;
+                    if (W_X_POL_DIR) dir = !dir; // Инверсия DIR если нужно
+                    
+                    if (dir) F_SET_PIN(&g_pins[PIN_X_MO_R]); 
+                    else     F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+                }
+            }
+        }
+    }
+
+    // --- ОБРАБОТКА КОНЦА ИМПУЛЬСА (Compare Event 1) ---
+    // Срабатывает, когда счетчик CNT достигает значения CCR1
+    if (sr & TIM_SR_CC1IF) {
+        TIM2->SR = ~TIM_SR_CC1IF; // Сбрасываем флаг
+        
+        // Если мы в режиме ШИМ — гасим все силовые выходы
+        if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
+            F_RESET_PIN(&g_pins[PIN_X_MO_L]);   F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_L_H]); F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+        }
+    }
+}
+
+/**
+ * @brief Установка длительности шага для шагового двигателя
+ * @param period: Значение ARR (длительность в микросекундах при PSC=169)
+ */
+void XTimerSet(uint16_t period) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
+        // Устанавливаем новое значение автоперезагрузки (частота шагов)
+        __HAL_TIM_SET_AUTORELOAD(&htim2, period);
+        // Запускаем таймер (бит CEN в CR1)
+        __HAL_TIM_ENABLE(&htim2);
+    }
+}
+
+/**
+ * @brief Установка мощности мотора X
+ * @param power: Значение от -5000 до 5000
+ */
+void XMotorSet(int power) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
+
+    if (abs(power) < 10) power = 0; // Небольшой deadband
+    
+    X_PWM_CURRENT = power;
+
+    if (power == 0) {
+        // МГНОВЕННОЕ ТОРМОЖЕНИЕ
+        // Сбрасываем регистр сравнения
+        TIM2->CCR1 = 0;
+        
+        // Прямое управление регистрами BSRR для мгновенного отключения
+        // Это гарантирует, что даже если прерывание опоздает, ток прервется
+        F_RESET_PIN(&g_pins[PIN_X_MO_L]);
+        F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+        F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
+        F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+    } else {
+        if (power > 5000)  power = 5000;
+        if (power < -5000) power = -5000;
+        TIM2->CCR1 = abs(power);
+    }
+}
+
+
+
+
+
+
+// ============================================================================
+// ПОДСИСТЕМА PWM LASER & LIGHT (DMA-BASED)
+// ============================================================================
+
+// Глобальные переменные для работы DMA
+volatile uint32_t dma_pwm_masks[3][2] = {0}; // [Laser, LED1, LED2][SET, RESET]
+uint32_t raw_pin_masks[3] = {0};             // Маски пинов (1 << N)
+uint32_t LAST_LASER_FREQ = 0;                // Для защиты от повторной инициализации
+
+/**
+ * @brief Привязка физических портов к каналам DMA.
+ */
+void PWM_LaserLight_LinkHardware(void) {
+    uint8_t target_ids[3] = { PIN_PWM_LASER, PIN_PWM_LED1, PIN_PWM_LED2 };
+
+    for (int i = 0; i < 3; i++) {
+        PIN_CFG_T *cfg = &g_pins[target_ids[i]];
+        
+        // Смещение каналов: DMA1_CH2...CH7 (CH1 зарезервирован под FIFO)
+        DMA_Channel_TypeDef* ch_on  = (DMA_Channel_TypeDef*)((uint32_t)DMA1_Channel1 + ((i + 1) * 0x14));
+        DMA_Channel_TypeDef* ch_off = (DMA_Channel_TypeDef*)((uint32_t)DMA1_Channel1 + ((i + 4) * 0x14));
+
+        if (!cfg->used || cfg->bsrr == (uint32_t*)&GPIO_NULL_REG || cfg->bsrr == NULL) {
+            ch_on->CCR &= ~DMA_CCR_EN;
+            ch_off->CCR &= ~DMA_CCR_EN;
+            continue;
+        }
+
+        raw_pin_masks[i] = cfg->pin;
+
+        // Настройка адресов в регистрах DMA
+        ch_on->CCR &= ~DMA_CCR_EN;
+        ch_on->CPAR = (uint32_t)cfg->bsrr;
+        ch_on->CMAR = (uint32_t)&dma_pwm_masks[i][0];
+        ch_on->CCR |= DMA_CCR_EN;
+
+        ch_off->CCR &= ~DMA_CCR_EN;
+        ch_off->CPAR = (uint32_t)cfg->bsrr;
+        ch_off->CMAR = (uint32_t)&dma_pwm_masks[i][1];
+        ch_off->CCR |= DMA_CCR_EN;
+    }
+}
+
+/**
+ * @brief Полная инициализация таймера и DMA
+ */
+void SetLaserLightPWMFrequency(uint32_t freq_hz) {
+    if (freq_hz == LAST_LASER_FREQ && freq_hz != 0) return;
+    
+    if (freq_hz == 0) { 
+        TIM1->CR1 &= ~TIM_CR1_CEN; 
+        LAST_LASER_FREQ = 0; 
+        return; 
+    }
+
+    // 1. Включение тактирования
+    __HAL_RCC_TIM1_CLK_ENABLE();
+    __HAL_RCC_DMA1_CLK_ENABLE();
+    __HAL_RCC_DMAMUX1_CLK_ENABLE();
+
+    // 2. ИСПРАВЛЕННЫЙ РАСЧЕТ ЧАСТОТЫ ТАЙМЕРА (TIM1 на APB2)
+    uint32_t pclk2 = HAL_RCC_GetPCLK2Freq();
+    uint32_t tim_clk = pclk2;
+
+    // Если делитель APB2 не 1, частота таймера удваивается автоматически
+    if ((RCC->CFGR & RCC_CFGR_PPRE2) != RCC_CFGR_PPRE2_DIV1) {
+        tim_clk = pclk2 * 2;
+    }
+
+    uint32_t arr = 100;
+    // PSC = (F_clk / (F_target * (ARR + 1)))
+    uint32_t psc_val = tim_clk / (freq_hz * (arr + 1));
+    
+    TIM1->PSC = (psc_val > 0) ? psc_val - 1 : 0;
+    TIM1->ARR = arr;
+    
+    // Остальной код без изменений
+    TIM1->CCMR1 = 0; 
+    TIM1->CCMR2 = 0;
+    TIM1->DIER = TIM_DIER_UDE | TIM_DIER_CC1DE | TIM_DIER_CC2DE | TIM_DIER_CC3DE;
+
+		// 3. Настройка каналов DMA (2-7). Канал 1 ОСТАВЛЯЕМ ДЛЯ ПАКЕТОВ!
+    for (int i = 0; i < 6; i++) {
+        uint8_t ch_num = i + 2; // Номер канала: 2, 3, 4, 5, 6, 7
+        
+        uint32_t req;
+        if (i < 3)      req = LL_DMAMUX_REQ_TIM1_UP;
+        else if (i == 3) req = LL_DMAMUX_REQ_TIM1_CH1;
+        else if (i == 4) req = LL_DMAMUX_REQ_TIM1_CH2;
+        else             req = LL_DMAMUX_REQ_TIM1_CH3;
+
+        // В DMAMUX каналы считаются от 0. 
+        // Канал DMA1 Ch2 соответствует DMAMUX Request Generator 1 или Channel 1
+        LL_DMAMUX_SetRequestID(DMAMUX1, ch_num - 1, req); 
+
+        // Правильный расчет адреса канала:
+        // DMA1_Channel1 + 0*0x14 = Ch1
+        // DMA1_Channel1 + 1*0x14 = Ch2 ...
+        DMA_Channel_TypeDef* DMA_Ch = (DMA_Channel_TypeDef*)((uint32_t)DMA1_Channel1 + ((ch_num - 1) * 0x14));
+        
+        DMA_Ch->CCR &= ~DMA_CCR_EN;
+        DMA1->IFCR = (0x0F << ((ch_num - 1) * 4)); 
+
+        DMA_Ch->CCR = DMA_CCR_DIR | DMA_CCR_CIRC | DMA_CCR_MINC | 
+                      (0x02 << DMA_CCR_PSIZE_Pos) | (0x02 << DMA_CCR_MSIZE_Pos) | 
+                      LL_DMA_PRIORITY_HIGH; 
+        
+        DMA_Ch->CNDTR = 1;
+
+        // СРАЗУ СТАВИМ ПРИОРИТЕТ NVIC ДЛЯ ЭТОГО КАНАЛА
+        IRQn_Type irq = (IRQn_Type)(DMA1_Channel1_IRQn + (ch_num - 1));
+        HAL_NVIC_SetPriority(irq, 2, 0); 
+        HAL_NVIC_EnableIRQ(irq);
+    }
+
+    for(int i=0; i<3; i++) { 
+        dma_pwm_masks[i][0] = 0; 
+        dma_pwm_masks[i][1] = 0; 
+    }
+
+    PWM_LaserLight_LinkHardware();
+
+    TIM1->BDTR |= TIM_BDTR_MOE; 
+    TIM1->SR = 0;               
+    TIM1->EGR |= TIM_EGR_UG;    
+    TIM1->CR1 |= TIM_CR1_CEN;   
+    
+    LAST_LASER_FREQ = freq_hz;
+}
+
+/**
+ * @brief Сверхбыстрое управление мощностью лазера (Branchless)
+ */
+//inline void SetLaserPWM(uint16_t val) {
+//    dma_pwm_masks[0][0] = (uint32_t)(val != 0) * raw_pin_masks[0];
+//    dma_pwm_masks[0][1] = (uint32_t)(val < 100) * (raw_pin_masks[0] << 16);
+//    // Обновляем порог срабатывания таймера
+//    TIM1->CCR1 = val;
+//}
+
+
+void Laser_Off(void) {
+    LASER_SAFETY_LOCK = 1;
+    HAL_TIM_Base_Stop_IT(&htim3); 
+    SetLaserPWM(0);
+    TIM1->EGR |= TIM_EGR_UG;      // Мгновенная очистка регистров
+    F_RESET_PIN(&g_pins[PIN_PWM_LASER]); // Физическая гарантия нуля
+}
+
+void Laser_Ready(void) {
+    TIM3->CNT = 0;                // Обнуляем интерполяцию
+    interp_counter = 0; 
+    TIM1->CNT = 0;                // Фазируем ШИМ
+    TIM1->EGR |= TIM_EGR_UG;      // Пропихиваем нули    
+    LASER_SAFETY_LOCK = 0;        // Разрешаем работу
+}
+
+
+inline void SetLaserPWM(uint16_t val) {
+    // Если включена блокировка, любое значение превращается в 0
+    if (LASER_SAFETY_LOCK) val = 0;
+
+    dma_pwm_masks[0][0] = (uint32_t)(val != 0) * raw_pin_masks[0];
+    dma_pwm_masks[0][1] = (uint32_t)(val < 100) * (raw_pin_masks[0] << 16);
+    TIM1->CCR1 = val;
+
+    if (val == 0) {
+        F_RESET_PIN(&g_pins[PIN_PWM_LASER]);
+        dma_pwm_masks[0][0] = 0; // Чистим память для DMA
+    }
+}
+
+
+/**
+ * @brief Сверхбыстрое управление мощностью подсветки 1
+ */
+inline void SetLight1PWM(uint16_t val) {    
+    dma_pwm_masks[1][0] = (uint32_t)(val != 0) * raw_pin_masks[1];
+    dma_pwm_masks[1][1] = (uint32_t)(val < 100) * (raw_pin_masks[1] << 16);
+		// Обновляем порог срабатывания таймера	
+    TIM1->CCR2 = val;
+}
+
+/**
+ * @brief Сверхбыстрое управление мощностью подсветки 2
+ */
+inline void SetLight2PWM(uint16_t val) {  
+    dma_pwm_masks[2][0] = (uint32_t)(val != 0) * raw_pin_masks[2];
+    dma_pwm_masks[2][1] = (uint32_t)(val < 100) * (raw_pin_masks[2] << 16);
+		// Обновляем порог срабатывания таймера    
+    TIM1->CCR3 = val;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// HAL callback
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+    // TIM3 - Интерполяция печати
+    if (htim->Instance == TIM3) {
+        // SDK вариант: один шаг интерполяции
+        if (XInterpTimerCallback() == 0) {
+            // Возврат 0 означает, что серия интерполяции завершена
+            HAL_TIM_Base_Stop_IT(&htim3);
+// __HAL_TIM_SET_COUNTER(&htim3, 0);	// TODO Потом заменить по сути одно и тоже что TIM3->CNT = 0;			
+            TIM3->CNT = 0;  // Сброс счетчика
+        }
+    }
+    // TIM4 - Управление осью Y
+    if (htim->Instance == TIM4) {
+        YTimerCallback();
+    }
+}
+
+// установка периода и запуск таймера YTimer
+void YTimerSet(uint16_t period)
+{
+    __HAL_TIM_SET_AUTORELOAD(&htim4, period);
+    __HAL_TIM_ENABLE(&htim4);
+}
+
+
+
+void XInterpTimerStart(uint32_t period) {
+    // Старт интерполяционого таймера
+    TIM3->ARR = period;          // Установка периода
+    TIM3->SR &= ~TIM_SR_UIF;     // Сброс флага прерывания
+    TIM3->DIER |= TIM_DIER_UIE;  // Разрешение прерывания
+    TIM3->CR1 |= TIM_CR1_CEN;    // Запуск таймера
+}
+
+/**
+ * @brief Наш собственный быстрый обработчик прерываний
+ * @param pin_mask Битовая маска сработавших пинов (например, 0x0020 для Pin 5)
+ */
+void LPP_GPIO_EXTI_Handler(uint16_t pin_mask) {
+    // Здесь мы просто пробрасываем маску в логику энкодера
+    // или делаем что-то еще. Пин нам не важен, важен сам факт.
+    XEncoderCallback(pin_mask); 
+}
+
+// Одиночные линии (0-4)
+void EXTI0_IRQHandler(void) { EXTI->PR1 = (1U << 0); LPP_GPIO_EXTI_Handler(1U << 0); }
+void EXTI1_IRQHandler(void) { EXTI->PR1 = (1U << 1); LPP_GPIO_EXTI_Handler(1U << 1); }
+void EXTI2_IRQHandler(void) { EXTI->PR1 = (1U << 2); LPP_GPIO_EXTI_Handler(1U << 2); }
+void EXTI3_IRQHandler(void) { EXTI->PR1 = (1U << 3); LPP_GPIO_EXTI_Handler(1U << 3); }
+void EXTI4_IRQHandler(void) { EXTI->PR1 = (1U << 4); LPP_GPIO_EXTI_Handler(1U << 4); }
+
+// Групповые линии (5-9)
+void EXTI9_5_IRQHandler(void) {
+    uint32_t pr = EXTI->PR1 & 0x03E0; 
+    if (pr) {
+        EXTI->PR1 = pr; // Сбрасываем флаги
+        LPP_GPIO_EXTI_Handler(pr); 
+    }
+}
+
+// Групповые линии (10-15)
+void EXTI15_10_IRQHandler(void) {
+    uint32_t pr = EXTI->PR1 & 0xFC00; 
+    if (pr) {
+        EXTI->PR1 = pr; 
+        LPP_GPIO_EXTI_Handler(pr);
+    }
+}
+
+// ============================================================================
+// Инициализация DMA для Memory-to-Memory
+// ============================================================================
+void DMA_M2M_Init(void) {
+    // 1. Тактирование DMA И DMAMUX (Критично для G4!)
+    RCC->AHB1ENR |= RCC_AHB1ENR_DMA1EN;
+    RCC->AHB1ENR |= RCC_AHB1ENR_DMAMUX1EN; 
+    __DSB(); 
+
+    DMA1_Channel1->CCR = 0;
+    while(DMA1_Channel1->CCR & DMA_CCR_EN);
+
+    // Сброс настроек мультиплексора для этого канала
+    DMAMUX1_Channel0->CCR = 0; 
+
+    DMA1->IFCR = DMA_IFCR_CGIF1;
+
+    DMA1_Channel1->CCR = DMA_CCR_MEM2MEM | 
+                         (0x2 << DMA_CCR_PL_Pos) | 
+                         (0x2 << DMA_CCR_MSIZE_Pos) | 
+                         (0x2 << DMA_CCR_PSIZE_Pos) | 
+                         DMA_CCR_MINC | 
+                         DMA_CCR_PINC | 
+                         DMA_CCR_TCIE |
+                         DMA_CCR_TEIE; // Включим еще прерывание по ошибке
+
+    HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 3, 0);
+    HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+}
+
+// ============================================================================
+// Запуск копирования (ВАЖНО: в M2M режиме CPAR = source, CMAR = destination)
+// ============================================================================
+void FIFO_DATA_StartDma(uint32_t src_addr, uint32_t dst_addr, uint16_t size) {
+    // 1. Выключаем канал
+    DMA1_Channel1->CCR &= ~DMA_CCR_EN;
+    
+    // Ждём полной остановки
+    while(DMA1_Channel1->CCR & DMA_CCR_EN);
+    
+    // 2. Очищаем ВСЕ флаги канала 1
+    DMA1->IFCR = DMA_IFCR_CGIF1;
+    
+    // 3. В режиме M2M:
+    //    CPAR = источник (source)
+    //    CMAR = приёмник (destination)
+    DMA1_Channel1->CPAR  = src_addr;  // Источник
+    DMA1_Channel1->CMAR  = dst_addr;  // Приёмник
+    DMA1_Channel1->CNDTR = size;      // Количество 32-bit слов
+    
+    // 4. Старт DMA
+    DMA1_Channel1->CCR |= DMA_CCR_EN;
+}
+
+// ============================================================================
+// Обработчик прерывания
+// ============================================================================
+void DMA1_Channel1_IRQHandler(void) {
+    uint32_t isr = DMA1->ISR;
+    
+    // Transfer Complete
+    if (isr & DMA_ISR_TCIF1) {
+        DMA1->IFCR = DMA_IFCR_CTCIF1;
+        FIFO_DATA_EndDma();
+    }
+    
+    // Transfer Error
+    if (isr & DMA_ISR_TEIF1) {
+        DMA1->IFCR = DMA_IFCR_CTEIF1;
+        // TODO: обработка ошибки
+    }
+    
+    // Half Transfer (на всякий случай)
+    if (isr & DMA_ISR_HTIF1) {
+        DMA1->IFCR = DMA_IFCR_CHTIF1;
+    }
+}
+
+
+/* USER CODE END 4 */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */

@@ -39,4 +39,4 @@ lpp_stm32f103c8tx/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\My_Libraries\counter.h ..\..\LPP_SDK\lpp_sdk.h \
-  ..\..\LPP_SDK\configs\lpp_config_f103.h
+  ..\..\LPP_SDK\configs\lpp_config_f103.h ..\..\LPP_SDK\lpp_core_gpio.h

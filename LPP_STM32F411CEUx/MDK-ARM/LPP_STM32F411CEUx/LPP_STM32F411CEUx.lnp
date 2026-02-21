@@ -31,6 +31,7 @@
 "lpp_stm32f411ceux\usbd_ioreq.o"
 "lpp_stm32f411ceux\usbd_customhid.o"
 "lpp_stm32f411ceux\lpp_sdk.o"
+"lpp_stm32f411ceux\lpp_core_gpio.o"
 --strict --scatter "LPP_STM32F411CEUx\LPP_STM32F411CEUx.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

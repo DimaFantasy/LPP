@@ -1,4 +1,4 @@
 #ifndef COUNTER_H
 #define COUNTER_H
-#define APP_VERSION 32U
+#define APP_VERSION 163U
 #endif

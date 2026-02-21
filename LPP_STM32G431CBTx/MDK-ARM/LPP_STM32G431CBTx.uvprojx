@@ -696,6 +696,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\LPP_SDK\lpp_sdk.h</FilePath>
             </File>
+            <File>
+              <FileName>lpp_core_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPP_SDK\lpp_core_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>lpp_core_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPP_SDK\lpp_core_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

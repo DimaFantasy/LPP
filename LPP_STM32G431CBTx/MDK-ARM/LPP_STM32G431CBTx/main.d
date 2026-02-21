@@ -42,4 +42,6 @@ lpp_stm32g431cbtx/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\My_Libraries\counter.h ..\..\LPP_SDK\lpp_sdk.h \
-  ..\..\LPP_SDK\configs\lpp_config_g431.h
+  ..\..\LPP_SDK\configs\lpp_config_g431.h ..\..\LPP_SDK\lpp_core_gpio.h \
+  ..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_ll_dmamux.h \
+  ..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_ll_dma.h

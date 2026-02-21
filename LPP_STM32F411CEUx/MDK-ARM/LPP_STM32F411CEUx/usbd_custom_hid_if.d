@@ -42,4 +42,6 @@ lpp_stm32f411ceux/usbd_custom_hid_if.o: \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
-  ..\..\LPP_SDK\lpp_sdk.h ..\..\LPP_SDK\configs\lpp_config_f411.h
+  ..\..\LPP_SDK\lpp_sdk.h ..\..\LPP_SDK\configs\lpp_config_f411.h \
+  ..\..\LPP_SDK\lpp_core_gpio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h

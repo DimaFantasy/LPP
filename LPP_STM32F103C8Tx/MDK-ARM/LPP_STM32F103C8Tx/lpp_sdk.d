@@ -32,5 +32,6 @@ lpp_stm32f103c8tx/lpp_sdk.o: ..\..\LPP_SDK\lpp_sdk.c \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h \
-  ..\My_Libraries\counter.h \
+  ..\..\LPP_SDK\lpp_core_gpio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h

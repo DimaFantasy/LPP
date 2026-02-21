@@ -34,11 +34,20 @@
 #include "stm32g4xx_hal.h"
 
 // ============================================================================
-// Пины и порт энкодера
+// Защищённые GPIO-пины (не должны сбрасываться или переинициализироваться)
 // ============================================================================
-#define X_ENCODER_PORT         GPIOB
-#define X_ENCODER_CFG_PIN_A    GPIO_PIN_6   // PB6
-#define X_ENCODER_CFG_PIN_B    GPIO_PIN_5   // PB5
+typedef struct {
+    GPIO_TypeDef *port;
+    uint16_t      pin;
+} lpp_protected_pin_t;
+
+static const lpp_protected_pin_t lpp_protected_pins[] = {
+    { GPIOA, GPIO_PIN_8  },  // PA8 — USB pull-up 1.5 кОм (определение устройства)
+    { GPIOA, GPIO_PIN_11 },  // PA11 — USB DM (Data-)
+    { GPIOA, GPIO_PIN_12 },  // PA12 — USB DP (Data+)
+
+    { NULL,  0 }             // Завершающий элемент массива
+};
 
 // ============================================================================
 // Память и адреса версий

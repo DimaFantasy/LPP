@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lpp_sdk_boot.h"
+#include "counter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

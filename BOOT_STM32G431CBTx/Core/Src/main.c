@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "lpp_sdk_boot.h"
+#include "lpp_sdk.h"
 #include "counter.h"
 
 /* USER CODE END Includes */
@@ -106,7 +106,7 @@ int main(void)
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);  // Выключение USB
     HAL_Delay(2000);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);  // Включение USB
- //   USB->BCDR |= USB_BCDR_DPPU; // DPPU = 1 → подтяжка DP включена 
+    USB->BCDR |= USB_BCDR_DPPU; // DPPU = 1 → подтяжка DP включена 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -114,7 +114,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

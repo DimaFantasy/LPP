@@ -37,5 +37,7 @@ boot_stm32g431cbtx/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\..\LPP_SDK\lpp_sdk_boot.h ..\..\LPP_SDK\configs\lpp_config_g431.h \
+  ..\..\LPP_SDK\lpp_sdk.h ..\..\LPP_SDK\configs\lpp_config_g431.h \
+  ..\..\LPP_SDK\lpp_core_gpio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\My_Libraries\counter.h

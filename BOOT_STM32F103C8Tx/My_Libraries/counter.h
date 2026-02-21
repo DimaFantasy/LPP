@@ -1,4 +1,4 @@
 #ifndef COUNTER_H
 #define COUNTER_H
-#define BOOT_VERSION 115U
+#define BOOT_VERSION 118U
 #endif

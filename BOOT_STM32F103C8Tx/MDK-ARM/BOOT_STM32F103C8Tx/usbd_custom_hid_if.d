@@ -39,5 +39,4 @@ boot_stm32f103c8tx/usbd_custom_hid_if.o: \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
-  ..\..\LPP_SDK\lpp_sdk_boot.h ..\..\LPP_SDK\configs\lpp_config_f103.h \
-  ..\My_Libraries\counter.h
+  ..\..\LPP_SDK\lpp_sdk_boot.h ..\..\LPP_SDK\configs\lpp_config_f103.h

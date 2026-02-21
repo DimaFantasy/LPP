@@ -1,7 +1,7 @@
 /**
  ******************************************************************************
- * @file    lpp_config_g431.h
- * @brief   LPP hardware configuration for STM32G431
+ * @file    lpp_config_f411.h
+ * @brief   LPP hardware configuration for STM32F411CEU6
  *
  * This file is part of the LPP (Laser Printer Platform) SDK —
  * a software development kit for embedded laser printer control,
@@ -27,30 +27,50 @@
  ******************************************************************************
  */
 
-#ifndef LPP_CONFIG_G431_H
-#define LPP_CONFIG_G431_H
+#ifndef LPP_CONFIG_F411_H
+#define LPP_CONFIG_F411_H
 
 #include "stm32f4xx.h"
 #include "stm32f4xx_hal.h"
 
 // ============================================================================
-// Пины и порт энкодера
+// Защищённые GPIO-пины (не должны сбрасываться или переинициализироваться)
 // ============================================================================
-#define X_ENCODER_PORT         GPIOB
-#define X_ENCODER_CFG_PIN_A    GPIO_PIN_6   // PB6
-#define X_ENCODER_CFG_PIN_B    GPIO_PIN_8   // PB8
+typedef struct {
+    GPIO_TypeDef *port;
+    uint16_t      pin;
+} lpp_protected_pin_t;
+
+static const lpp_protected_pin_t lpp_protected_pins[] = {
+    // USB пины (критически важны для связи)
+    { GPIOA, GPIO_PIN_11 },  // PA11 — USB DM (Data-)
+    { GPIOA, GPIO_PIN_12 },  // PA12 — USB DP (Data+)
+    
+    // SWD пины для отладки (опционально, можно закомментировать если не используете)
+    { GPIOA, GPIO_PIN_13 },  // PA13 — SWDIO
+    { GPIOA, GPIO_PIN_14 },  // PA14 — SWCLK
+
+    { NULL,  0 }             // Завершающий элемент массива
+};
 
 // ============================================================================
 // Память и адреса версий
+// STM32F411CEU6: 512KB Flash (0x08000000 - 0x0807FFFF)
+// Разбивка:
+//   APP:  0x08000000 - 0x08007FFF (32 KB, sectors 0-1)
+//   BOOT: 0x08008000 - 0x0800FFFF (32 KB, sector 2)
 // ============================================================================
-#define BASE_BOOT_VER          0x0800FFF8U
-#define BASE_APP_VER           0x08007FFCU
 
-#define BOOT_SIG_BLOCK_ADDR    0x0800FFE8U  // BOOT KEY0
-#define APP_SIG_BLOCK_ADDR     0x08007FECU  // APP  KEY0
+// --- Адреса версий (в последних 8 байтах области) ---
+#define BASE_APP_VER           0x08007FFCU  // Последние 4 байта APP
+#define BASE_BOOT_VER          0x0800FFF8U  // Последние 8 байт BOOT (оставляем запас)
+
+// --- Адреса сигнатур ---
+#define APP_SIG_BLOCK_ADDR     0x08007FECU  // APP  KEY0 (16 байт до конца)
+#define BOOT_SIG_BLOCK_ADDR    0x0800FFE8U  // BOOT KEY0 (24 байта до конца)
 
 // ============================================================================
-// Уникальные сигнатуры (STM32G431CBTx)
+// Уникальные сигнатуры (STM32F411CEU6)
 // Полное соответствие PC-проверке
 // ============================================================================
 
@@ -69,26 +89,31 @@
 // ============================================================================
 // Базовые адреса
 // ============================================================================
-#define BASE_APP_START_ADDR    0x08000000U
-#define BASE_BOOT_START_ADDR   0x08008000U   // бут: 32 КБ
+#define BASE_APP_START_ADDR    0x08000000U  // Начало APP
+#define BASE_BOOT_START_ADDR   0x08008000U  // Начало BOOT (бут: 32 КБ)
 
 // ============================================================================
-// Адреса метаданных приложения (последние 24 байта)
+// Адреса метаданных приложения (последние 24 байта APP области)
+// APP: 32KB = 0x8000, конец = 0x08007FFF
+// Метаданные с 0x08007FE8 до 0x08007FFF (24 байта)
 // ============================================================================
-#define APP_RESETI_SECTION     ".ARM.__at_0x08007FE8"
-#define APP_KEY0_SECTION       ".ARM.__at_0x08007FEC"
-#define APP_KEY1_SECTION       ".ARM.__at_0x08007FF0"
-#define APP_KEY2_SECTION       ".ARM.__at_0x08007FF4"
-#define APP_KEY3_SECTION       ".ARM.__at_0x08007FF8"
-#define APP_VER_F_SECTION      ".ARM.__at_0x08007FFC"
+#define APP_RESETI_SECTION     ".ARM.__at_0x08007FE8"  // 4 байта: счетчик сбросов
+#define APP_KEY0_SECTION       ".ARM.__at_0x08007FEC"  // 4 байта: ключ 0
+#define APP_KEY1_SECTION       ".ARM.__at_0x08007FF0"  // 4 байта: ключ 1
+#define APP_KEY2_SECTION       ".ARM.__at_0x08007FF4"  // 4 байта: ключ 2
+#define APP_KEY3_SECTION       ".ARM.__at_0x08007FF8"  // 4 байта: ключ 3
+#define APP_VER_F_SECTION      ".ARM.__at_0x08007FFC"  // 4 байта: версия
 
 // ============================================================================
-// Сигнатуры бутлоадера (в конце бут-области)
+// Сигнатуры бутлоадера (в конце BOOT области)
+// BOOT: 32KB начиная с 0x08008000, конец = 0x0800FFFF
+// Метаданные с 0x0800FFE8 до 0x0800FFFF (24 байта)
 // ============================================================================
-#define BOOT_KEY0_SECTION      ".ARM.__at_0x0800FFE8"
-#define BOOT_KEY1_SECTION      ".ARM.__at_0x0800FFEC"
-#define BOOT_KEY2_SECTION      ".ARM.__at_0x0800FFF0"
-#define BOOT_KEY3_SECTION      ".ARM.__at_0x0800FFF4"
-#define BOOT_VER_F_SECTION     ".ARM.__at_0x0800FFF8"
+#define BOOT_KEY0_SECTION      ".ARM.__at_0x0800FFE8"  // 4 байта: ключ 0
+#define BOOT_KEY1_SECTION      ".ARM.__at_0x0800FFEC"  // 4 байта: ключ 1
+#define BOOT_KEY2_SECTION      ".ARM.__at_0x0800FFF0"  // 4 байта: ключ 2
+#define BOOT_KEY3_SECTION      ".ARM.__at_0x0800FFF4"  // 4 байта: ключ 3
+#define BOOT_VER_F_SECTION     ".ARM.__at_0x0800FFF8"  // 4 байта: версия
 
-#endif // LPP_CONFIG_G431_H
+
+#endif // LPP_CONFIG_F411_H

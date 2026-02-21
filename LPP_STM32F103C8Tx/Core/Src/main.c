@@ -52,16 +52,15 @@ const uint32_t APP_KEY3   __attribute__((section(APP_KEY3_SECTION)))   = APP_SIG
 const uint32_t APP_VER_F  __attribute__((section(APP_VER_F_SECTION)))  = APP_VERSION;
 
 // Глобальные определения таймеров и режимов
-TIM_HandleTypeDef htim1;  // Основной таймер для управления мотором X
+TIM_HandleTypeDef htim1;  
+TIM_HandleTypeDef htim2; 
 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
-DMA_HandleTypeDef hdma_memtomem_dma1_channel1;
 /* USER CODE BEGIN PV */
 
 void XferCpltCallback(DMA_HandleTypeDef *hdma);
@@ -78,12 +77,10 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
-static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
-
+static void DMA_M2M_Init();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -99,7 +96,12 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	
+	//Приоритет 0: EXTI (Энкодер) — Ловит физический шаг.
+	//Приоритет 1: TIM3 (Интерполяция) — Рассчитывает момент внутри шага.
+	//Приоритет 2: DMA (PWM Laser) — Тот самый DMA, который «включает порт». Он должен отработать мгновенно, как только интерполятор или таймер дали отшку.
+	//Приоритет 3: DMA1_CH1 (M2M Data) — Перекачка данных из буфера. Она может подождать пару тактов, пока лазер выстрелит.
+	//Приоритет 4: USB — Связь.
+	//Приоритет 5: TIM2, TIM4  (PID) — Моторы Степеры управление.		
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -118,34 +120,46 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_USB_DEVICE_Init();
-  MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
+		DMA_M2M_Init();
 		// Инициализация 
 		Lpp_Init();		
-    // Настройка приоритетов прерываний
-//    HAL_NVIC_SetPriority(TIM1_UP_IRQn, 2, 0);
-//    HAL_NVIC_EnableIRQ(TIM1_UP_IRQn);
-//    HAL_NVIC_SetPriority(TIM1_CC_IRQn, 2, 0);
-//    HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
-
-    // Запуск PWM для лазера и подсветки
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);  // Лазер
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);  // Подсветка
 
     // Запуск таймеров
     HAL_TIM_Base_Start_IT(&htim4);
 
-    // Инициализация задержки и периферии
-    HAL_Delay(2000);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);    // Включение USB
+		// Инициализация USB
+		#if defined(STM32F401xE) || defined(STM32F401xC) || \
+				defined(STM32F411xE)
+				// F401, F411: используют OTG_FS_GCCFG для управления PHY и pull-up
+				USB_OTG_FS->GCCFG &= ~USB_OTG_GCCFG_PWRDWN;  // Отключаем PHY (и pull-up)
+				HAL_Delay(10);
+		#elif defined(STM32G431xx)
+				// G431: использует регистр BCDR
+				USB->BCDR &= ~USB_BCDR_DPPU;
+				HAL_Delay(10);
+		#endif
 
-    // Настройка DMA callback
-    HAL_DMA_RegisterCallback(&hdma_memtomem_dma1_channel1, HAL_DMA_XFER_CPLT_CB_ID, XferCpltCallback);
-		
+				// Выключаем питание USB
+				F_RESET_PIN(&g_pins[SYS_PIN_USB_EN]);
+				HAL_Delay(2000);  // достаточная задержка
+				
+				// Включаем питание USB
+				F_SET_PIN(&g_pins[SYS_PIN_USB_EN]);
+				HAL_Delay(50);   // стабилизация
+
+		#if defined(STM32F401xE) || defined(STM32F401xC) || \
+				defined(STM32F411xE)
+				// F401, F411: включаем PHY (и pull-up)
+				USB_OTG_FS->GCCFG |= USB_OTG_GCCFG_PWRDWN;
+		#elif defined(STM32G431xx)
+				// G431: включаем pull-up
+				USB->BCDR |= USB_BCDR_DPPU;
+		#endif
+			
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -153,8 +167,7 @@ int main(void)
     while (1) {
     /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-			
+    /* USER CODE BEGIN 3 */			
 			Lpp_MainLoop();
     }
   /* USER CODE END 3 */
@@ -204,66 +217,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 5;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 100;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-  /* USER CODE END TIM2_Init 2 */
-  HAL_TIM_MspPostInit(&htim2);
-
 }
 
 /**
@@ -358,45 +311,12 @@ static void MX_TIM4_Init(void)
 }
 
 /**
-  * Enable DMA controller clock
-  * Configure DMA for memory to memory transfers
-  *   hdma_memtomem_dma1_channel1
-  */
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* Configure DMA request hdma_memtomem_dma1_channel1 on DMA1_Channel1 */
-  hdma_memtomem_dma1_channel1.Instance = DMA1_Channel1;
-  hdma_memtomem_dma1_channel1.Init.Direction = DMA_MEMORY_TO_MEMORY;
-  hdma_memtomem_dma1_channel1.Init.PeriphInc = DMA_PINC_ENABLE;
-  hdma_memtomem_dma1_channel1.Init.MemInc = DMA_MINC_ENABLE;
-  hdma_memtomem_dma1_channel1.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-  hdma_memtomem_dma1_channel1.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-  hdma_memtomem_dma1_channel1.Init.Mode = DMA_NORMAL;
-  hdma_memtomem_dma1_channel1.Init.Priority = DMA_PRIORITY_LOW;
-  if (HAL_DMA_Init(&hdma_memtomem_dma1_channel1) != HAL_OK)
-  {
-    Error_Handler( );
-  }
-
-  /* DMA interrupt init */
-  /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 2, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
 
   /* USER CODE END MX_GPIO_Init_1 */
@@ -405,50 +325,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11
-                          |GPIO_PIN_12, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PA6 PA7 PA8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB0 PB1 PB10 PB11
-                           PB12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11
-                          |GPIO_PIN_12;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB6 PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
   /* USER CODE END MX_GPIO_Init_2 */
@@ -456,521 +332,511 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+ ******************************************************************************
+ * @file    lpp_sdk_f103.c
+ * @brief   Реализация аппаратного уровня LPP для STM32F103 (Blue Pill)
+ ******************************************************************************
+ */
+
+// Глобальные переменные SDK
+volatile uint32_t dma_pwm_masks[3][2] = {0}; // [Laser, LED1, LED2][SET, RESET]
+uint32_t raw_pin_masks[3] = {0};             // Маски пинов (1 << N)
+uint32_t LAST_LASER_FREQ = 0;
+volatile int32_t X_PWM_CURRENT = 0;
+
 // ============================================================================
-// Обработчик прерывания TIM1 (переполнение и каналы)
+// СЕКЦИЯ: СВЯЗЬ (USB HID)
 // ============================================================================
 
 /**
- * @brief  Обработчик прерывания TIM1 (Update)
- * @retval None
+ * @brief Отправка 64-байтного пакета хосту
  */
-void TIM1_UP_IRQHandler(void)
-{
-    HAL_TIM_IRQHandler(&htim1);
-}
-
-/**
- * @brief  Обработчик прерывания TIM1 (Capture/Compare)
- * @retval None
- */
-void TIM1_CC_IRQHandler(void)
-{
-    HAL_TIM_IRQHandler(&htim1);
+uint8_t PacketSend(uint8_t* buffer) {
+    // На F103 используется стандартная функция HID-класса
+    return USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, buffer, 64);	
 }
 
 // ============================================================================
-// Функции управления мотором X
+// СЕКЦИЯ: МОТОР ОСИ X (TIM2)
 // ============================================================================
 
-/**
- * @brief Установка мощности мотора X
- * @param power Мощность (-5000 до +5000)
- * @retval None
- */
-void XMotorSet(int power) {
-    // Ограничение мощности
-    if (power > 5000) power = 5000;
-    if (power < -5000) power = -5000;
+void XMotorInit(X_MOTOR_MODE_T mode) {
+    if (X_MOTOR_MODE == mode) return;
 
-    // Режим ONE_PWM: один ШИМ + DIR
-    if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
-        TIM1->CCR1 = (W_X_POL_PWM == 0) ? abs(power) : (5000 - abs(power));
-        
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14,
-                          (W_X_POL_DIR == 0) ? ((power >= 0) ? GPIO_PIN_RESET : GPIO_PIN_SET)
-                                             : ((power >= 0) ? GPIO_PIN_SET : GPIO_PIN_RESET));
-    }
+    // 1. Сначала глушим прерывание в NVIC — ДО сброса таймера
+    HAL_NVIC_DisableIRQ(TIM2_IRQn);
+//    __HAL_TIM_DISABLE(&htim2); // Выключить таймер ПЕРЕД сбросом	
+    HAL_NVIC_ClearPendingIRQ(TIM2_IRQn); // ← убираем застрявший pending
 
-    // Режим TWO_PWM: два ШИМ канала
-    if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
-        if (W_X_POL_PWM == 0) {
-            TIM1->CCR1 = 5000 + power;
-            TIM1->CCR2 = 5000 - power;
-        } else {
-            TIM1->CCR1 = 5000 - power;
-            TIM1->CCR2 = 5000 + power;
-        }
-    }
-}
+    __HAL_RCC_TIM2_FORCE_RESET();
+    __HAL_RCC_TIM2_RELEASE_RESET();
+    __HAL_RCC_TIM2_CLK_ENABLE();
 
-// ============================================================================
-// MotorX_Init — инициализация таймера и GPIO для оси X
-// Поддерживаются 3 режима работы двигателя:
-//   1) X_MOTOR_MODE_STEP      — Шаговый двигатель (STEP + DIR)
-//   2) X_MOTOR_MODE_ONE_PWM   — Один ШИМ + DIR
-//   3) X_MOTOR_MODE_TWO_PWM   — Два ШИМ (Dual H-Bridge)
-// В любом режиме пин PB15 (ENABLE) используется как выход, активный уровень
-// задаётся при настройке, но здесь он просто включается.
-// ============================================================================
-
-void XMotorInit(X_MOTOR_MODE_T mode)
-{
-    if (X_MOTOR_MODE == mode) return; // если режим уже установлен — выходим
+    TIM2->CR1  = 0;
+    TIM2->CR2  = 0;
+    TIM2->DIER = 0;
+    TIM2->SR   = 0;
+    TIM2->CCER = 0;
+    X_PWM_CURRENT = 0;
 	
-		__HAL_RCC_TIM1_FORCE_RESET();     // полный аппаратный сброс TIM1 (как после включения MCU)
-		__HAL_RCC_TIM1_RELEASE_RESET();   // выход из сброса — таймер в чистом состоянии
-		
-    // ------------------------------------------------------------------------
-    // Режим START — отключаем таймер и переводим пины в безопасное состояние
-    // ------------------------------------------------------------------------
-    if (mode == X_MOTOR_MODE_START)
-    {
-        GPIO_InitTypeDef GPIO_InitStruct = {0};
-        GPIO_InitStruct.Pin = GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
-        GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-        GPIO_InitStruct.Pull = GPIO_NOPULL;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-        X_MOTOR_MODE = mode;
-        return;
+    htim2.Instance = TIM2;
+    htim2.Init.CounterMode    = TIM_COUNTERMODE_UP;
+    htim2.Init.ClockDivision  = TIM_CLOCKDIVISION_DIV1;
+    // F103: RepetitionCounter не существует у TIM2 — убираем или ставим 0 если HAL требует
+    htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+
+    if (mode == X_MOTOR_MODE_STEP) {
+        // 72МГц / 72 = 1МГц → 1 тик = 1 мкс
+        htim2.Init.Prescaler = 71;
+        htim2.Init.Period    = 10000;
+
+        HAL_TIM_OnePulse_Init(&htim2, TIM_OPMODE_SINGLE);
+
+        HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
+        HAL_NVIC_EnableIRQ(TIM2_IRQn);
+        __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);
+
+        TIM2->EGR |= TIM_EGR_UG;
+        TIM2->SR   = 0;
+				TIM2->DIER |= TIM_DIER_UIE; // Включаем ПОСЛЕ сброса SR
+        // НЕ запускаем CEN здесь — запуск только через XTimerSet
+        // (иначе сразу стреляет UIF с дефолтным ARR)
+				// Тестовый толчок 
+				TIM2->ARR  = 100;   // 100 мкс
+				TIM2->CR1 |= TIM_CR1_CEN; // Старт одного импульса
     }
+    else {
+        // 72МГц / 14 ≈ 5.14МГц, период 5000 тиков ≈ ~1кГц ШИМ
+        htim2.Init.Prescaler = 13;
+        htim2.Init.Period    = 5001;
+        HAL_TIM_Base_Init(&htim2);
 
-    // ------------------------------------------------------------------------
-    // Включаем тактирование портов и TIM1
-    // ------------------------------------------------------------------------
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_TIM1_CLK_ENABLE();
-    __HAL_RCC_AFIO_CLK_ENABLE();
+        TIM2->CR1 &= ~TIM_CR1_OPM; // Непрерывный режим
 
-    // ------------------------------------------------------------------------
-    // Настройка ENABLE (PB15) — всегда как выход push-pull
-    // ------------------------------------------------------------------------
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    GPIO_InitStruct.Pin = GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET); // включаем драйвер
-
-    
-    // ------------------------------------------------------------------------
-    // Режим STEP + DIR (шаговый двигатель, без энкодера)
-    // ------------------------------------------------------------------------
-    if (mode == X_MOTOR_MODE_STEP)
-    {
-        // Настройка GPIO: PB13 = STEP, PB14 = DIR
-        GPIO_InitStruct.Pin = GPIO_PIN_13 | GPIO_PIN_14;
-        GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-        GPIO_InitStruct.Pull = GPIO_NOPULL;
-        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-        // Начальные уровни
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
-
-        // --- Настройка TIM1 для генерации коротких STEP-импульсов ---
-        TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-        TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-        htim1.Instance = TIM1;
-        htim1.Init.Prescaler = 72;               // 72 MHz / 72 = 1 MHz (1 мкс)
-        htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-        htim1.Init.Period = 10000;               // 1 мкс — длина импульса
-        htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-        htim1.Init.RepetitionCounter = 0;
-        htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-
-        HAL_TIM_Base_Init(&htim1);
-        sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-        HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig);
-
-        // Включаем One Pulse Mode
-        HAL_TIM_OnePulse_Init(&htim1, TIM_OPMODE_SINGLE);
-
-        sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-        sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-        HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig);
-
-        // Прерывание TIM1_UP (срабатывает по завершению импульса)
-        HAL_NVIC_SetPriority(TIM1_UP_IRQn, 1, 0);  
-        HAL_NVIC_EnableIRQ(TIM1_UP_IRQn);
-				
-				// Обнуляем счётчик таймера
-				__HAL_TIM_SET_COUNTER(&htim1, 0);  
-				// Запускаем таймер в режиме One Pulse (вызовет колбэк один раз)
-				HAL_TIM_Base_Start_IT(&htim1);				
-    }
-
-    // ------------------------------------------------------------------------
-    // PWM-режимы (1PWM + DIR) и (2PWM — Dual Bridge)
-    // ------------------------------------------------------------------------
-    else
-    {
-        // PB13 — PWM выход, PB14 — либо PWM2, либо DIR
-        GPIO_InitStruct.Pin = GPIO_PIN_13;
-        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull = GPIO_NOPULL;
-        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-        if (mode == X_MOTOR_MODE_TWO_PWM) {
-            GPIO_InitStruct.Pin = GPIO_PIN_14;
-            GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-            HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-        } else {
-            GPIO_InitStruct.Pin = GPIO_PIN_14;
-            GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-            HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
-        }
-
-        // Настройка TIM1 под PWM
-        htim1.Instance = TIM1;
-        if (mode == X_MOTOR_MODE_ONE_PWM) {
-            htim1.Init.Prescaler = 15;
-            htim1.Init.Period = 4999;
-        } else {
-            htim1.Init.Prescaler = 7;
-            htim1.Init.Period = 9999;
-        }
-
-        htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-        htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-        htim1.Init.RepetitionCounter = 0;
-        htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-
-        HAL_TIM_Base_Init(&htim1);
-
-        TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-        sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-        HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig);
-
-        HAL_TIM_PWM_Init(&htim1);
-
-        // Конфигурация PWM-каналов
         TIM_OC_InitTypeDef sConfigOC = {0};
-        sConfigOC.OCMode = TIM_OCMODE_PWM1;
-        sConfigOC.Pulse = 0;
-        sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-        sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-        sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-        sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-        sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+        sConfigOC.OCMode = TIM_OCMODE_TIMING;
+        sConfigOC.Pulse  = 2500; // Старт 50%
+        HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
 
-        HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
-        HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
+        TIM2->CR1   |= TIM_CR1_ARPE;
+        TIM2->CCMR1 |= TIM_CCMR1_OC1PE;
 
-        // Настройка DeadTime и Break-функций
-        TIM_BreakDeadTimeConfigTypeDef sBDT = {0};
-        sBDT.OffStateRunMode = TIM_OSSR_DISABLE;
-        sBDT.OffStateIDLEMode = TIM_OSSI_DISABLE;
-        sBDT.LockLevel = TIM_LOCKLEVEL_OFF;
-        sBDT.DeadTime = 0;
-        sBDT.BreakState = TIM_BREAK_DISABLE;
-        sBDT.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
-        sBDT.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-        HAL_TIMEx_ConfigBreakDeadTime(&htim1, &sBDT);
+        HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
+        HAL_NVIC_EnableIRQ(TIM2_IRQn);
+        __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE | TIM_IT_CC1);
 
-        HAL_NVIC_SetPriority(TIM1_UP_IRQn, 2, 0);
-        HAL_NVIC_EnableIRQ(TIM1_UP_IRQn);
-
-        // Запуск таймера и каналов PWM
-        HAL_TIM_Base_Start_IT(&htim1);
-        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-        TIM1->BDTR |= TIM_BDTR_MOE;
-        TIM1->CCER |= TIM_CCER_CC1NE;
-
-        if (mode == X_MOTOR_MODE_TWO_PWM) {
-            HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-            TIM1->CCER |= TIM_CCER_CC2NE;
-        }
+        TIM2->EGR |= TIM_EGR_UG;
+        TIM2->SR   = 0;
+        TIM2->CR1 |= TIM_CR1_CEN;
     }
 
-    // Сохраняем текущий режим
     X_MOTOR_MODE = mode;
 }
 
+/**
+ * @brief DeadTime ~1 мкс на F103 @ 72МГц
+ * F411 использовал 60 NOP @ 100МГц ≈ 0.6 мкс
+ * F103 @ 72МГц: ~50 NOP ≈ ~0.7 мкс (pipeline короче, нет суперскалярности)
+ * Подберите экспериментально осциллографом!
+ */
+__STATIC_INLINE void XMotorDeadTime(void) {
+    for (volatile int i = 0; i < 50; i++) { __NOP(); }
+}
+
+//// Надёжный вариант через DWT (если включен)
+///**
+// * @brief Универсальный DeadTime на базе тактов ядра (DWT)
+// * Работает на F103 (72MHz), F411 (100MHz), G431 (170MHz)
+// */
+//__STATIC_INLINE void XMotorDeadTime(void) {
+//    // 1. Рассчитываем количество тактов для 1 мкс.
+//    // SystemCoreClock / 1000000 дает количество тактов в 1 мкс.
+//    uint32_t ticks = (SystemCoreClock / 1000000) * 1; // *1 = 1 мкс.
+
+//    // 2. Ждем завершения отсчета тактов
+//    uint32_t start = DWT->CYCCNT;
+//    while ((DWT->CYCCNT - start) < ticks);
+//}
+
+void TIM2_IRQHandler(void) {
+    uint32_t sr = TIM2->SR;
+
+    if (sr & TIM_SR_UIF) {
+        TIM2->SR = ~TIM_SR_UIF;
+
+        XTimerCallback();
+
+        if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
+            F_RESET_PIN(&g_pins[PIN_X_MO_L]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+
+            if (X_PWM_CURRENT != 0) {
+                XMotorDeadTime();
+
+                int32_t raw_pwr  = (W_X_POL_PWM == 0) ? X_PWM_CURRENT : -X_PWM_CURRENT;
+                uint32_t abs_pwr = (uint32_t)abs(raw_pwr);
+                if (abs_pwr > 5000) abs_pwr = 5000;
+
+                TIM2->CCR1 = abs_pwr;
+
+                if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
+                    if (raw_pwr > 0) {
+                        F_SET_PIN(&g_pins[PIN_X_MO_L]);
+                        F_SET_PIN(&g_pins[PIN_X_MO_R_H]);
+                    } else {
+                        F_SET_PIN(&g_pins[PIN_X_MO_R]);
+                        F_SET_PIN(&g_pins[PIN_X_MO_L_H]);
+                    }
+                }
+                else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
+                    F_SET_PIN(&g_pins[PIN_X_MO_L]);
+                    uint8_t dir = (raw_pwr >= 0) ? 0 : 1;
+                    if (W_X_POL_DIR) dir = !dir;
+                    if (dir) F_SET_PIN(&g_pins[PIN_X_MO_R]);
+                    else     F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+                }
+            }
+        }
+    }
+
+    if (sr & TIM_SR_CC1IF) {
+        TIM2->SR = ~TIM_SR_CC1IF;
+
+        if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
+            F_RESET_PIN(&g_pins[PIN_X_MO_L]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
+            F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+        }
+    }
+}
+
+void XTimerSet(uint16_t period) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
+        __HAL_TIM_SET_AUTORELOAD(&htim2, period);
+        __HAL_TIM_ENABLE(&htim2);
+    }
+}
+
+void XMotorSet(int power) {
+    if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
+
+    if (power >  5000) power =  5000;
+    if (power < -5000) power = -5000;
+
+    X_PWM_CURRENT = power;
+    TIM2->CCR1    = (uint32_t)abs(power);
+
+    if (power == 0) {
+        F_RESET_PIN(&g_pins[PIN_X_MO_L]);
+        F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+        F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
+        F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+    }
+}
+
 // ============================================================================
-// Функции управления осью Y
+// СЕКЦИЯ: ЛАЗЕР И ПОДСВЕТКА (TIM1 + DMA1)
 // ============================================================================
-/**
- * @brief  Устанавливает направление DIR для оси Y.
- * @param  dir_state: 0 — одно направление, 1 — противоположное.
- */
-void YSetDir(uint8_t dir_pin_state)
-{
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, dir_pin_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+// ============================================================================
+// Принцип работы:
+// 1. LASER: Включение по TIM1_UP (0), выключение по CCR1 (val).
+// 2. LED1/LED2: "Инверсная" логика для общего сброса.
+//    - Включение: Каждому свой CCR (CCR4 для LED1, CCR3 для LED2).
+//    - Точка включения = (100 - val). Чем больше яркость, тем раньше старт.
+//    - Выключение: ОБЩЕЕ по CCR2 (всегда 100) через один канал DMA.
+//
+// Ограничения:
+// - LASER: Любой порт, любой пин.
+// - LED1 & LED2: Обязательно на одном GPIO порту (используют общий BSRR).
+// ============================================================================
+
+// F103 маппинг TIM1 → DMA1 (жёстко в железе, не меняется):
+void PWM_LaserLight_LinkHardware(void) {
+    PIN_CFG_T *laser = &g_pins[PIN_PWM_LASER];
+    PIN_CFG_T *led1  = &g_pins[PIN_PWM_LED1];
+    PIN_CFG_T *led2  = &g_pins[PIN_PWM_LED2];
+
+    // 1. Останавливаем все каналы DMA перед перенастройкой
+    DMA1_Channel5->CCR &= ~DMA_CCR_EN; // Laser ON
+    DMA1_Channel2->CCR &= ~DMA_CCR_EN; // Laser OFF
+    DMA1_Channel4->CCR &= ~DMA_CCR_EN; // LED1 ON
+    DMA1_Channel3->CCR &= ~DMA_CCR_EN; // Common LED OFF (CH2)
+    DMA1_Channel6->CCR &= ~DMA_CCR_EN; // LED2 ON
+
+    // Сброс флагов
+    DMA1->IFCR = DMA_IFCR_CGIF2 | DMA_IFCR_CGIF3 | DMA_IFCR_CGIF4 |
+                 DMA_IFCR_CGIF5 | DMA_IFCR_CGIF6;
+
+    uint32_t ccr_base = DMA_CCR_DIR | DMA_CCR_CIRC | DMA_CCR_MSIZE_1 | 
+                        DMA_CCR_PSIZE_1 | DMA_CCR_PL_Msk;
+
+    // ----------------------------------------------------------------
+    // ЛАЗЕР (Любой порт/пин)
+    // ----------------------------------------------------------------
+    if (laser->used && laser->bsrr != &GPIO_NULL_REG) {
+        raw_pin_masks[0] = laser->pin;
+        DMA1_Channel5->CPAR  = (uint32_t)laser->bsrr;
+        DMA1_Channel5->CMAR  = (uint32_t)&dma_pwm_masks[0][0];
+        DMA1_Channel5->CNDTR = 1;
+        DMA1_Channel5->CCR   = ccr_base | DMA_CCR_EN;
+
+        DMA1_Channel2->CPAR  = (uint32_t)laser->bsrr;
+        DMA1_Channel2->CMAR  = (uint32_t)&dma_pwm_masks[0][1];
+        DMA1_Channel2->CNDTR = 1;
+        DMA1_Channel2->CCR   = ccr_base | DMA_CCR_EN;
+    }
+
+    // ----------------------------------------------------------------
+    // ПОДСВЕТКА (LED1 и LED2)
+    // ----------------------------------------------------------------
+    
+    // Проверка совместимости портов
+    bool led1_active = (led1->used && led1->bsrr != &GPIO_NULL_REG);
+    bool led2_active = (led2->used && led2->bsrr != &GPIO_NULL_REG);
+    
+    // Если оба активны, но порты РАЗНЫЕ — блокируем инициализацию подсветки
+    if (led1_active && led2_active && (led1->bsrr != led2->bsrr)) {
+        return; // Защита: порты не совпадают, ШИМ через общий сброс невозможен
+    }
+
+    // Настройка LED1
+    if (led1_active) {
+        raw_pin_masks[1] = led1->pin;
+        // ON: TIM1_CH4
+        DMA1_Channel4->CPAR  = (uint32_t)led1->bsrr;
+        DMA1_Channel4->CMAR  = (uint32_t)&dma_pwm_masks[1][0];
+        DMA1_Channel4->CNDTR = 1;
+        DMA1_Channel4->CCR   = ccr_base | DMA_CCR_EN;
+
+        // OFF: TIM1_CH2 (Общий канал выключения)
+        DMA1_Channel3->CPAR  = (uint32_t)led1->bsrr;
+        DMA1_Channel3->CMAR  = (uint32_t)&dma_pwm_masks[1][1];
+        DMA1_Channel3->CNDTR = 1;
+        DMA1_Channel3->CCR   = ccr_base | DMA_CCR_EN;
+    }
+
+    // Настройка LED2
+    if (led2_active) {
+        raw_pin_masks[2] = led2->pin;
+        // ON: TIM1_CH3
+        DMA1_Channel6->CPAR  = (uint32_t)led2->bsrr;
+        DMA1_Channel6->CMAR  = (uint32_t)&dma_pwm_masks[2][0];
+        DMA1_Channel6->CNDTR = 1;
+        DMA1_Channel6->CCR   = ccr_base | DMA_CCR_EN;
+
+        // Если LED1 не используется, настраиваем канал OFF на порт LED2
+        if (!led1_active) {
+            DMA1_Channel3->CPAR  = (uint32_t)led2->bsrr;
+            DMA1_Channel3->CMAR  = (uint32_t)&dma_pwm_masks[1][1];
+            DMA1_Channel3->CNDTR = 1;
+            DMA1_Channel3->CCR   = ccr_base | DMA_CCR_EN;
+        }
+    }
 }
 
-/**
- * @brief  Устанавливает уровень STEP для оси Y.
- * @param  step_state: 0 — низкий уровень, 1 — высокий уровень.
- */
-void YSetStep(uint8_t step_pin_state)
-{
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, step_pin_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
+void SetLaserLightPWMFrequency(uint32_t freq_hz) {
+    if (freq_hz == LAST_LASER_FREQ && freq_hz != 0) return;
+
+    if (freq_hz == 0) {
+        TIM1->CR1 &= ~TIM_CR1_CEN;
+        LAST_LASER_FREQ = 0;
+        return;
+    }
+
+    __HAL_RCC_TIM1_CLK_ENABLE();
+    __HAL_RCC_DMA1_CLK_ENABLE();
+
+		uint32_t arr = 100; // Наш диапазон 0-100%
+    uint32_t psc_val = 72000000 / (freq_hz * (arr + 1));
+
+    
+    TIM1->CR1  &= ~TIM_CR1_CEN; 
+    TIM1->PSC   = (psc_val > 0) ? psc_val - 1 : 0;
+    TIM1->ARR   = arr;
+    
+    // Начальные безопасные значения:
+    TIM1->CCR1  = 0;   // Laser OFF (управляется в SetLaserPWM)
+    TIM1->CCR2  = 100; // Точка ОБЩЕГО СБРОСА для LED1 и LED2 (всегда конец периода)
+    TIM1->CCR3  = 100; // Точка включения LED2 (по умолчанию 100 = выключен)
+    TIM1->CCR4  = 100; // Точка включения LED1 (по умолчанию 100 = выключен)
+
+    // DMA запросы от таймера
+    TIM1->DIER = TIM_DIER_UDE    |  // Update  → Ch5 (Laser ON)
+                 TIM_DIER_CC1DE  |  // CCR1    → Ch2 (Laser OFF)
+                 TIM_DIER_CC2DE  |  // CCR2    → Ch3 (LED1 OFF + LED2 OFF)
+                 TIM_DIER_CC3DE  |  // CCR3    → Ch6 (LED2 ON)
+                 TIM_DIER_CC4DE;    // CCR4    → Ch4 (LED1 ON)
+
+    PWM_LaserLight_LinkHardware();
+
+    TIM1->BDTR |= TIM_BDTR_MOE;
+    TIM1->EGR  |= TIM_EGR_UG;  // Загрузить PSC/ARR/CCR
+    TIM1->SR    = 0;
+    TIM1->CR1  |= TIM_CR1_CEN;
+
+    LAST_LASER_FREQ = freq_hz;
 }
 
-/**
- * @brief  Управляет сигналом ENABLE для шаговых драйверов осей X, Y, Z.
- * @param  enabled: 1 — включить драйверы (ENA = HIGH),
- *                  0 — выключить драйверы (ENA = LOW).
- */
-void YSetEnable(uint8_t enabled)
-{
-    GPIO_PinState st = enabled ? GPIO_PIN_SET : GPIO_PIN_RESET;
+// ============================================================================
+// Управление мощностью
+// ============================================================================
 
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, st); // Ось X
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,  st); // Ось Y
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6,  st); // Ось Z
+void Laser_Off(void) {
+    LASER_SAFETY_LOCK = 1;
+    HAL_TIM_Base_Stop_IT(&htim3);
+    SetLaserPWM(0);
+    TIM1->EGR |= TIM_EGR_UG;
+    F_RESET_PIN(&g_pins[PIN_PWM_LASER]);
 }
 
-// установка периода и запуск таймера YTimer
-void YTimerSet(uint16_t period)
-{
+void Laser_Ready(void) {
+    TIM3->CNT = 0;
+    TIM1->CNT = 0;
+    TIM1->EGR |= TIM_EGR_UG;
+    LASER_SAFETY_LOCK = 0;
+}
+
+inline void SetLaserPWM(uint16_t val) {
+    if (LASER_SAFETY_LOCK) val = 0;
+    if (val > 100) val = 100;
+
+    dma_pwm_masks[0][0] = (val > 0)   ? raw_pin_masks[0]        : 0; // SET
+    dma_pwm_masks[0][1] = (val < 100) ? (raw_pin_masks[0] << 16): 0; // RESET
+
+    TIM1->CCR1 = val;
+    if (val == 0) F_RESET_PIN(&g_pins[PIN_PWM_LASER]);
+}
+
+inline void SetLight1PWM(uint16_t val) {
+    if (val > 100) val = 100;
+    
+    // 1. Устанавливаем точку включения. 
+    // Для 100% ставим 1, чтобы не мешать Laser ON в 0-м такте.
+    TIM1->CCR4 = (val < 100) ? (100 - val) : 1; 
+
+    // 2. Маска включения (SET)
+    dma_pwm_masks[1][0] = (val > 0) ? raw_pin_masks[1] : 0;
+
+    // 3. Маска выключения (RESET) в общем канале (DMA1_Ch3)
+    // Для себя: сбрасываем, только если яркость ниже 100%
+    uint32_t r1 = (val < 100) ? (raw_pin_masks[1] << 16) : 0;
+    
+    // Для соседа: сбрасываем, если его CCR3 > 1 (значит его яркость < 100%)
+    uint32_t r2 = (TIM1->CCR3 > 1 && raw_pin_masks[2]) ? (raw_pin_masks[2] << 16) : 0;
+    
+    dma_pwm_masks[1][1] = r1 | r2;
+
+    // Если 0 — гарантированно тушим пин
+    if (val == 0) F_RESET_PIN(&g_pins[PIN_PWM_LED1]);
+}
+
+inline void SetLight2PWM(uint16_t val) {
+    if (val > 100) val = 100;
+
+    // 1. Точка включения
+    TIM1->CCR3 = (val < 100) ? (100 - val) : 1; 
+
+    // 2. Маска включения (SET)
+    dma_pwm_masks[2][0] = (val > 0) ? raw_pin_masks[2] : 0;
+
+    // 3. Общая маска выключения (RESET)
+    // Для соседа (LED1): смотрим на его CCR4
+    uint32_t r1 = (TIM1->CCR4 > 1 && raw_pin_masks[1]) ? (raw_pin_masks[1] << 16) : 0;
+    
+    // Для себя: смотрим на свой val
+    uint32_t r2 = (val < 100) ? (raw_pin_masks[2] << 16) : 0;
+    
+    dma_pwm_masks[1][1] = r1 | r2;
+
+    if (val == 0) F_RESET_PIN(&g_pins[PIN_PWM_LED2]);
+}
+
+// ============================================================================
+// СЕКЦИЯ: DMA M2M (Копирование пакетов)
+// ============================================================================
+
+void DMA_M2M_Init(void) {
+    __HAL_RCC_DMA1_CLK_ENABLE();
+}
+
+void FIFO_DATA_StartDma(uint32_t src, uint32_t dst, uint16_t count) {
+    DMA1_Channel1->CCR &= ~DMA_CCR_EN;
+    DMA1->IFCR = DMA_IFCR_CGIF1; // Сброс флагов
+    
+    DMA1_Channel1->CPAR = src;
+    DMA1_Channel1->CMAR = dst;
+    DMA1_Channel1->CNDTR = count;
+    
+    // M2M, Low Priority, 8-bit, MINC, PINC, TCIE
+    DMA1_Channel1->CCR = DMA_CCR_MEM2MEM | DMA_CCR_MINC | DMA_CCR_PINC | 
+                         DMA_CCR_TCIE | DMA_CCR_TEIE;
+    
+    HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 2, 0);
+    HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+    DMA1_Channel1->CCR |= DMA_CCR_EN;
+}
+
+void DMA1_Channel1_IRQHandler(void) {
+    if (DMA1->ISR & DMA_ISR_TCIF1) {
+        DMA1->IFCR = DMA_IFCR_CTCIF1;
+        FIFO_DATA_EndDma(); // Callback готовности данных
+    }
+}
+
+// ============================================================================
+// СЕКЦИЯ: ИНТЕРПОЛЯЦИЯ И Y-ОСЬ
+// ============================================================================
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+    if (htim->Instance == TIM3) {
+        if (XInterpTimerCallback() == 0) {
+            HAL_TIM_Base_Stop_IT(&htim3);
+            TIM3->CNT = 0;
+        }
+    }
+    if (htim->Instance == TIM4) {
+        YTimerCallback();
+    }
+}
+
+void YTimerSet(uint16_t period) {
     __HAL_TIM_SET_AUTORELOAD(&htim4, period);
     __HAL_TIM_ENABLE(&htim4);
 }
 
-// ============================================================================
-// Управление шаговым двигателем X (в режиме X_MOTOR_MODE_STEP)
-// ============================================================================
-
-/**
- * @brief  Устанавливает направление DIR для оси X.
- */
-void XSetDir(uint8_t dir_pin_state)
-{
-    // Локальный драйвер X (на плате)
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, dir_pin_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
-    // DB25 выход (Pin 3)
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, dir_pin_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
-}
-
-/**
- * @brief  Устанавливает уровень STEP для оси X.
- */
-void XSetStep(uint8_t step_pin_state)
-{
-    // Локальный драйвер X
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, step_pin_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
-    // DB25 выход (Pin 2)
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, step_pin_state ? GPIO_PIN_SET : GPIO_PIN_RESET);
-}
-
-/**
- * @brief  Управляет сигналом ENABLE для оси X.
- * @param  enabled: 1 — включить (ENA = HIGH), 0 — выключить (ENA = LOW).
- */
-void XSetEnable(uint8_t enabled)
-{
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, enabled ? GPIO_PIN_SET : GPIO_PIN_RESET);	
-}
-
-
-// @brief Установка периода и запуск TIM1 для шагов X
-// @param period: период в тактах таймера (микросекунды при Prescaler=71)
-void XTimerSet(uint16_t period)
-{
-    __HAL_TIM_SET_AUTORELOAD(&htim1, period);  // ARR
-    __HAL_TIM_ENABLE(&htim1);                  // Включаем таймер
-}
-
-// ============================================================================
-// Обработчики прерываний таймеров
-// ============================================================================
-
-/**
- * @brief Callback обработки переполнения таймера
- * @param htim Указатель на обработчик таймера
- * @retval None
- */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-    // TIM1 - Управление мотором X и PID регулятор
-    if (htim->Instance == TIM1) {
-			XTimerCallback();
-    }
-
-    // TIM3 - Интерполяция печати
-    if (htim->Instance == TIM3) {
-			
-        // SDK вариант: один шаг интерполяции
-        if (XInterpTimerCallback() == 0)
-        {
-            // Возврат 0 означает, что серия интерполяции завершена
-            HAL_TIM_Base_Stop_IT(&htim3);
-            TIM3->CNT = 0;  // Сброс счетчика
-        }						
-    }
-
-    // TIM4 - Управление осью Y
-    if (htim->Instance == TIM4) {
-			YTimerCallback();
-    }
-}
-
-// ============================================================================
-// Обработчики внешних прерываний (энкодер)
-// ============================================================================
-
-// Установка мощности лазера (TIM2 CH1)
-
-void SetLaserPWM(uint16_t pwm_value)
-{
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, pwm_value);
-}
-
-// Установка мощности подсветки (TIM2 CH2)
-
-void SetLightPWM(uint16_t pwm_value)
-{
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, pwm_value);
-}
-
-/**
- * @brief  Настраивает частоту PWM по значению в герцах (универсально для всех STM32).
- * @param  freq_hz  Желаемая частота PWM, Гц (например 1000, 5000, 100000).
- * 
- * Функция автоматически вычисляет нужный делитель (PSC) на основе частоты шины таймера.
- * Работает одинаково для разных частот системного тактирования и серий MCU 
- * (STM32F0, F1, F2, F3, F4, G0, G4, H7, L0, L1, L4, L5, WB, WL и др.).
- * 
- * Учитывает важную особенность тактирования таймеров STM32:
- * - Если прескалер APBx = 1, то частота таймера = частота шины APBx
- * - Если прескалер APBx > 1, то частота таймера = частота шины APBx × 2
- * 
- * Пример: если SYSCLK = 72 MHz, APB1 prescaler = /2, freq_hz = 20 kHz, ARR = 99:
- *         PCLK1 = 36 MHz, но TIM_CLK = 72 MHz (удвоение!)
- *         PSC = (72_000_000 / (100 × 20_000)) - 1 = 35
- */
-void SetLaserLightPWMFrequency(uint32_t freq_hz)
-{
-    // Получаем базовую частоту шины APB1
-    uint32_t pclk1 = HAL_RCC_GetPCLK1Freq();
-    
-    // Извлекаем биты прескалера APB1 из регистра конфигурации тактирования
-    // Расположение битов PPRE1 зависит от серии MCU
-    uint32_t ppre1_bits;
-    
-		// STM32F0/F1/F2/F3/F4/G0/G4/L0/L1/L4/L5/WB/WL: биты PPRE1 в RCC->CFGR
-		ppre1_bits = (RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos;
-    
-    // Определяем реальную частоту тактирования таймера
-    // Кодировка битов PPRE1[2:0]:
-    // 0xx (0-3): нет деления (APB prescaler = 1)    → TIM_CLK = PCLK1
-    // 100 (4):   деление на 2 (APB prescaler = 2)   → TIM_CLK = PCLK1 × 2
-    // 101 (5):   деление на 4 (APB prescaler = 4)   → TIM_CLK = PCLK1 × 2
-    // 110 (6):   деление на 8 (APB prescaler = 8)   → TIM_CLK = PCLK1 × 2
-    // 111 (7):   деление на 16 (APB prescaler = 16) → TIM_CLK = PCLK1 × 2
-    uint32_t tim_clk;
-    if (ppre1_bits >= 4)
-    {
-        // APB1 prescaler >= 2: таймер получает удвоенную частоту шины
-        tim_clk = pclk1 * 2;
-    }
-    else
-    {
-        // APB1 prescaler = 1: таймер тактируется напрямую от шины
-        tim_clk = pclk1;
-    }
-    
-    // Устанавливаем значение ARR (Auto-Reload Register) — определяет период счёта.
-    // ARR = 99 даёт 100 шагов ШИМ (0-99), что удобно для процентного управления (1% = 1 шаг).
-    uint32_t arr = 100 - 1;
-    
-    // Вычисляем делитель частоты (Prescaler) по формуле:
-    // f_PWM = TIM_CLK / ((PSC + 1) × (ARR + 1))
-    // Отсюда: PSC = (TIM_CLK / ((ARR + 1) × f_PWM)) - 1
-    uint32_t prescaler = (tim_clk / (arr + 1)) / freq_hz;
-    
-    // Защита от выхода за допустимые значения 16-битного регистра PSC (0-65535)
-    if (prescaler < 1) prescaler = 1;
-    if (prescaler > 65535) prescaler = 65535;
-    
-    // Применяем вычисленные параметры к таймеру через макросы HAL
-    __HAL_TIM_SET_PRESCALER(&htim2, prescaler - 1);  // PSC (вычитаем 1, т.к. регистр работает как (PSC+1))
-    __HAL_TIM_SET_AUTORELOAD(&htim2, arr);           // ARR (период счёта)
-    
-    // Генерируем событие обновления (Update Event) для немедленного применения новых значений PSC и ARR.
-    // Без этого изменения вступят в силу только после переполнения счётчика.
-    htim2.Instance->EGR = TIM_EGR_UG;
-    
-    // Сбрасываем счётчик таймера в 0 для стабильного старта с новыми параметрами
-    __HAL_TIM_SET_COUNTER(&htim2, 0);
-}
-
 void XInterpTimerStart(uint32_t period) {
-    // Старт интерполяционого таймера
-		TIM3->ARR = period;          // Установка периода
-    TIM3->SR &= ~TIM_SR_UIF;     // Сброс флага прерывания
-    TIM3->DIER |= TIM_DIER_UIE;  // Разрешение прерывания
-    TIM3->CR1 |= TIM_CR1_CEN;    // Запуск таймера
-}
-
-uint16_t ReadEncoderPins(void) {
-    // Читаем состояние пинов энкодера на порту B
-    return X_ENCODER_PORT->IDR & (ENCODER_A_PIN | ENCODER_B_PIN);
-}
-
-/**
- * @brief Callback обработки внешних прерываний (энкодер)
- * @param GPIO_Pin Пин, вызвавший прерывание
- * @retval None
- */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-//__disable_irq(); 
-    XEncoderCallback(GPIO_Pin);
-//__enable_irq();		
+    TIM3->ARR = period;
+    TIM3->SR &= ~TIM_SR_UIF;
+    TIM3->DIER |= TIM_DIER_UIE;
+    TIM3->CR1 |= TIM_CR1_CEN;
 }
 
 // ============================================================================
-// Отправка 64-байтного пакета хосту (используется SDK)
+// ОБРАБОТЧИКИ ПРЕРЫВАНИЙ EXTI (Энкодер)
 // ============================================================================
-uint8_t PacketSend(uint8_t* buffer)
-{
-    // Отправка HID отчёта (64 байта)
-    return USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, buffer, 64);
+
+void LPP_GPIO_EXTI_Handler(uint16_t pin_mask) {
+    XEncoderCallback(pin_mask); 
 }
 
-// ============================================================================
-// Запуск DMA для копирования блока данных FIFO (вызывается из SDK)
-// ============================================================================
-void FIFO_DATA_StartDma(uint32_t src_addr, uint32_t dst_addr, uint16_t size)
-{
-    HAL_DMA_Start_IT(
-        &hdma_memtomem_dma1_channel1,
-        src_addr,
-        dst_addr,
-        size  // передаём размер извне
-    );
+void EXTI0_IRQHandler(void) { __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0); LPP_GPIO_EXTI_Handler(GPIO_PIN_0); }
+void EXTI1_IRQHandler(void) { __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_1); LPP_GPIO_EXTI_Handler(GPIO_PIN_1); }
+void EXTI2_IRQHandler(void) { __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_2); LPP_GPIO_EXTI_Handler(GPIO_PIN_2); }
+void EXTI3_IRQHandler(void) { __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_3); LPP_GPIO_EXTI_Handler(GPIO_PIN_3); }
+void EXTI4_IRQHandler(void) { __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_4); LPP_GPIO_EXTI_Handler(GPIO_PIN_4); }
+void EXTI9_5_IRQHandler(void) {
+    uint32_t pin = EXTI->PR & 0x03E0;
+    EXTI->PR = pin; LPP_GPIO_EXTI_Handler(pin);
 }
-
-// ============================================================================
-// Обработчик завершения DMA передачи
-// ============================================================================
-/**
- * @brief Callback завершения DMA передачи
- * @param hdma Указатель на структуру DMA
- * @retval None
- */
-void XferCpltCallback(DMA_HandleTypeDef* hdma) {
-	// Проверяем, что это нужный канал DMA
-	if (hdma == &hdma_memtomem_dma1_channel1) {
-		FIFO_DATA_EndDma();		
-	}
+void EXTI15_10_IRQHandler(void) {
+    uint32_t pin = EXTI->PR & 0xFC00;
+    EXTI->PR = pin; LPP_GPIO_EXTI_Handler(pin);
 }
 
 /* USER CODE END 4 */

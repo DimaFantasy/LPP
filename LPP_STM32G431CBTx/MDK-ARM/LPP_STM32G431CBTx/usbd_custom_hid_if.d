@@ -44,4 +44,6 @@ lpp_stm32g431cbtx/usbd_custom_hid_if.o: \
   ..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim_ex.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
-  ..\..\LPP_SDK\lpp_sdk.h ..\..\LPP_SDK\configs\lpp_config_g431.h
+  ..\..\LPP_SDK\lpp_sdk.h ..\..\LPP_SDK\configs\lpp_config_g431.h \
+  ..\..\LPP_SDK\lpp_core_gpio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h
