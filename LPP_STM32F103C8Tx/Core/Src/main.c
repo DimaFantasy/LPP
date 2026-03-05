@@ -562,12 +562,17 @@ void PWM_LaserLight_LinkHardware(void) {
     PIN_CFG_T *led1  = &g_pins[PIN_PWM_LED1];
     PIN_CFG_T *led2  = &g_pins[PIN_PWM_LED2];
 
-    // 1. Останавливаем все каналы DMA перед перенастройкой
+    // Останавливаем все каналы DMA перед перенастройкой
     DMA1_Channel5->CCR &= ~DMA_CCR_EN; // Laser ON
     DMA1_Channel2->CCR &= ~DMA_CCR_EN; // Laser OFF
     DMA1_Channel4->CCR &= ~DMA_CCR_EN; // LED1 ON
     DMA1_Channel3->CCR &= ~DMA_CCR_EN; // Common LED OFF (CH2)
     DMA1_Channel6->CCR &= ~DMA_CCR_EN; // LED2 ON
+	
+		// Перед перенастройкой сбрасывай текущие пины.
+		if (laser->used) F_RESET_PIN(laser);
+		if (led1->used)  F_RESET_PIN(led1);
+		if (led2->used)  F_RESET_PIN(led2);	
 
     // Сброс флагов
     DMA1->IFCR = DMA_IFCR_CGIF2 | DMA_IFCR_CGIF3 | DMA_IFCR_CGIF4 |
@@ -665,20 +670,20 @@ void SetLaserLightPWMFrequency(uint32_t freq_hz) {
     TIM1->CCR2  = 100; // Точка ОБЩЕГО СБРОСА для LED1 и LED2 (всегда конец периода)
     TIM1->CCR3  = 100; // Точка включения LED2 (по умолчанию 100 = выключен)
     TIM1->CCR4  = 100; // Точка включения LED1 (по умолчанию 100 = выключен)
-
+		
     // DMA запросы от таймера
     TIM1->DIER = TIM_DIER_UDE    |  // Update  → Ch5 (Laser ON)
                  TIM_DIER_CC1DE  |  // CCR1    → Ch2 (Laser OFF)
                  TIM_DIER_CC2DE  |  // CCR2    → Ch3 (LED1 OFF + LED2 OFF)
                  TIM_DIER_CC3DE  |  // CCR3    → Ch6 (LED2 ON)
                  TIM_DIER_CC4DE;    // CCR4    → Ch4 (LED1 ON)
+								 
+		PWM_LaserLight_LinkHardware(); 								 
 
-    PWM_LaserLight_LinkHardware();
-
-    TIM1->BDTR |= TIM_BDTR_MOE;
-    TIM1->EGR  |= TIM_EGR_UG;  // Загрузить PSC/ARR/CCR
-    TIM1->SR    = 0;
-    TIM1->CR1  |= TIM_CR1_CEN;
+		TIM1->BDTR |= TIM_BDTR_MOE;// Управляет физическими ногами но на всякий бусть будет
+    TIM1->EGR  |= TIM_EGR_UG;  // генерируем событие (PSC/ARR защёлкиваются)
+    TIM1->SR    = 0;           // сбрасываем флаги ПОСЛЕ UG, иначе смысла нет
+    TIM1->CR1  |= TIM_CR1_CEN; // только потом запускаем
 
     LAST_LASER_FREQ = freq_hz;
 }
