@@ -263,11 +263,10 @@ GND                     | 19 / 39 / 40 | ✅ 19,39,40 = GND  | ✅ 19,39 = GND  
 
  8  | Z_STEP
  9  | Z_DIR
-
-17  | Z_ENABLE
-
-15  | PROBE
-13  | E_STOP
+ 17  | Z_ENABLE
+ 
+ 15  | PROBE
+ 13  | E_STOP
 ```
 
 ---
