@@ -1341,6 +1341,13 @@ void PacketReceive(uint8_t* buffer) {
             X_GO_POS = SET_X.DAT.W_X_MOV_POS;
             SET_X.DAT.W_X_POS_WRITE = 0;
         }
+				
+				// Если драйвер выключен — целевая позиция следует за энкодером
+				// При включении драйвера каретка уже на целевой, движения не будет
+				if (SET_X.DAT.W_X_ENABLED == 0) {
+						X_GO_POS = X_POS;
+						SET_X.DAT.W_X_MOV_POS = X_POS;
+				}				
 
         if (SET_X.DAT.W_X_RESET == 1) {
             X_POS = 0;

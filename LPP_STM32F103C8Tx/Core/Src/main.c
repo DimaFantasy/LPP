@@ -358,16 +358,43 @@ uint8_t PacketSend(uint8_t* buffer) {
 }
 
 // ============================================================================
-// СЕКЦИЯ: МОТОР ОСИ X (TIM2)
+// СЕКЦИЯ: МОТОР ОСИ X (TIM2) — STM32F103 @ 72МГц
 // ============================================================================
+
+// Активировать ШИМ-пин (PIN_X_MO_L) с учётом полярности
+// W_X_POL_PWM = 0: стоп=LOW,  активен=HIGH
+// W_X_POL_PWM = 1: стоп=HIGH, активен=LOW  (BLDC с инвертированным входом)
+__STATIC_INLINE void X_PWM_SET(void) {
+    if (W_X_POL_PWM == 0) F_SET_PIN(&g_pins[PIN_X_MO_L]);
+    else                   F_RESET_PIN(&g_pins[PIN_X_MO_L]);
+}
+
+// Деактивировать ШИМ-пин (PIN_X_MO_L) с учётом полярности
+__STATIC_INLINE void X_PWM_CLR(void) {
+    if (W_X_POL_PWM == 0) F_RESET_PIN(&g_pins[PIN_X_MO_L]);
+    else                   F_SET_PIN(&g_pins[PIN_X_MO_L]);
+}
+
+// Активировать DIR-пин (PIN_X_MO_R) с учётом полярности
+// W_X_POL_DIR = 0: прямая полярность
+// W_X_POL_DIR = 1: инвертированная полярность
+// Используется только в режиме ONE_PWM
+__STATIC_INLINE void X_DIR_SET(void) {
+    if (W_X_POL_DIR == 0) F_SET_PIN(&g_pins[PIN_X_MO_R]);
+    else                   F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+}
+
+// Деактивировать DIR-пин (PIN_X_MO_R) с учётом полярности
+__STATIC_INLINE void X_DIR_CLR(void) {
+    if (W_X_POL_DIR == 0) F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+    else                   F_SET_PIN(&g_pins[PIN_X_MO_R]);
+}
 
 void XMotorInit(X_MOTOR_MODE_T mode) {
     if (X_MOTOR_MODE == mode) return;
 
-    // 1. Сначала глушим прерывание в NVIC — ДО сброса таймера
     HAL_NVIC_DisableIRQ(TIM2_IRQn);
-//    __HAL_TIM_DISABLE(&htim2); // Выключить таймер ПЕРЕД сбросом	
-    HAL_NVIC_ClearPendingIRQ(TIM2_IRQn); // ← убираем застрявший pending
+    HAL_NVIC_ClearPendingIRQ(TIM2_IRQn);
 
     __HAL_RCC_TIM2_FORCE_RESET();
     __HAL_RCC_TIM2_RELEASE_RESET();
@@ -379,12 +406,10 @@ void XMotorInit(X_MOTOR_MODE_T mode) {
     TIM2->SR   = 0;
     TIM2->CCER = 0;
     X_PWM_CURRENT = 0;
-	
 
-    htim2.Instance = TIM2;
-    htim2.Init.CounterMode    = TIM_COUNTERMODE_UP;
-    htim2.Init.ClockDivision  = TIM_CLOCKDIVISION_DIV1;
-    // F103: RepetitionCounter не существует у TIM2 — убираем или ставим 0 если HAL требует
+    htim2.Instance               = TIM2;
+    htim2.Init.CounterMode       = TIM_COUNTERMODE_UP;
+    htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
     htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
 
     if (mode == X_MOTOR_MODE_STEP) {
@@ -394,21 +419,23 @@ void XMotorInit(X_MOTOR_MODE_T mode) {
 
         HAL_TIM_OnePulse_Init(&htim2, TIM_OPMODE_SINGLE);
 
+        // Порядок важен: сначала EGR сброс, потом UIE
+        TIM2->DIER = 0;
+        TIM2->EGR |= TIM_EGR_UG;   // применить Prescaler в железо
+        TIM2->SR   = 0;             // сбросить UIF от EGR
+        TIM2->DIER |= TIM_DIER_UIE;
+
         HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
         HAL_NVIC_EnableIRQ(TIM2_IRQn);
-        __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);
 
-        TIM2->EGR |= TIM_EGR_UG;
+        // Тестовый толчок
+        TIM2->ARR  = 100;           // 100 мкс
+        TIM2->CNT  = 0;
         TIM2->SR   = 0;
-				TIM2->DIER |= TIM_DIER_UIE; // Включаем ПОСЛЕ сброса SR
-        // НЕ запускаем CEN здесь — запуск только через XTimerSet
-        // (иначе сразу стреляет UIF с дефолтным ARR)
-				// Тестовый толчок 
-				TIM2->ARR  = 100;   // 100 мкс
-				TIM2->CR1 |= TIM_CR1_CEN; // Старт одного импульса
+        TIM2->CR1 |= TIM_CR1_CEN;
     }
     else {
-        // 72МГц / 14 ≈ 5.14МГц, период 5000 тиков ≈ ~1кГц ШИМ
+        // 72МГц / 14 ≈ 5.14МГц, период 5001 тик ≈ ~1кГц ШИМ
         htim2.Init.Prescaler = 13;
         htim2.Init.Period    = 5001;
         HAL_TIM_Base_Init(&htim2);
@@ -417,18 +444,21 @@ void XMotorInit(X_MOTOR_MODE_T mode) {
 
         TIM_OC_InitTypeDef sConfigOC = {0};
         sConfigOC.OCMode = TIM_OCMODE_TIMING;
-        sConfigOC.Pulse  = 2500; // Старт 50%
+        sConfigOC.Pulse  = 2500;
         HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
 
         TIM2->CR1   |= TIM_CR1_ARPE;
         TIM2->CCMR1 |= TIM_CCMR1_OC1PE;
 
-        HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
-        HAL_NVIC_EnableIRQ(TIM2_IRQn);
-        __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE | TIM_IT_CC1);
-
+        // Порядок важен: сначала EGR сброс, потом прерывания
+        TIM2->DIER = 0;
         TIM2->EGR |= TIM_EGR_UG;
         TIM2->SR   = 0;
+        TIM2->DIER |= TIM_DIER_UIE | TIM_DIER_CC1IE;
+
+        HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
+        HAL_NVIC_EnableIRQ(TIM2_IRQn);
+
         TIM2->CR1 |= TIM_CR1_CEN;
     }
 
@@ -436,55 +466,45 @@ void XMotorInit(X_MOTOR_MODE_T mode) {
 }
 
 /**
- * @brief DeadTime ~1 мкс на F103 @ 72МГц
- * F411 использовал 60 NOP @ 100МГц ≈ 0.6 мкс
- * F103 @ 72МГц: ~50 NOP ≈ ~0.7 мкс (pipeline короче, нет суперскалярности)
- * Подберите экспериментально осциллографом!
+ * @brief Программная задержка dead-time между переключением ключей моста
+ * ~0.7 мкс при 72МГц. Подобрать осциллографом!
  */
 __STATIC_INLINE void XMotorDeadTime(void) {
     for (volatile int i = 0; i < 50; i++) { __NOP(); }
 }
 
-//// Надёжный вариант через DWT (если включен)
-///**
-// * @brief Универсальный DeadTime на базе тактов ядра (DWT)
-// * Работает на F103 (72MHz), F411 (100MHz), G431 (170MHz)
-// */
-//__STATIC_INLINE void XMotorDeadTime(void) {
-//    // 1. Рассчитываем количество тактов для 1 мкс.
-//    // SystemCoreClock / 1000000 дает количество тактов в 1 мкс.
-//    uint32_t ticks = (SystemCoreClock / 1000000) * 1; // *1 = 1 мкс.
-
-//    // 2. Ждем завершения отсчета тактов
-//    uint32_t start = DWT->CYCCNT;
-//    while ((DWT->CYCCNT - start) < ticks);
-//}
-
 void TIM2_IRQHandler(void) {
     uint32_t sr = TIM2->SR;
 
+    // --- НАЧАЛО ПЕРИОДА (Update Event) ---
     if (sr & TIM_SR_UIF) {
         TIM2->SR = ~TIM_SR_UIF;
 
+        // Вызов планировщика шагов (для STEP режима)
         XTimerCallback();
 
         if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
+            // Безопасный сброс всех ключей в начале периода
             F_RESET_PIN(&g_pins[PIN_X_MO_L]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R]);
             F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
 
             if (X_PWM_CURRENT != 0) {
+                // Пауза перед открытием ключей (защита от сквозного тока)
                 XMotorDeadTime();
 
-                int32_t raw_pwr  = (W_X_POL_PWM == 0) ? X_PWM_CURRENT : -X_PWM_CURRENT;
-                uint32_t abs_pwr = (uint32_t)abs(raw_pwr);
-                if (abs_pwr > 5000) abs_pwr = 5000;
-
-                TIM2->CCR1 = abs_pwr;
-
                 if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
-                    if (raw_pwr > 0) {
+                    // TWO_PWM: два пина шимят, W_X_POL_PWM меняет диагонали моста
+                    uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
+                    if (abs_pwr > 5000) abs_pwr = 5000;
+                    TIM2->CCR1 = abs_pwr;
+
+                    // Направление с учётом полярности
+                    uint8_t fwd = (X_PWM_CURRENT > 0) ? 1 : 0;
+                    if (W_X_POL_PWM) fwd = !fwd;
+
+                    if (fwd) {
                         F_SET_PIN(&g_pins[PIN_X_MO_L]);
                         F_SET_PIN(&g_pins[PIN_X_MO_R_H]);
                     } else {
@@ -493,49 +513,78 @@ void TIM2_IRQHandler(void) {
                     }
                 }
                 else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
-                    F_SET_PIN(&g_pins[PIN_X_MO_L]);
-                    uint8_t dir = (raw_pwr >= 0) ? 0 : 1;
-                    if (W_X_POL_DIR) dir = !dir;
-                    if (dir) F_SET_PIN(&g_pins[PIN_X_MO_R]);
-                    else     F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+                    // ONE_PWM: один пин ШИМ (L), второй DIR (R)
+                    // CCR1 всегда положительный — полярность через пины
+                    uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
+                    if (abs_pwr > 5000) abs_pwr = 5000;
+                    TIM2->CCR1 = abs_pwr;
+
+                    // DIR выставляем до ШИМ
+                    uint8_t dir = (X_PWM_CURRENT >= 0) ? 0 : 1;
+                    if (dir) X_DIR_SET();
+                    else     X_DIR_CLR();
+
+                    // ШИМ активен (с учётом полярности через функцию)
+                    X_PWM_SET();
                 }
             }
         }
     }
 
+    // --- КОНЕЦ ИМПУЛЬСА (Compare Event) ---
+    // Срабатывает когда CNT достигает CCR1
     if (sr & TIM_SR_CC1IF) {
         TIM2->SR = ~TIM_SR_CC1IF;
 
-        if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
+        if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
+            // Гасим все ключи в середине периода
             F_RESET_PIN(&g_pins[PIN_X_MO_L]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R]);
             F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
         }
+        else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
+            // Конец ШИМ-импульса — только ШИМ пин, DIR держится весь период
+            X_PWM_CLR();
+        }
     }
 }
 
+/**
+ * @brief Установка длительности шага (только для STEP режима)
+ * @param period: длительность в мкс (при PSC=71, 1 тик = 1 мкс)
+ */
 void XTimerSet(uint16_t period) {
     if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) {
-        __HAL_TIM_SET_AUTORELOAD(&htim2, period);
-        __HAL_TIM_ENABLE(&htim2);
+        TIM2->ARR  = period;
+        TIM2->CNT  = 0;
+        TIM2->SR   = 0;             // сброс UIF перед стартом
+        TIM2->CR1 |= TIM_CR1_CEN;  // старт одного импульса (OPM)
     }
 }
 
+/**
+ * @brief Установка мощности мотора X
+ * @param power: -5000..+5000 (0 = стоп)
+ */
 void XMotorSet(int power) {
     if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
 
-    if (power >  5000) power =  5000;
-    if (power < -5000) power = -5000;
+    if (abs(power) < 10) power = 0;
 
     X_PWM_CURRENT = power;
-    TIM2->CCR1    = (uint32_t)abs(power);
 
     if (power == 0) {
-        F_RESET_PIN(&g_pins[PIN_X_MO_L]);
-        F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+        TIM2->CCR1 = 0;
+        // Все ключи выключить
         F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
         F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+        X_DIR_CLR();    // DIR в неактивное состояние
+        X_PWM_CLR();    // ШИМ в неактивное состояние (HIGH если инвертированный)
+    } else {
+        if (power >  5000) power =  5000;
+        if (power < -5000) power = -5000;
+        TIM2->CCR1 = (uint32_t)abs(power);
     }
 }
 
