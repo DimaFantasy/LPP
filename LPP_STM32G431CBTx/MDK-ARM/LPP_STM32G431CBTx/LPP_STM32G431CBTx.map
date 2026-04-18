@@ -48,7 +48,7 @@ Section Cross References
     main.o(.text.main) refers to stm32g4xx_hal_tim.o(.text.HAL_TIM_Base_Start_IT) for HAL_TIM_Base_Start_IT
     main.o(.text.main) refers to lpp_sdk.o(.text.Lpp_MainLoop) for Lpp_MainLoop
     main.o(.text.main) refers to main.o(.bss.htim3) for htim3
-    main.o(.text.main) refers to main.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    main.o(.text.main) refers to main.o(.bss.htim4) for htim4
     main.o(.text.main) refers to stm32g4xx_hal.o(.text.HAL_Delay) for HAL_Delay
     main.o(.text.main) refers to lpp_core_gpio.o(.data.g_pins) for g_pins
     main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
@@ -73,25 +73,25 @@ Section Cross References
     main.o(.text.XMotorInit) refers to main.o(.bss.htim2) for htim2
     main.o(.ARM.exidx.text.XMotorInit) refers to main.o(.text.XMotorInit) for [Anonymous Symbol]
     main.o(.text.TIM2_IRQHandler) refers to lpp_sdk.o(.text.XTimerCallback) for XTimerCallback
-    main.o(.text.TIM2_IRQHandler) refers to main.o(.text.X_DIR_CLR) for X_DIR_CLR
     main.o(.text.TIM2_IRQHandler) refers to main.o(.text.X_PWM_CLR) for X_PWM_CLR
+    main.o(.text.TIM2_IRQHandler) refers to main.o(.text.X_DIR_CLR) for X_DIR_CLR
     main.o(.text.TIM2_IRQHandler) refers to lpp_sdk.o(.bss..L_MergedGlobals.1) for X_MOTOR_MODE
     main.o(.text.TIM2_IRQHandler) refers to lpp_core_gpio.o(.data.g_pins) for g_pins
-    main.o(.text.TIM2_IRQHandler) refers to main.o(.bss.X_PWM_CURRENT) for X_PWM_CURRENT
+    main.o(.text.TIM2_IRQHandler) refers to main.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
     main.o(.ARM.exidx.text.TIM2_IRQHandler) refers to main.o(.text.TIM2_IRQHandler) for [Anonymous Symbol]
-    main.o(.text.X_DIR_CLR) refers to lpp_sdk.o(.bss..L_MergedGlobals.1) for W_X_POL_DIR
-    main.o(.text.X_DIR_CLR) refers to lpp_core_gpio.o(.data.g_pins) for g_pins
-    main.o(.ARM.exidx.text.X_DIR_CLR) refers to main.o(.text.X_DIR_CLR) for [Anonymous Symbol]
     main.o(.text.X_PWM_CLR) refers to lpp_sdk.o(.bss..L_MergedGlobals.1) for W_X_POL_PWM
     main.o(.text.X_PWM_CLR) refers to lpp_core_gpio.o(.data.g_pins) for g_pins
     main.o(.ARM.exidx.text.X_PWM_CLR) refers to main.o(.text.X_PWM_CLR) for [Anonymous Symbol]
+    main.o(.text.X_DIR_CLR) refers to lpp_sdk.o(.bss..L_MergedGlobals.1) for W_X_POL_DIR
+    main.o(.text.X_DIR_CLR) refers to lpp_core_gpio.o(.data.g_pins) for g_pins
+    main.o(.ARM.exidx.text.X_DIR_CLR) refers to main.o(.text.X_DIR_CLR) for [Anonymous Symbol]
     main.o(.text.XTimerSet) refers to main.o(.text.OUTLINED_FUNCTION_0) for OUTLINED_FUNCTION_0
     main.o(.text.XTimerSet) refers to lpp_sdk.o(.bss..L_MergedGlobals.1) for X_MOTOR_MODE
     main.o(.ARM.exidx.text.XTimerSet) refers to main.o(.text.XTimerSet) for [Anonymous Symbol]
     main.o(.text.XMotorSet) refers to main.o(.text.X_DIR_CLR) for X_DIR_CLR
     main.o(.text.XMotorSet) refers to main.o(.text.X_PWM_CLR) for X_PWM_CLR
     main.o(.text.XMotorSet) refers to lpp_sdk.o(.bss..L_MergedGlobals.1) for X_MOTOR_MODE
-    main.o(.text.XMotorSet) refers to main.o(.bss.X_PWM_CURRENT) for X_PWM_CURRENT
+    main.o(.text.XMotorSet) refers to main.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
     main.o(.text.XMotorSet) refers to lpp_core_gpio.o(.data.g_pins) for g_pins
     main.o(.ARM.exidx.text.XMotorSet) refers to main.o(.text.XMotorSet) for [Anonymous Symbol]
     main.o(.text.PWM_LaserLight_LinkHardware) refers to main.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
@@ -125,7 +125,7 @@ Section Cross References
     main.o(.text.HAL_TIM_PeriodElapsedCallback) refers to lpp_sdk.o(.text.YTimerCallback) for YTimerCallback
     main.o(.text.HAL_TIM_PeriodElapsedCallback) refers to main.o(.bss.htim3) for htim3
     main.o(.ARM.exidx.text.HAL_TIM_PeriodElapsedCallback) refers to main.o(.text.HAL_TIM_PeriodElapsedCallback) for [Anonymous Symbol]
-    main.o(.text.YTimerSet) refers to main.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    main.o(.text.YTimerSet) refers to main.o(.bss.htim4) for htim4
     main.o(.ARM.exidx.text.YTimerSet) refers to main.o(.text.YTimerSet) for [Anonymous Symbol]
     main.o(.ARM.exidx.text.XInterpTimerStart) refers to main.o(.text.XInterpTimerStart) for [Anonymous Symbol]
     main.o(.text.LPP_GPIO_EXTI_Handler) refers to lpp_sdk.o(.text.XEncoderCallback) for XEncoderCallback
@@ -170,7 +170,7 @@ Section Cross References
     stm32g4xx_it.o(.text.TIM3_IRQHandler) refers to main.o(.bss.htim3) for htim3
     stm32g4xx_it.o(.ARM.exidx.text.TIM3_IRQHandler) refers to stm32g4xx_it.o(.text.TIM3_IRQHandler) for [Anonymous Symbol]
     stm32g4xx_it.o(.text.TIM4_IRQHandler) refers to stm32g4xx_hal_tim.o(.text.HAL_TIM_IRQHandler) for HAL_TIM_IRQHandler
-    stm32g4xx_it.o(.text.TIM4_IRQHandler) refers to main.o(.bss..L_MergedGlobals) for htim4
+    stm32g4xx_it.o(.text.TIM4_IRQHandler) refers to main.o(.bss.htim4) for htim4
     stm32g4xx_it.o(.ARM.exidx.text.TIM4_IRQHandler) refers to stm32g4xx_it.o(.text.TIM4_IRQHandler) for [Anonymous Symbol]
     stm32g4xx_hal_msp.o(.text.HAL_MspInit) refers to stm32g4xx_hal_pwr_ex.o(.text.HAL_PWREx_DisableUCPDDeadBattery) for HAL_PWREx_DisableUCPDDeadBattery
     stm32g4xx_hal_msp.o(.ARM.exidx.text.HAL_MspInit) refers to stm32g4xx_hal_msp.o(.text.HAL_MspInit) for [Anonymous Symbol]
@@ -2379,8 +2379,8 @@ Removing Unused input sections from the image.
     Removing main.o(.ARM.exidx.text.PacketSend), (8 bytes).
     Removing main.o(.ARM.exidx.text.XMotorInit), (8 bytes).
     Removing main.o(.ARM.exidx.text.TIM2_IRQHandler), (8 bytes).
-    Removing main.o(.ARM.exidx.text.X_DIR_CLR), (8 bytes).
     Removing main.o(.ARM.exidx.text.X_PWM_CLR), (8 bytes).
+    Removing main.o(.ARM.exidx.text.X_DIR_CLR), (8 bytes).
     Removing main.o(.ARM.exidx.text.XTimerSet), (8 bytes).
     Removing main.o(.ARM.exidx.text.XMotorSet), (8 bytes).
     Removing main.o(.ARM.exidx.text.PWM_LaserLight_LinkHardware), (8 bytes).
@@ -4520,10 +4520,10 @@ Image Symbol Table
     __arm_cp.8_1                             0x08005ca0   Number         4  main.o(.text.XTimerSet)
     X_DIR_CLR                                0x08005ca5   Thumb Code    20  main.o(.text.X_DIR_CLR)
     [Anonymous Symbol]                       0x08005ca4   Section        0  main.o(.text.X_DIR_CLR)
-    __arm_cp.6_0                             0x08005cb8   Number         4  main.o(.text.X_DIR_CLR)
+    __arm_cp.7_0                             0x08005cb8   Number         4  main.o(.text.X_DIR_CLR)
     X_PWM_CLR                                0x08005cbd   Thumb Code    20  main.o(.text.X_PWM_CLR)
     [Anonymous Symbol]                       0x08005cbc   Section        0  main.o(.text.X_PWM_CLR)
-    __arm_cp.7_0                             0x08005cd0   Number         4  main.o(.text.X_PWM_CLR)
+    __arm_cp.6_0                             0x08005cd0   Number         4  main.o(.text.X_PWM_CLR)
     [Anonymous Symbol]                       0x08005cd4   Section        0  lpp_sdk.o(.text.YCalculatePower)
     __arm_cp.36_0                            0x08005d50   Number         4  lpp_sdk.o(.text.YCalculatePower)
     __arm_cp.36_1                            0x08005d54   Number         4  lpp_sdk.o(.text.YCalculatePower)
@@ -4542,18 +4542,18 @@ Image Symbol Table
     [Anonymous Symbol]                       0x08005e98   Section        0  lpp_sdk.o(.text.flash_erase_area)
     [Anonymous Symbol]                       0x08005ee2   Section        0  lpp_sdk.o(.text.flash_write_buffer)
     [Anonymous Symbol]                       0x08005f64   Section        0  main.o(.text.main)
-    __arm_cp.0_0                             0x080060e0   Number         4  main.o(.text.main)
-    __arm_cp.0_1                             0x080060e4   Number         4  main.o(.text.main)
-    __arm_cp.0_2                             0x080060e8   Number         4  main.o(.text.main)
-    __arm_cp.0_3                             0x080060ec   Number         4  main.o(.text.main)
-    __arm_cp.0_4                             0x080060f0   Number         4  main.o(.text.main)
-    __arm_cp.0_5                             0x080060f4   Number         4  main.o(.text.main)
-    __arm_cp.0_6                             0x080060f8   Number         4  main.o(.text.main)
-    $v0                                      0x080060fc   Number         0  fpinit.o(x$fpl$fpinit)
-    x$fpl$fpinit                             0x080060fc   Section       26  fpinit.o(x$fpl$fpinit)
-    [Anonymous Symbol]                       0x08006130   Section        0  lpp_core_gpio.o(.rodata.cst16)
-    lpp_protected_pins                       0x08006140   Data          32  lpp_core_gpio.o(.rodata.cst32)
-    [Anonymous Symbol]                       0x08006140   Section        0  lpp_core_gpio.o(.rodata.cst32)
+    __arm_cp.0_0                             0x080060dc   Number         4  main.o(.text.main)
+    __arm_cp.0_1                             0x080060e0   Number         4  main.o(.text.main)
+    __arm_cp.0_2                             0x080060e4   Number         4  main.o(.text.main)
+    __arm_cp.0_3                             0x080060e8   Number         4  main.o(.text.main)
+    __arm_cp.0_4                             0x080060ec   Number         4  main.o(.text.main)
+    __arm_cp.0_5                             0x080060f0   Number         4  main.o(.text.main)
+    __arm_cp.0_6                             0x080060f4   Number         4  main.o(.text.main)
+    $v0                                      0x080060f8   Number         0  fpinit.o(x$fpl$fpinit)
+    x$fpl$fpinit                             0x080060f8   Section       26  fpinit.o(x$fpl$fpinit)
+    [Anonymous Symbol]                       0x0800612c   Section        0  lpp_core_gpio.o(.rodata.cst16)
+    lpp_protected_pins                       0x0800613c   Data          32  lpp_core_gpio.o(.rodata.cst32)
+    [Anonymous Symbol]                       0x0800613c   Section        0  lpp_core_gpio.o(.rodata.cst32)
     [Anonymous Symbol]                       0x20000000   Section        0  stm32g4xx_hal.o(.data..L_MergedGlobals)
     [Anonymous Symbol]                       0x20000008   Section        0  lpp_sdk.o(.data..L_MergedGlobals)
     CUSTOM_HID_ReportDesc_FS                 0x20000030   Data          34  usbd_custom_hid_if.o(.data.CUSTOM_HID_ReportDesc_FS)
@@ -4569,22 +4569,23 @@ Image Symbol Table
     USBD_CUSTOM_HID_OtherSpeedCfgDesc        0x20000114   Data          41  usbd_customhid.o(.data.USBD_CUSTOM_HID_OtherSpeedCfgDesc)
     [Anonymous Symbol]                       0x20000114   Section        0  usbd_customhid.o(.data.USBD_CUSTOM_HID_OtherSpeedCfgDesc)
     .bss                                     0x20000320   Section       96  libspace.o(.bss)
+    X_DIR_NEXT                               0x20000380   Data           1  main.o(.bss..L_MergedGlobals)
     [Anonymous Symbol]                       0x20000380   Section        0  main.o(.bss..L_MergedGlobals)
-    GPIO_NULL_REG                            0x20000384   Data           4  main.o(.bss..L_MergedGlobals)
-    [Anonymous Symbol]                       0x200003f8   Section        0  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    last_time_cycles                         0x2000046c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    [Anonymous Symbol]                       0x20000474   Section        0  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    X_LAST_POSITION                          0x20000480   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    X_POWER_ACCUM                            0x20000484   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    USBD_SetConfig.cfgidx                    0x20001c98   Data           1  usbd_ctlreq.o(.bss.USBD_SetConfig.cfgidx)
-    [Anonymous Symbol]                       0x20001c98   Section        0  usbd_ctlreq.o(.bss.USBD_SetConfig.cfgidx)
-    USBD_static_malloc.mem                   0x20001e9c   Data          88  usbd_conf.o(.bss.USBD_static_malloc.mem)
-    [Anonymous Symbol]                       0x20001e9c   Section        0  usbd_conf.o(.bss.USBD_static_malloc.mem)
-    Heap_Mem                                 0x200025c0   Data         512  startup_stm32g431xx.o(HEAP)
-    HEAP                                     0x200025c0   Section      512  startup_stm32g431xx.o(HEAP)
-    Stack_Mem                                0x200027c0   Data        1024  startup_stm32g431xx.o(STACK)
-    STACK                                    0x200027c0   Section     1024  startup_stm32g431xx.o(STACK)
-    __initial_sp                             0x20002bc0   Data           0  startup_stm32g431xx.o(STACK)
+    GPIO_NULL_REG                            0x2000038c   Data           4  main.o(.bss..L_MergedGlobals)
+    [Anonymous Symbol]                       0x200003b4   Section        0  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    last_time_cycles                         0x20000428   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    [Anonymous Symbol]                       0x20000430   Section        0  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    X_LAST_POSITION                          0x2000043c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    X_POWER_ACCUM                            0x20000440   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    USBD_SetConfig.cfgidx                    0x20001c54   Data           1  usbd_ctlreq.o(.bss.USBD_SetConfig.cfgidx)
+    [Anonymous Symbol]                       0x20001c54   Section        0  usbd_ctlreq.o(.bss.USBD_SetConfig.cfgidx)
+    USBD_static_malloc.mem                   0x20001e58   Data          88  usbd_conf.o(.bss.USBD_static_malloc.mem)
+    [Anonymous Symbol]                       0x20001e58   Section        0  usbd_conf.o(.bss.USBD_static_malloc.mem)
+    Heap_Mem                                 0x200025c8   Data         512  startup_stm32g431xx.o(HEAP)
+    HEAP                                     0x200025c8   Section      512  startup_stm32g431xx.o(HEAP)
+    Stack_Mem                                0x200027c8   Data        1024  startup_stm32g431xx.o(STACK)
+    STACK                                    0x200027c8   Section     1024  startup_stm32g431xx.o(STACK)
+    __initial_sp                             0x20002bc8   Data           0  startup_stm32g431xx.o(STACK)
 
     Global Symbols
 
@@ -4971,14 +4972,14 @@ Image Symbol Table
     YTimerSet                                0x08005e61   Thumb Code    20  main.o(.text.YTimerSet)
     flash_erase_area                         0x08005e99   Thumb Code    74  lpp_sdk.o(.text.flash_erase_area)
     flash_write_buffer                       0x08005ee3   Thumb Code   128  lpp_sdk.o(.text.flash_write_buffer)
-    main                                     0x08005f65   Thumb Code   380  main.o(.text.main)
-    _fp_init                                 0x080060fd   Thumb Code    26  fpinit.o(x$fpl$fpinit)
-    __fplib_config_fpu_vfp                   0x08006115   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x08006115   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    AHBPrescTable                            0x08006116   Data          16  system_stm32g4xx.o(.rodata.AHBPrescTable)
-    APBPrescTable                            0x08006126   Data           8  system_stm32g4xx.o(.rodata.APBPrescTable)
-    Region$$Table$$Base                      0x08006160   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08006180   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x08005f65   Thumb Code   376  main.o(.text.main)
+    _fp_init                                 0x080060f9   Thumb Code    26  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x08006111   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x08006111   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    AHBPrescTable                            0x08006112   Data          16  system_stm32g4xx.o(.rodata.AHBPrescTable)
+    APBPrescTable                            0x08006122   Data           8  system_stm32g4xx.o(.rodata.APBPrescTable)
+    Region$$Table$$Base                      0x0800615c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800617c   Number         0  anon$$obj.o(Region$$Table)
     APP_KEY0                                 0x08007fec   Data           4  main.o(.ARM.__at_0x08007FEC)
     APP_KEY1                                 0x08007ff0   Data           4  main.o(.ARM.__at_0x08007FF0)
     APP_KEY2                                 0x08007ff4   Data           4  main.o(.ARM.__at_0x08007FF4)
@@ -5003,100 +5004,100 @@ Image Symbol Table
     g_pins                                   0x20000170   Data         400  lpp_core_gpio.o(.data.g_pins)
     pFlash                                   0x20000300   Data          32  stm32g4xx_hal_flash.o(.data.pFlash)
     __libspace_start                         0x20000320   Data          96  libspace.o(.bss)
-    LAST_LASER_FREQ                          0x20000380   Data           4  main.o(.bss..L_MergedGlobals)
     __temporary_stack_top$libspace           0x20000380   Data           0  libspace.o(.bss)
-    raw_pin_masks                            0x20000388   Data          12  main.o(.bss..L_MergedGlobals)
-    dma_pwm_masks                            0x20000394   Data          24  main.o(.bss..L_MergedGlobals)
-    htim4                                    0x200003ac   Data          76  main.o(.bss..L_MergedGlobals)
-    needSendStatusReport                     0x200003f8   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    CURRENT_PRINT_DIRECTION                  0x200003f9   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_STOPPING                               0x200003fa   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_TRACKING_ACTIVE                        0x200003fb   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    activeBuffer                             0x200003fc   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    interp_counter                           0x200003fd   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_EN_DIRECT                            0x200003fe   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_MOTOR_MODE                             0x200003ff   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_POLAR_DYNAMIC                          0x20000400   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_POL_DIR                              0x20000401   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_POL_PWM                              0x20000402   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_POL_EN                               0x20000403   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_PIN                                    0x20000404   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_DIR_HI                                 0x20000405   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_DIR_LO                                 0x20000406   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_STEP_HI                                0x20000407   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_STEP_LO                                0x20000408   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_MOTION                                 0x20000409   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_RETURN_DONE                            0x2000040a   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_MOTION                                 0x2000040b   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_DIR_HI                                 0x2000040c   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_DIR_LO                                 0x2000040d   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_STEP_HI                                0x2000040e   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_STEP_LO                                0x2000040f   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    START_PRINT                              0x20000410   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    PRINT_ACTIVE                             0x20000411   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    PRINT_ACTIVE_COUNT                       0x20000412   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    SetupPrintJob                            0x20000413   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    LASER_SAFETY_LOCK                        0x20000414   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_POS_LAST_STATE                         0x20000415   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_PIN                                    0x20000416   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    g_encoder_timeout_active                 0x20000417   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_POWER_REAL                           0x20000418   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_SPEED                                0x2000041a   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_KP                                     0x2000041c   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_KI                                     0x2000041e   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_KP_POS                                 0x20000420   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_REAL_SPED                              0x20000422   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_ACCL                                   0x20000424   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_REAL_SPED                              0x20000426   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_ACCL                                   0x20000428   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_SPEED_ERROR_INTEGRAL                 0x2000042c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    PRINT_LEFT_BORDER                        0x20000430   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    PRINT_RIGHT_BORDER                       0x20000434   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_SPEED_FILTERED                       0x20000438   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_SPEED_ERROR                          0x2000043c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_GO_POS                                 0x20000440   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_POS                                    0x20000444   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_START_POS                              0x20000448   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    X_HALF_POS                               0x2000044c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_START_POS                              0x20000450   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_FINISH_POS                             0x20000454   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_HALF_POS                               0x20000458   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_POS                                    0x2000045c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_LINES                                  0x20000460   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    Y_IMAGE_POSITION                         0x20000464   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    LedStatusChangeMS                        0x20000468   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_SPEED_SET_POLAR                      0x20000470   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
-    W_X_P_component                          0x20000474   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    W_X_I_component                          0x20000478   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    W_X_PI_sum                               0x2000047c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    nextPrintBit                             0x20000488   Data           8  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    FIFO_POS_Y                               0x20000490   Data          44  lpp_sdk.o(.bss..L_MergedGlobals.2)
-    APP_ERASE                                0x200004bc   Data          64  lpp_sdk.o(.bss.APP_ERASE)
-    APP_ID                                   0x200004fc   Data          64  lpp_sdk.o(.bss.APP_ID)
-    APP_JAMP_TO_BOOT                         0x2000053c   Data          64  lpp_sdk.o(.bss.APP_JAMP_TO_BOOT)
-    APP_SPEED_TEST                           0x2000057c   Data          64  lpp_sdk.o(.bss.APP_SPEED_TEST)
-    APP_WRITE                                0x200005bc   Data          64  lpp_sdk.o(.bss.APP_WRITE)
-    FIFO_DATA                                0x200005fc   Data        1332  lpp_sdk.o(.bss.FIFO_DATA)
-    GPIO_NULL_REG                            0x20000b30   Data           4  lpp_core_gpio.o(.bss.GPIO_NULL_REG)
-    LAZER                                    0x20000b34   Data          64  lpp_sdk.o(.bss.LAZER)
-    LIGHT                                    0x20000b74   Data          64  lpp_sdk.o(.bss.LIGHT)
-    LPP_DataReady                            0x20000bb4   Data           1  main.o(.bss.LPP_DataReady)
-    PRINT_CONFIG                             0x20000bb8   Data          64  lpp_sdk.o(.bss.PRINT_CONFIG)
-    SET_PARAM                                0x20000bf8   Data          64  lpp_sdk.o(.bss.SET_PARAM)
-    SET_X                                    0x20000c38   Data          64  lpp_sdk.o(.bss.SET_X)
-    SET_Y                                    0x20000c78   Data          64  lpp_sdk.o(.bss.SET_Y)
-    TRACK                                    0x20000cb8   Data          64  lpp_sdk.o(.bss.TRACK)
-    TUNING_X                                 0x20000cf8   Data        2000  lpp_sdk.o(.bss.TUNING_X)
-    TUNING_Y                                 0x200014c8   Data        2000  lpp_sdk.o(.bss.TUNING_Y)
-    USBD_StrDesc                             0x20001c9c   Data         512  usbd_desc.o(.bss.USBD_StrDesc)
-    USB_TUNING_X                             0x20001ef4   Data          64  lpp_sdk.o(.bss.USB_TUNING_X)
-    USB_TUNING_Y                             0x20001f34   Data          64  lpp_sdk.o(.bss.USB_TUNING_Y)
-    X_PWM_CURRENT                            0x20001f74   Data           4  main.o(.bss.X_PWM_CURRENT)
-    hUsbDeviceFS                             0x20001f78   Data         720  usb_device.o(.bss.hUsbDeviceFS)
-    hpcd_USB_FS                              0x20002248   Data         732  usbd_conf.o(.bss.hpcd_USB_FS)
-    htim2                                    0x20002524   Data          76  main.o(.bss.htim2)
-    htim3                                    0x20002570   Data          76  main.o(.bss.htim3)
-    uwTick                                   0x200025bc   Data           4  stm32g4xx_hal.o(.bss.uwTick)
+    X_PWM_CURRENT                            0x20000384   Data           4  main.o(.bss..L_MergedGlobals)
+    LAST_LASER_FREQ                          0x20000388   Data           4  main.o(.bss..L_MergedGlobals)
+    raw_pin_masks                            0x20000390   Data          12  main.o(.bss..L_MergedGlobals)
+    dma_pwm_masks                            0x2000039c   Data          24  main.o(.bss..L_MergedGlobals)
+    needSendStatusReport                     0x200003b4   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    CURRENT_PRINT_DIRECTION                  0x200003b5   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_STOPPING                               0x200003b6   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_TRACKING_ACTIVE                        0x200003b7   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    activeBuffer                             0x200003b8   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    interp_counter                           0x200003b9   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_EN_DIRECT                            0x200003ba   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_MOTOR_MODE                             0x200003bb   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_POLAR_DYNAMIC                          0x200003bc   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_POL_DIR                              0x200003bd   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_POL_PWM                              0x200003be   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_POL_EN                               0x200003bf   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_PIN                                    0x200003c0   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_DIR_HI                                 0x200003c1   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_DIR_LO                                 0x200003c2   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_STEP_HI                                0x200003c3   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_STEP_LO                                0x200003c4   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_MOTION                                 0x200003c5   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_RETURN_DONE                            0x200003c6   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_MOTION                                 0x200003c7   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_DIR_HI                                 0x200003c8   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_DIR_LO                                 0x200003c9   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_STEP_HI                                0x200003ca   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_STEP_LO                                0x200003cb   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    START_PRINT                              0x200003cc   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    PRINT_ACTIVE                             0x200003cd   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    PRINT_ACTIVE_COUNT                       0x200003ce   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    SetupPrintJob                            0x200003cf   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    LASER_SAFETY_LOCK                        0x200003d0   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_POS_LAST_STATE                         0x200003d1   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_PIN                                    0x200003d2   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    g_encoder_timeout_active                 0x200003d3   Data           1  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_POWER_REAL                           0x200003d4   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_SPEED                                0x200003d6   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_KP                                     0x200003d8   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_KI                                     0x200003da   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_KP_POS                                 0x200003dc   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_REAL_SPED                              0x200003de   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_ACCL                                   0x200003e0   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_REAL_SPED                              0x200003e2   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_ACCL                                   0x200003e4   Data           2  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_SPEED_ERROR_INTEGRAL                 0x200003e8   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    PRINT_LEFT_BORDER                        0x200003ec   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    PRINT_RIGHT_BORDER                       0x200003f0   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_SPEED_FILTERED                       0x200003f4   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_SPEED_ERROR                          0x200003f8   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_GO_POS                                 0x200003fc   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_POS                                    0x20000400   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_START_POS                              0x20000404   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    X_HALF_POS                               0x20000408   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_START_POS                              0x2000040c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_FINISH_POS                             0x20000410   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_HALF_POS                               0x20000414   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_POS                                    0x20000418   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_LINES                                  0x2000041c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    Y_IMAGE_POSITION                         0x20000420   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    LedStatusChangeMS                        0x20000424   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_SPEED_SET_POLAR                      0x2000042c   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.1)
+    W_X_P_component                          0x20000430   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    W_X_I_component                          0x20000434   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    W_X_PI_sum                               0x20000438   Data           4  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    nextPrintBit                             0x20000444   Data           8  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    FIFO_POS_Y                               0x2000044c   Data          44  lpp_sdk.o(.bss..L_MergedGlobals.2)
+    APP_ERASE                                0x20000478   Data          64  lpp_sdk.o(.bss.APP_ERASE)
+    APP_ID                                   0x200004b8   Data          64  lpp_sdk.o(.bss.APP_ID)
+    APP_JAMP_TO_BOOT                         0x200004f8   Data          64  lpp_sdk.o(.bss.APP_JAMP_TO_BOOT)
+    APP_SPEED_TEST                           0x20000538   Data          64  lpp_sdk.o(.bss.APP_SPEED_TEST)
+    APP_WRITE                                0x20000578   Data          64  lpp_sdk.o(.bss.APP_WRITE)
+    FIFO_DATA                                0x200005b8   Data        1332  lpp_sdk.o(.bss.FIFO_DATA)
+    GPIO_NULL_REG                            0x20000aec   Data           4  lpp_core_gpio.o(.bss.GPIO_NULL_REG)
+    LAZER                                    0x20000af0   Data          64  lpp_sdk.o(.bss.LAZER)
+    LIGHT                                    0x20000b30   Data          64  lpp_sdk.o(.bss.LIGHT)
+    LPP_DataReady                            0x20000b70   Data           1  main.o(.bss.LPP_DataReady)
+    PRINT_CONFIG                             0x20000b74   Data          64  lpp_sdk.o(.bss.PRINT_CONFIG)
+    SET_PARAM                                0x20000bb4   Data          64  lpp_sdk.o(.bss.SET_PARAM)
+    SET_X                                    0x20000bf4   Data          64  lpp_sdk.o(.bss.SET_X)
+    SET_Y                                    0x20000c34   Data          64  lpp_sdk.o(.bss.SET_Y)
+    TRACK                                    0x20000c74   Data          64  lpp_sdk.o(.bss.TRACK)
+    TUNING_X                                 0x20000cb4   Data        2000  lpp_sdk.o(.bss.TUNING_X)
+    TUNING_Y                                 0x20001484   Data        2000  lpp_sdk.o(.bss.TUNING_Y)
+    USBD_StrDesc                             0x20001c58   Data         512  usbd_desc.o(.bss.USBD_StrDesc)
+    USB_TUNING_X                             0x20001eb0   Data          64  lpp_sdk.o(.bss.USB_TUNING_X)
+    USB_TUNING_Y                             0x20001ef0   Data          64  lpp_sdk.o(.bss.USB_TUNING_Y)
+    hUsbDeviceFS                             0x20001f30   Data         720  usb_device.o(.bss.hUsbDeviceFS)
+    hpcd_USB_FS                              0x20002200   Data         732  usbd_conf.o(.bss.hpcd_USB_FS)
+    htim2                                    0x200024dc   Data          76  main.o(.bss.htim2)
+    htim3                                    0x20002528   Data          76  main.o(.bss.htim3)
+    htim4                                    0x20002574   Data          76  main.o(.bss.htim4)
+    uwTick                                   0x200025c0   Data           4  stm32g4xx_hal.o(.bss.uwTick)
 
 
 
@@ -5108,7 +5109,7 @@ Memory Map of the image
 
   Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000064a0, Max: 0x00007fe8, ABSOLUTE, COMPRESSED[0x00006258])
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00006180, Max: 0x00007fe8, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000617c, Max: 0x00007fe8, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -5483,8 +5484,8 @@ Memory Map of the image
     0x080059c4   0x080059c4   0x0000002c   Code   RO         1851    .text.XStopTracking  lpp_sdk.o
     0x080059f0   0x080059f0   0x0000028c   Code   RO         1893    .text.XTimerCallback  lpp_sdk.o
     0x08005c7c   0x08005c7c   0x00000028   Code   RO           27    .text.XTimerSet     main.o
-    0x08005ca4   0x08005ca4   0x00000018   Code   RO           23    .text.X_DIR_CLR     main.o
-    0x08005cbc   0x08005cbc   0x00000018   Code   RO           25    .text.X_PWM_CLR     main.o
+    0x08005ca4   0x08005ca4   0x00000018   Code   RO           25    .text.X_DIR_CLR     main.o
+    0x08005cbc   0x08005cbc   0x00000018   Code   RO           23    .text.X_PWM_CLR     main.o
     0x08005cd4   0x08005cd4   0x00000084   Code   RO         1881    .text.YCalculatePower  lpp_sdk.o
     0x08005d58   0x08005d58   0x00000064   Code   RO         1875    .text.YMove         lpp_sdk.o
     0x08005dbc   0x08005dbc   0x0000002c   Code   RO         1867    .text.YSetEnable    lpp_sdk.o
@@ -5494,17 +5495,17 @@ Memory Map of the image
     0x08005e98   0x08005e98   0x0000004a   Code   RO         1817    .text.flash_erase_area  lpp_sdk.o
     0x08005ee2   0x08005ee2   0x00000080   Code   RO         1815    .text.flash_write_buffer  lpp_sdk.o
     0x08005f62   0x08005f62   0x00000002   PAD
-    0x08005f64   0x08005f64   0x00000198   Code   RO           11    .text.main          main.o
-    0x080060fc   0x080060fc   0x0000001a   Code   RO         2064    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x08006116   0x08006116   0x00000010   Data   RO         1652    .rodata.AHBPrescTable  system_stm32g4xx.o
-    0x08006126   0x08006126   0x00000008   Data   RO         1653    .rodata.APBPrescTable  system_stm32g4xx.o
-    0x0800612e   0x0800612e   0x00000002   PAD
-    0x08006130   0x08006130   0x00000010   Data   RO         1956    .rodata.cst16       lpp_core_gpio.o
-    0x08006140   0x08006140   0x00000020   Data   RO         1957    .rodata.cst32       lpp_core_gpio.o
-    0x08006160   0x08006160   0x00000020   Data   RO         2139    Region$$Table       anon$$obj.o
+    0x08005f64   0x08005f64   0x00000194   Code   RO           11    .text.main          main.o
+    0x080060f8   0x080060f8   0x0000001a   Code   RO         2064    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x08006112   0x08006112   0x00000010   Data   RO         1652    .rodata.AHBPrescTable  system_stm32g4xx.o
+    0x08006122   0x08006122   0x00000008   Data   RO         1653    .rodata.APBPrescTable  system_stm32g4xx.o
+    0x0800612a   0x0800612a   0x00000002   PAD
+    0x0800612c   0x0800612c   0x00000010   Data   RO         1956    .rodata.cst16       lpp_core_gpio.o
+    0x0800613c   0x0800613c   0x00000020   Data   RO         1957    .rodata.cst32       lpp_core_gpio.o
+    0x0800615c   0x0800615c   0x00000020   Data   RO         2139    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08006180, Size: 0x00002bc0, Max: 0x00008000, ABSOLUTE, COMPRESSED[0x000000d8])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08006180, Size: 0x00002bc8, Max: 0x00008000, ABSOLUTE, COMPRESSED[0x000000d8])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -5534,41 +5535,42 @@ Memory Map of the image
     0x20000170   COMPRESSED   0x00000190   Data   RW         1955    .data.g_pins        lpp_core_gpio.o
     0x20000300   COMPRESSED   0x00000020   Data   RW          685    .data.pFlash        stm32g4xx_hal_flash.o
     0x20000320        -       0x00000060   Zero   RW         2004    .bss                c_w.l(libspace.o)
-    0x20000380        -       0x00000078   Zero   RW           87    .bss..L_MergedGlobals  main.o
-    0x200003f8        -       0x0000007c   Zero   RW         1932    .bss..L_MergedGlobals.1  lpp_sdk.o
-    0x20000474        -       0x00000048   Zero   RW         1933    .bss..L_MergedGlobals.2  lpp_sdk.o
-    0x200004bc        -       0x00000040   Zero   RW         1922    .bss.APP_ERASE      lpp_sdk.o
-    0x200004fc        -       0x00000040   Zero   RW         1923    .bss.APP_ID         lpp_sdk.o
-    0x2000053c        -       0x00000040   Zero   RW         1919    .bss.APP_JAMP_TO_BOOT  lpp_sdk.o
-    0x2000057c        -       0x00000040   Zero   RW         1920    .bss.APP_SPEED_TEST  lpp_sdk.o
-    0x200005bc        -       0x00000040   Zero   RW         1921    .bss.APP_WRITE      lpp_sdk.o
-    0x200005fc        -       0x00000534   Zero   RW         1929    .bss.FIFO_DATA      lpp_sdk.o
-    0x20000b30        -       0x00000004   Zero   RW         1954    .bss.GPIO_NULL_REG  lpp_core_gpio.o
-    0x20000b34        -       0x00000040   Zero   RW         1918    .bss.LAZER          lpp_sdk.o
-    0x20000b74        -       0x00000040   Zero   RW         1917    .bss.LIGHT          lpp_sdk.o
-    0x20000bb4        -       0x00000001   Zero   RW           83    .bss.LPP_DataReady  main.o
-    0x20000bb5   COMPRESSED   0x00000003   PAD
-    0x20000bb8        -       0x00000040   Zero   RW         1907    .bss.PRINT_CONFIG   lpp_sdk.o
-    0x20000bf8        -       0x00000040   Zero   RW         1916    .bss.SET_PARAM      lpp_sdk.o
-    0x20000c38        -       0x00000040   Zero   RW         1914    .bss.SET_X          lpp_sdk.o
-    0x20000c78        -       0x00000040   Zero   RW         1915    .bss.SET_Y          lpp_sdk.o
-    0x20000cb8        -       0x00000040   Zero   RW         1912    .bss.TRACK          lpp_sdk.o
-    0x20000cf8        -       0x000007d0   Zero   RW         1925    .bss.TUNING_X       lpp_sdk.o
-    0x200014c8        -       0x000007d0   Zero   RW         1928    .bss.TUNING_Y       lpp_sdk.o
-    0x20001c98        -       0x00000001   Zero   RW         1734    .bss.USBD_SetConfig.cfgidx  usbd_ctlreq.o
-    0x20001c99   COMPRESSED   0x00000003   PAD
-    0x20001c9c        -       0x00000200   Zero   RW          244    .bss.USBD_StrDesc   usbd_desc.o
-    0x20001e9c        -       0x00000058   Zero   RW          204    .bss.USBD_static_malloc.mem  usbd_conf.o
-    0x20001ef4        -       0x00000040   Zero   RW         1909    .bss.USB_TUNING_X   lpp_sdk.o
-    0x20001f34        -       0x00000040   Zero   RW         1910    .bss.USB_TUNING_Y   lpp_sdk.o
-    0x20001f74        -       0x00000004   Zero   RW           80    .bss.X_PWM_CURRENT  main.o
-    0x20001f78        -       0x000002d0   Zero   RW          215    .bss.hUsbDeviceFS   usb_device.o
-    0x20002248        -       0x000002dc   Zero   RW          203    .bss.hpcd_USB_FS    usbd_conf.o
-    0x20002524        -       0x0000004c   Zero   RW           81    .bss.htim2          main.o
-    0x20002570        -       0x0000004c   Zero   RW           82    .bss.htim3          main.o
-    0x200025bc        -       0x00000004   Zero   RW          549    .bss.uwTick         stm32g4xx_hal.o
-    0x200025c0        -       0x00000200   Zero   RW            2    HEAP                startup_stm32g431xx.o
-    0x200027c0        -       0x00000400   Zero   RW            1    STACK               startup_stm32g431xx.o
+    0x20000380        -       0x00000034   Zero   RW           87    .bss..L_MergedGlobals  main.o
+    0x200003b4        -       0x0000007c   Zero   RW         1932    .bss..L_MergedGlobals.1  lpp_sdk.o
+    0x20000430        -       0x00000048   Zero   RW         1933    .bss..L_MergedGlobals.2  lpp_sdk.o
+    0x20000478        -       0x00000040   Zero   RW         1922    .bss.APP_ERASE      lpp_sdk.o
+    0x200004b8        -       0x00000040   Zero   RW         1923    .bss.APP_ID         lpp_sdk.o
+    0x200004f8        -       0x00000040   Zero   RW         1919    .bss.APP_JAMP_TO_BOOT  lpp_sdk.o
+    0x20000538        -       0x00000040   Zero   RW         1920    .bss.APP_SPEED_TEST  lpp_sdk.o
+    0x20000578        -       0x00000040   Zero   RW         1921    .bss.APP_WRITE      lpp_sdk.o
+    0x200005b8        -       0x00000534   Zero   RW         1929    .bss.FIFO_DATA      lpp_sdk.o
+    0x20000aec        -       0x00000004   Zero   RW         1954    .bss.GPIO_NULL_REG  lpp_core_gpio.o
+    0x20000af0        -       0x00000040   Zero   RW         1918    .bss.LAZER          lpp_sdk.o
+    0x20000b30        -       0x00000040   Zero   RW         1917    .bss.LIGHT          lpp_sdk.o
+    0x20000b70        -       0x00000001   Zero   RW           83    .bss.LPP_DataReady  main.o
+    0x20000b71   COMPRESSED   0x00000003   PAD
+    0x20000b74        -       0x00000040   Zero   RW         1907    .bss.PRINT_CONFIG   lpp_sdk.o
+    0x20000bb4        -       0x00000040   Zero   RW         1916    .bss.SET_PARAM      lpp_sdk.o
+    0x20000bf4        -       0x00000040   Zero   RW         1914    .bss.SET_X          lpp_sdk.o
+    0x20000c34        -       0x00000040   Zero   RW         1915    .bss.SET_Y          lpp_sdk.o
+    0x20000c74        -       0x00000040   Zero   RW         1912    .bss.TRACK          lpp_sdk.o
+    0x20000cb4        -       0x000007d0   Zero   RW         1925    .bss.TUNING_X       lpp_sdk.o
+    0x20001484        -       0x000007d0   Zero   RW         1928    .bss.TUNING_Y       lpp_sdk.o
+    0x20001c54        -       0x00000001   Zero   RW         1734    .bss.USBD_SetConfig.cfgidx  usbd_ctlreq.o
+    0x20001c55   COMPRESSED   0x00000003   PAD
+    0x20001c58        -       0x00000200   Zero   RW          244    .bss.USBD_StrDesc   usbd_desc.o
+    0x20001e58        -       0x00000058   Zero   RW          204    .bss.USBD_static_malloc.mem  usbd_conf.o
+    0x20001eb0        -       0x00000040   Zero   RW         1909    .bss.USB_TUNING_X   lpp_sdk.o
+    0x20001ef0        -       0x00000040   Zero   RW         1910    .bss.USB_TUNING_Y   lpp_sdk.o
+    0x20001f30        -       0x000002d0   Zero   RW          215    .bss.hUsbDeviceFS   usb_device.o
+    0x20002200        -       0x000002dc   Zero   RW          203    .bss.hpcd_USB_FS    usbd_conf.o
+    0x200024dc        -       0x0000004c   Zero   RW           81    .bss.htim2          main.o
+    0x20002528        -       0x0000004c   Zero   RW           82    .bss.htim3          main.o
+    0x20002574        -       0x0000004c   Zero   RW           80    .bss.htim4          main.o
+    0x200025c0        -       0x00000004   Zero   RW          549    .bss.uwTick         stm32g4xx_hal.o
+    0x200025c4   COMPRESSED   0x00000004   PAD
+    0x200025c8        -       0x00000200   Zero   RW            2    HEAP                startup_stm32g431xx.o
+    0x200027c8        -       0x00000400   Zero   RW            1    STACK               startup_stm32g431xx.o
 
 
 
@@ -5630,7 +5632,7 @@ Image component sizes
 
        766         48         48        400          4       7900   lpp_core_gpio.o
       5168        370          0         12       6424      31736   lpp_sdk.o
-      2554        208         20          0        277      20746   main.o
+      2550        208         20          0        281      20730   main.o
         64         26        472          0       1536        836   startup_stm32g431xx.o
        246         32          0          8          4       9055   stm32g4xx_hal.o
        304         40          0          0          0      10307   stm32g4xx_hal_cortex.o
@@ -5659,9 +5661,9 @@ Image component sizes
        124          0          0          0          0       4688   usbd_ioreq.o
 
     ----------------------------------------------------------------------
-     23694       1270        598        800      10304     323435   Object Totals
+     23690       1270        598        800      10312     323419   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        38          0          2         20          6          0   (incl. Padding)
+        38          0          2         20         10          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -5713,15 +5715,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     24382       1286        598        800      10400     323511   Grand Totals
-     24382       1286        598        216      10400     323511   ELF Image Totals (compressed)
-     24382       1286        598        216          0          0   ROM Totals
+     24378       1286        598        800      10408     323495   Grand Totals
+     24378       1286        598        216      10408     323495   ELF Image Totals (compressed)
+     24378       1286        598        216          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                24980 (  24.39kB)
-    Total RW  Size (RW Data + ZI Data)             11200 (  10.94kB)
-    Total ROM Size (Code + RO Data + RW Data)      25196 (  24.61kB)
+    Total RO  Size (Code + RO Data)                24976 (  24.39kB)
+    Total RW  Size (RW Data + ZI Data)             11208 (  10.95kB)
+    Total ROM Size (Code + RO Data + RW Data)      25192 (  24.60kB)
 
 ==============================================================================
 

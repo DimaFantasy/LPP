@@ -3,7 +3,7 @@
 <title>Static Call Graph - [LPP_STM32G431CBTx\LPP_STM32G431CBTx.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image LPP_STM32G431CBTx\LPP_STM32G431CBTx.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Tue Apr 14 17:40:50 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sat Apr 18 06:01:01 2026
 <BR><P>
 <H3>Maximum Stack Usage =        212 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1534,8 +1534,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = TIM2_IRQHandler &rArr; XTimerCallback &rArr; XCalculatePower &rArr; XMove &rArr; XStepperStepCallback &rArr; PrintStopJob &rArr; Laser_Off &rArr; SetLaserPWM
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerCallback
-<LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_PWM_CLR
-<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_DIR_CLR
+<LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_DIR_CLR
+<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_PWM_CLR
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32g431xx.o(RESET)
 </UL>
@@ -2092,11 +2092,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[177]"></a>XMotorSet</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, main.o(.text.XMotorSet))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = XMotorSet
+<P><STRONG><a name="[177]"></a>XMotorSet</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, main.o(.text.XMotorSet))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = XMotorSet
 </UL>
-<BR>[Calls]<UL><LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_PWM_CLR
-<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_DIR_CLR
+<BR>[Calls]<UL><LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_DIR_CLR
+<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;X_PWM_CLR
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XTimerCallback
 </UL>
@@ -2203,7 +2203,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PacketReceive
 </UL>
 
-<P><STRONG><a name="[72]"></a>main</STRONG> (Thumb, 380 bytes, Stack size 32 bytes, main.o(.text.main))
+<P><STRONG><a name="[72]"></a>main</STRONG> (Thumb, 376 bytes, Stack size 32 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 196 + Unknown Stack Size
 <LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
@@ -2241,12 +2241,12 @@ Local Symbols
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[14f]"></a>X_DIR_CLR</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(.text.X_DIR_CLR))
+<P><STRONG><a name="[14f]"></a>X_PWM_CLR</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(.text.X_PWM_CLR))
 <BR><BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMotorSet
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[150]"></a>X_PWM_CLR</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(.text.X_PWM_CLR))
+<P><STRONG><a name="[150]"></a>X_DIR_CLR</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(.text.X_DIR_CLR))
 <BR><BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XMotorSet
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_IRQHandler
 </UL>

@@ -465,34 +465,36 @@ __STATIC_INLINE void XMotorDeadTime(void) {
     for (volatile int i = 0; i < 100; i++) { __NOP(); }
 }
 
+// Желаемое направление
+static volatile uint8_t X_DIR_NEXT = 0; // 0 = вперёд, 1 = назад
+
 void TIM2_IRQHandler(void) {
     uint32_t sr = TIM2->SR;
 
-    // --- НАЧАЛО ПЕРИОДА (Update Event) ---
     if (sr & TIM_SR_UIF) {
         TIM2->SR = ~TIM_SR_UIF;
 
-        // Вызов планировщика шагов (для STEP режима)
         XTimerCallback();
 
         if (X_MOTOR_MODE != X_MOTOR_MODE_STEP) {
-            // Безопасный сброс всех ключей в начале периода
+
+            // ✅ Сброс пинов с учётом режима
             F_RESET_PIN(&g_pins[PIN_X_MO_L]);
-            F_RESET_PIN(&g_pins[PIN_X_MO_R]);
             F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
+            // PIN_X_MO_R — DIR в ONE_PWM, сбрасываем только в TWO_PWM
+            if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
+                F_RESET_PIN(&g_pins[PIN_X_MO_R]);
+            }
 
             if (X_PWM_CURRENT != 0) {
-                // Пауза перед открытием ключей (защита от сквозного тока)
                 XMotorDeadTime();
 
                 if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
-                    // TWO_PWM: два пина шимят, W_X_POL_PWM меняет диагонали моста
                     uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
                     if (abs_pwr > 5000) abs_pwr = 5000;
                     TIM2->CCR1 = abs_pwr;
 
-                    // Направление с учётом полярности
                     uint8_t fwd = (X_PWM_CURRENT > 0) ? 1 : 0;
                     if (W_X_POL_PWM) fwd = !fwd;
 
@@ -505,39 +507,35 @@ void TIM2_IRQHandler(void) {
                     }
                 }
                 else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
-                    // ONE_PWM: один пин ШИМ (L), второй DIR (R)
-                    // CCR1 всегда положительный — полярность через пины
                     uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
                     if (abs_pwr > 5000) abs_pwr = 5000;
                     TIM2->CCR1 = abs_pwr;
 
-                    // DIR выставляем до ШИМ
-                    uint8_t dir = (X_PWM_CURRENT >= 0) ? 0 : 1;
-                    if (dir) X_DIR_SET();
-                    else     X_DIR_CLR();
-
-                    // ШИМ активен (с учётом полярности через макрос)
+                    // DIR уже выставлен в CC1IF — не трогаем
                     X_PWM_SET();
                 }
             }
         }
     }
 
-    // --- КОНЕЦ ИМПУЛЬСА (Compare Event) ---
-    // Срабатывает когда CNT достигает CCR1
     if (sr & TIM_SR_CC1IF) {
         TIM2->SR = ~TIM_SR_CC1IF;
 
         if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
-            // Гасим все ключи в середине периода
+            // ✅ Гасим все ключи — в TWO_PWM PIN_X_MO_R это ключ моста
             F_RESET_PIN(&g_pins[PIN_X_MO_L]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R]);
             F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
             F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
         }
         else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
-            // Конец ШИМ-импульса — только ШИМ пин, DIR держится весь период
+            // Гасим только ШИМ, DIR (PIN_X_MO_R) не трогаем
             X_PWM_CLR();
+
+            // Обновляем DIR в паузе между импульсами
+            X_DIR_NEXT = (X_PWM_CURRENT >= 0) ? 0 : 1;
+            if (X_DIR_NEXT) X_DIR_SET();
+            else            X_DIR_CLR();
         }
     }
 }
@@ -561,18 +559,17 @@ void XTimerSet(uint16_t period) {
  */
 void XMotorSet(int power) {
     if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
-
     if (abs(power) < 10) power = 0;
-
+	
     X_PWM_CURRENT = power;
 
     if (power == 0) {
         TIM2->CCR1 = 0;
-        // Все ключи выключить
         F_RESET_PIN(&g_pins[PIN_X_MO_L_H]);
         F_RESET_PIN(&g_pins[PIN_X_MO_R_H]);
-        X_DIR_CLR();    // DIR в неактивное состояние
-        X_PWM_CLR();    // ШИМ в неактивное состояние (HIGH если инвертированный)
+        X_DIR_CLR();
+        X_PWM_CLR();
+        X_DIR_NEXT = 0; // ✅ сброс
     } else {
         if (power >  5000) power =  5000;
         if (power < -5000) power = -5000;
