@@ -993,6 +993,10 @@ void XStepperStepCallback(int8_t direction) {
         // Проверка нахождения в зоне печати
         if (X_POS >= PRINT_LEFT_BORDER && X_POS <= PRINT_RIGHT_BORDER) {
             activeBuffer = NextBuffer;
+					
+						if (LASER_SAFETY_LOCK) {
+								Laser_Ready(); // Сброс фазы ШИМ и снятие блокировки
+						}					
 
             // Управление лазером по текущему биту
             SetLaserPWM(nextPrintBit[activeBuffer][0] ? PRINT_CONFIG.DAT.W_SET_LAZER : 0);
@@ -1011,6 +1015,9 @@ void XStepperStepCallback(int8_t direction) {
         } else {
             // Вне зоны печати: выключить лазер и сбросить интерполяцию
             SetLaserPWM(0);
+						if (!LASER_SAFETY_LOCK) {
+								Laser_Off();  // Гарантированное гашение с DMA-очисткой
+						}					
             interp_counter = 0;
         }
 
