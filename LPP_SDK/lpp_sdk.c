@@ -60,6 +60,24 @@ volatile int32_t W_X_PI_sum;                    // Сумма P+I составл
 
 volatile uint8_t needSendStatusReport = 0;  // Флаг необходимости отправки статуса
 
+// Яркость подсветки — управляется из SetLight1/2PWM, читается в Lpp_MainLoop
+volatile uint16_t led1_pwm_val = 0;
+volatile uint16_t led2_pwm_val = 0;
+
+// @brief Установка яркости подсветки LED1 (0..100)
+void SetLight1PWM(uint16_t val) {
+    if (val > 100) val = 100;
+    led1_pwm_val = val;
+    if (val == 0) F_RESET_PIN(&g_pins[PIN_PWM_LED1]);
+}
+
+// @brief Установка яркости подсветки LED2 (0..100)
+void SetLight2PWM(uint16_t val) {
+    if (val > 100) val = 100;
+    led2_pwm_val = val;
+    if (val == 0) F_RESET_PIN(&g_pins[PIN_PWM_LED2]);
+}
+
 // Глобальные переменные для управления печатью
 volatile uint8_t CURRENT_PRINT_DIRECTION = 0;  // 0-слева направо, 1-справа налево
 volatile int32_t PRINT_LEFT_BORDER = 0;        // Левая граница зоны печати
@@ -1556,33 +1574,59 @@ void Lpp_Init(void) {
 // Основной цикл SDK (вызов из бесконечного while в main.c)
 // ============================================================================
 void Lpp_MainLoop(void) {
-    HAL_Delay(1);
-    DWT_1kHz_Handler();
-	
-		// ========================================================
-    // WATCHDOG ДЛЯ PIN_LED_STATUS
     // ========================================================
-    // Просто наращиваем счетчик каждую миллисекунду
-    if (LedStatusChangeMS < 1100) { 
-        LedStatusChangeMS++;
+    // WATCHDOG ДЛЯ PIN_LED_STATUS
+    // Реальное время через DWT->CYCCNT
+    // ========================================================
+    static uint32_t _last_1ms = 0;
+    uint32_t _now = DWT->CYCCNT;
+    if (CyclesToMicroseconds(_now - _last_1ms) >= 1000) {
+        _last_1ms = _now;
+        if (LedStatusChangeMS < 1100) {
+            LedStatusChangeMS++;
+        }
     }
 
     // Если пакетов не было больше 1 секунды (1000 мс)
     if (LedStatusChangeMS > 1000) {
-        // Проверяем флаг инверсии, который пришел в offset 10
         if (SET_PARAM.DAT.W_LED_STATUS_INV) {
-            // Если инверсный (LED к Плюсу): гасим подачей единицы (SET)
-            F_SET_PIN(&g_pins[PIN_LED_STATUS]); 
+            F_SET_PIN(&g_pins[PIN_LED_STATUS]);
         } else {
-            // Если прямой (LED к Земле): гасим подачей нуля (RESET)
-            F_RESET_PIN(&g_pins[PIN_LED_STATUS]); 
-        } 
+            F_RESET_PIN(&g_pins[PIN_LED_STATUS]);
+        }
     }
     // WATCHDOG ДЛЯ PIN_LED_STATUS END
+
+    // ========================================================
+    // ПРОГРАММНЫЙ ШИМ ПОДСВЕТКИ — 500 Гц, 100 шагов
+    // 20 мкс × 100 шагов = 2 мс период = 500 Гц
+    // ========================================================
+    #define LED_STEP_US 20
+
+    static uint32_t _led_last = 0;
+    static uint8_t  _led_phase = 0;
+
+    if (CyclesToMicroseconds(_now - _led_last) >= LED_STEP_US) {			
+        _led_last = _now;
+        if (++_led_phase >= 100) _led_phase = 0;
+
+        if (g_pins[PIN_PWM_LED1].used) {
+            if (_led_phase < led1_pwm_val) F_SET_PIN(&g_pins[PIN_PWM_LED1]);
+            else                           F_RESET_PIN(&g_pins[PIN_PWM_LED1]);
+        }
+        if (g_pins[PIN_PWM_LED2].used) {
+            if (_led_phase < led2_pwm_val) F_SET_PIN(&g_pins[PIN_PWM_LED2]);
+            else                           F_RESET_PIN(&g_pins[PIN_PWM_LED2]);
+        }
+    }
 
     // Обработка отправки статуса печати
     if (needSendStatusReport) {
         needSendStatusReport = 0;
+        // Гасим LED пока цикл заблокирован retry (до 30 мс)
+        if (g_pins[PIN_PWM_LED1].used) F_RESET_PIN(&g_pins[PIN_PWM_LED1]);
+        if (g_pins[PIN_PWM_LED2].used) F_RESET_PIN(&g_pins[PIN_PWM_LED2]);
+        _led_phase = 0;
         // Попытка отправки с повторениями
         uint8_t retryCount = 3;
         while (retryCount-- > 0) {
@@ -1622,6 +1666,10 @@ void Lpp_MainLoop(void) {
         Y_FINISH_POS = PRINT_CONFIG.DAT.W_LASER_INITIAL_POSITION_Y;
 
         // Ожидание достижения позиции Y
+        // Гасим LED на время блокировки цикла (до 10 секунд)
+        if (g_pins[PIN_PWM_LED1].used) F_RESET_PIN(&g_pins[PIN_PWM_LED1]);
+        if (g_pins[PIN_PWM_LED2].used) F_RESET_PIN(&g_pins[PIN_PWM_LED2]);
+        _led_phase = 0;
         uint8_t y_position_ready = 0;
         for (int i = 0; i < 100; i++) {
             HAL_Delay(100);
@@ -1833,6 +1881,8 @@ static inline int16_t clamp16(int32_t v, int16_t min, int16_t max) {
 // По сути сам ПИД X
 // ============================================================================
 void XTimerCallback(void) {
+		DWT_1kHz_Handler();	
+	
     // ========================================================
     // РЕЖИМ ШАГОВОГО МОТОРА
     // ========================================================

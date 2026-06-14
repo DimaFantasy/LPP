@@ -1,7 +1,7 @@
 Dependencies for Project 'LPP_STM32G431CBTx', Target 'LPP_STM32G431CBTx': (DO NOT MODIFY !)
 CompilerVersion: 6190000::V6.19::ARMCLANG
 F (startup_stm32g431xx.s)(0x698944FA)(--target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 538" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32G431xx SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o lpp_stm32g431cbtx/startup_stm32g431xx.o)
-F (../Core/Src/main.c)(0x69E2DC78)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_Device/App -I ../USB_Device/Target -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o lpp_stm32g431cbtx/main.o -MD)
+F (../Core/Src/main.c)(0x6A2EDFFD)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_Device/App -I ../USB_Device/Target -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o lpp_stm32g431cbtx/main.o -MD)
 I (..\Core\Inc\main.h)(0x6977AE82)
 I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal.h)(0x68C864AC)
 I (..\Core\Inc\stm32g4xx_hal_conf.h)(0x69614C3C)
@@ -45,8 +45,8 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x637B24FC)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x637B24FC)
 I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x637B24FA)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x637B24FC)
-I (..\My_Libraries\counter.h)(0x69EBF3C0)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69929499)
+I (..\My_Libraries\counter.h)(0x6A2EE002)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6A287092)
 I (..\..\LPP_SDK\configs\lpp_config_g431.h)(0x6981FE26)
 I (..\..\LPP_SDK\lpp_core_gpio.h)(0x69952B70)
 I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_ll_dmamux.h)(0x68C864AC)
@@ -304,7 +304,7 @@ I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim.h)(0x68C864AC)
 I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim_ex.h)(0x68C864AC)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h)(0x68C86478)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h)(0x68C86478)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69929499)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6A287092)
 I (..\..\LPP_SDK\configs\lpp_config_g431.h)(0x6981FE26)
 I (..\..\LPP_SDK\lpp_core_gpio.h)(0x69952B70)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x637B24FC)
@@ -1146,9 +1146,9 @@ I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim.h)(0x68C864AC)
 I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim_ex.h)(0x68C864AC)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h)(0x68C86478)
 I (..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h)(0x68C86478)
-F (..\My_Libraries\counter.h)(0x69EBF3C0)()
-F (..\..\LPP_SDK\lpp_sdk.c)(0x69EBF366)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_Device/App -I ../USB_Device/Target -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o lpp_stm32g431cbtx/lpp_sdk.o -MD)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69929499)
+F (..\My_Libraries\counter.h)(0x6A2EE002)()
+F (..\..\LPP_SDK\lpp_sdk.c)(0x6A286E7B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_Device/App -I ../USB_Device/Target -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o lpp_stm32g431cbtx/lpp_sdk.o -MD)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6A287092)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x637B24FC)
 I (..\..\LPP_SDK\configs\lpp_config_g431.h)(0x6981FE26)
 I (..\Drivers\CMSIS\Device\ST\STM32G4xx\Include\stm32g4xx.h)(0x68C864AC)
@@ -1187,8 +1187,8 @@ I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim_ex.h)(0x68C864AC)
 I (..\..\LPP_SDK\lpp_core_gpio.h)(0x69952B70)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x637B24FC)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x637B24FC)
-F (..\..\LPP_SDK\lpp_sdk.h)(0x69929499)()
-F (..\..\LPP_SDK\lpp_core_gpio.c)(0x699958C7)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_Device/App -I ../USB_Device/Target -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o lpp_stm32g431cbtx/lpp_core_gpio.o -MD)
+F (..\..\LPP_SDK\lpp_sdk.h)(0x6A287092)()
+F (..\..\LPP_SDK\lpp_core_gpio.c)(0x6A12949E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../USB_Device/App -I ../USB_Device/Target -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Libraries -I ../../LPP_SDK-I./RTE/_LPP_STM32G431CBTx-IC:/Users/user/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/user/AppData/Local/Arm/Packs/Keil/STM32G4xx_DFP/1.5.0/Drivers/CMSIS/Device/ST/STM32G4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o lpp_stm32g431cbtx/lpp_core_gpio.o -MD)
 I (..\..\LPP_SDK\lpp_core_gpio.h)(0x69952B70)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x637B24FC)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x637B24FC)
@@ -1226,5 +1226,5 @@ I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_pwr_ex.h)(0x68C864AC)
 I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim.h)(0x68C864AC)
 I (..\Drivers\STM32G4xx_HAL_Driver\Inc\stm32g4xx_hal_tim_ex.h)(0x68C864AC)
 I (..\..\LPP_SDK\configs\lpp_config_g431.h)(0x6981FE26)
-I (..\..\LPP_SDK\lpp_sdk.h)(0x69929499)
+I (..\..\LPP_SDK\lpp_sdk.h)(0x6A287092)
 F (..\..\LPP_SDK\lpp_core_gpio.h)(0x69952B70)()

@@ -107,11 +107,11 @@ void SetPinConfiguration(uint8_t W_PIN_ID, uint8_t W_PIN_PORT, uint8_t W_PIN_NUM
         }
     }
 		
-		// Если это ШИМ-канал, неважно, включили мы его или выключили — 
-    // вызываем линковку DMA один раз здесь.
-    if (W_PIN_ID == PIN_PWM_LASER || W_PIN_ID == PIN_PWM_LED1 || W_PIN_ID == PIN_PWM_LED2) {
+    // Если это пин лазера — перелинковываем DMA
+    if (W_PIN_ID == PIN_PWM_LASER) {
         PWM_LaserLight_LinkHardware();
-    }		
+    }
+    // LED1/LED2 настраиваются как GPIO Output через InitPin — этого достаточно
 		
 }
 										 

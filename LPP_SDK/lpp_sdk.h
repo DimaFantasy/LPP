@@ -449,7 +449,7 @@ typedef union {
 } TYPE_SPEED_TEST;
 
 // Константы работы с энкодером (DWT-based)
-#define ENCODER_TIMEOUT_US 60000  // Таймаут энкодера в микросекундах
+#define ENCODER_TIMEOUT_US 50000  // Таймаут энкодера в микросекундах
 #define SPEED_MIN_TICKS 50        // Минимальный допустимый период
 #define SPEED_MAX_TICKS 60000     // Максимальный допустимый период
 
@@ -577,15 +577,12 @@ extern void XTimerSet(uint16_t period);
 // **Реализовать в main.c**
 extern void SetLaserPWM(uint16_t pwm_value);
 
-// @brief Установка мощности первой подсветки.
-// Физика: Управляет каналом 2 таймера.
-// **Реализовать в main.c**
-extern void SetLight1PWM(uint16_t pwm_value);
-
-// @brief Установка мощности второй подсветки.
-// Физика: Управляет каналом 3 таймера.
-// **Реализовать в main.c**
-extern void SetLight2PWM(uint16_t pwm_value);
+// @brief Установка яркости подсветки LED1/LED2 (0..100).
+// Реализованы в lpp_sdk.c, вызываются из PacketReceive.
+extern volatile uint16_t led1_pwm_val;
+extern volatile uint16_t led2_pwm_val;
+void SetLight1PWM(uint16_t pwm_value);
+void SetLight2PWM(uint16_t pwm_value);
 
 
 #ifdef __cplusplus
