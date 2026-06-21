@@ -376,7 +376,7 @@ void TIM2_IRQHandler(void) {
 
                 if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
                     uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
-                    if (abs_pwr > 5000) abs_pwr = 5000;
+                    if (abs_pwr > 4900) abs_pwr = 4900;
                     TIM2->CCR1 = abs_pwr;
 
                     uint8_t fwd = (X_PWM_CURRENT > 0) ? 1 : 0;
@@ -392,7 +392,7 @@ void TIM2_IRQHandler(void) {
                 }
                 else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
                     uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
-                    if (abs_pwr > 5000) abs_pwr = 5000;
+                    if (abs_pwr > 4900) abs_pwr = 4900;
                     TIM2->CCR1 = abs_pwr;
                     X_PWM_SET();
                 }
@@ -427,9 +427,16 @@ void XTimerSet(uint16_t period) {
     }
 }
 
+// Потолок 4900 вместо ARR=5000: запас ~20мкс нужен, т.к. CCR1
+// пишется в конце ISR (после XTimerCallback+DeadTime), и при
+// power близком к ARR счётчик CNT успевает обогнать запись CCR1 —
+// CC1 не срабатывает, период проходит с выходом в 0.
 void XMotorSet(int power) {
     if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
     if (abs(power) < 10) power = 0;
+
+    if (power >  4900) power =  4900;
+    if (power < -4900) power = -4900;
 
     X_PWM_CURRENT = power;
 
@@ -441,8 +448,6 @@ void XMotorSet(int power) {
         X_PWM_CLR();
         X_DIR_NEXT = 0;
     } else {
-        if (power >  5000) power =  5000;
-        if (power < -5000) power = -5000;
         TIM2->CCR1 = (uint32_t)abs(power);
     }
 }
@@ -579,51 +584,69 @@ inline void SetLaserPWM(uint16_t val) {
 // SetLight1PWM и SetLight2PWM перенесены в lpp_sdk.c
 
 // ============================================================================
-// СЕКЦИЯ: DMA M2M (DMA2_Stream0)
-// F411: DMA2_Stream0, Channel 0, M2M
+// DMA M2M
 // ============================================================================
-
-volatile uint8_t LPP_DataReady = 0;
-
 void DMA_M2M_Init(void) {
     __HAL_RCC_DMA2_CLK_ENABLE();
-    __DSB();
 
+    // Полностью копируем HAL_DMA_Init:
     DMA2_Stream0->CR = 0;
-    while (DMA2_Stream0->CR & DMA_SxCR_EN);
-    DMA2->LIFCR = DMA_LIFCR_CTCIF0 | DMA_LIFCR_CTEIF0 | DMA_LIFCR_CHTIF0
-                | DMA_LIFCR_CDMEIF0 | DMA_LIFCR_CFEIF0;
+    while(DMA2_Stream0->CR & DMA_SxCR_EN);
+
+    // Сброс всех флагов Stream0
+    DMA2->LIFCR = 0x3F;
+
+    // CR: Channel0, M2M, Priority Low, 8bit->8bit, PINC+MINC, Normal
+    DMA2_Stream0->CR = (0 << DMA_SxCR_CHSEL_Pos)  | // Channel 0
+                       DMA_SxCR_DIR_1              | // Memory-to-Memory
+                       (0 << DMA_SxCR_PL_Pos)      | // Priority Low
+                       (0 << DMA_SxCR_MSIZE_Pos)   | // 8-bit Memory
+                       (0 << DMA_SxCR_PSIZE_Pos)   | // 8-bit Periph
+                       DMA_SxCR_MINC               | // Memory increment
+                       DMA_SxCR_PINC;                // Periph increment
+
+    // FCR: FIFO enable, Full threshold, Single burst — ОБЯЗАТЕЛЬНО для M2M
+    DMA2_Stream0->FCR = DMA_SxFCR_DMDIS | (0x03 << DMA_SxFCR_FTH_Pos);
+
 }
 
 void FIFO_DATA_StartDma(uint32_t src, uint32_t dst, uint16_t count) {
-    LPP_DataReady = 0;
-
+    // Копируем HAL_DMA_Start_IT:
+    
+    // 1. Disable
     DMA2_Stream0->CR &= ~DMA_SxCR_EN;
-    while (DMA2_Stream0->CR & DMA_SxCR_EN);
-    DMA2->LIFCR = DMA_LIFCR_CTCIF0 | DMA_LIFCR_CTEIF0 | DMA_LIFCR_CHTIF0
-                | DMA_LIFCR_CDMEIF0 | DMA_LIFCR_CFEIF0;
+    while(DMA2_Stream0->CR & DMA_SxCR_EN);
 
-    // M2M: PAR = source (PINC), M0AR = dest (MINC)
+    // 2. Сброс флагов
+    DMA2->LIFCR = 0x3F;
+
+    // 3. Адреса и размер
     DMA2_Stream0->PAR  = src;
     DMA2_Stream0->M0AR = dst;
     DMA2_Stream0->NDTR = count;
-    DMA2_Stream0->FCR  = DMA_SxFCR_DMDIS | (0x03 << DMA_SxFCR_FTH_Pos);
 
-    DMA2_Stream0->CR = (1UL << 14U) | DMA_SxCR_MINC | DMA_SxCR_PINC |
-                       DMA_SxCR_TCIE | DMA_SxCR_TEIE | DMA_SxCR_EN;
+    // 4. FCR заново (сбрасывается при выключении)
+    DMA2_Stream0->FCR = DMA_SxFCR_DMDIS | (0x03 << DMA_SxFCR_FTH_Pos);
+
+    // 5. Включаем прерывания и запускаем — всё в одной записи
+    DMA2_Stream0->CR |= DMA_SxCR_TCIE | DMA_SxCR_TEIE | DMA_SxCR_DMEIE;
+    DMA2_Stream0->CR |= DMA_SxCR_EN;
 }
 
 void DMA2_Stream0_IRQHandler(void) {
-    uint32_t lisr = DMA2->LISR;
+    uint32_t isr = DMA2->LISR;
 
-    if (lisr & DMA_LISR_TCIF0) {
+    if (isr & DMA_LISR_TCIF0) {
         DMA2->LIFCR = DMA_LIFCR_CTCIF0;
-        LPP_DataReady = 1;
         FIFO_DATA_EndDma();
     }
-    if (lisr & DMA_LISR_TEIF0) {
+    if (isr & DMA_LISR_TEIF0) {
         DMA2->LIFCR = DMA_LIFCR_CTEIF0;
-        LPP_DataReady = 1;
+        // обработка ошибки
+    }
+    if (isr & DMA_LISR_DMEIF0) {
+        DMA2->LIFCR = DMA_LIFCR_CDMEIF0;
+        // direct mode error — не должно быть при FIFO
     }
 }
 

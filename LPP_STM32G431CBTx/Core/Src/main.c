@@ -330,13 +330,9 @@ void XMotorInit(X_MOTOR_MODE_T mode) {
         TIM2->CR1 |= TIM_CR1_CEN;
     }
     else {
-        if (mode == X_MOTOR_MODE_ONE_PWM) {
-            htim2.Init.Prescaler = 18;
-            htim2.Init.Period    = 4940;
-        } else {
-            htim2.Init.Prescaler = 9;
-            htim2.Init.Period    = 9880;
-        }
+			
+				htim2.Init.Prescaler = 33;
+				htim2.Init.Period    = 5000;	
 
         HAL_TIM_Base_Init(&htim2);
 
@@ -391,7 +387,7 @@ void TIM2_IRQHandler(void) {
 
                 if (X_MOTOR_MODE == X_MOTOR_MODE_TWO_PWM) {
                     uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
-                    if (abs_pwr > 5000) abs_pwr = 5000;
+                    if (abs_pwr > 4900) abs_pwr = 4900;
                     TIM2->CCR1 = abs_pwr;
 
                     uint8_t fwd = (X_PWM_CURRENT > 0) ? 1 : 0;
@@ -407,7 +403,7 @@ void TIM2_IRQHandler(void) {
                 }
                 else if (X_MOTOR_MODE == X_MOTOR_MODE_ONE_PWM) {
                     uint32_t abs_pwr = (uint32_t)abs(X_PWM_CURRENT);
-                    if (abs_pwr > 5000) abs_pwr = 5000;
+                    if (abs_pwr > 4900) abs_pwr = 4900;
                     TIM2->CCR1 = abs_pwr;
                     X_PWM_SET();
                 }
@@ -442,9 +438,16 @@ void XTimerSet(uint16_t period) {
     }
 }
 
+// Потолок 4900 вместо ARR=5000: запас ~20мкс нужен, т.к. CCR1
+// пишется в конце ISR (после XTimerCallback+DeadTime), и при
+// power близком к ARR счётчик CNT успевает обогнать запись CCR1 —
+// CC1 не срабатывает, период проходит с выходом в 0.
 void XMotorSet(int power) {
     if (X_MOTOR_MODE == X_MOTOR_MODE_STEP) return;
     if (abs(power) < 10) power = 0;
+
+    if (power >  4900) power =  4900;
+    if (power < -4900) power = -4900;
 
     X_PWM_CURRENT = power;
 
@@ -456,8 +459,6 @@ void XMotorSet(int power) {
         X_PWM_CLR();
         X_DIR_NEXT = 0;
     } else {
-        if (power >  5000) power =  5000;
-        if (power < -5000) power = -5000;
         TIM2->CCR1 = (uint32_t)abs(power);
     }
 }
