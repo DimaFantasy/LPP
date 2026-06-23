@@ -607,15 +607,26 @@ void SetLaserLightPWMFrequency(uint32_t freq_hz) {
     __HAL_RCC_TIM1_CLK_ENABLE();
     __HAL_RCC_DMA1_CLK_ENABLE();
 
-    uint32_t arr = 100;
-    uint32_t psc_val = 72000000 / (freq_hz * (arr + 1));
+    uint32_t pclk2   = HAL_RCC_GetPCLK2Freq();
+    uint32_t tim_clk = ((RCC->CFGR & RCC_CFGR_PPRE2) != RCC_CFGR_PPRE2_DIV1)
+                       ? pclk2 * 2 : pclk2;
+
+    uint32_t arr = tim_clk / freq_hz;
+    uint32_t psc = 0;
+
+    if (arr > 65535) {
+        psc = arr / 65535;
+        arr = tim_clk / ((psc + 1) * freq_hz);
+    }
+
+    if (arr < 1) arr = 1;
+    if (arr > 65535) arr = 65535;
 
     TIM1->CR1  &= ~TIM_CR1_CEN;
-    TIM1->PSC   = (psc_val > 0) ? psc_val - 1 : 0;
-    TIM1->ARR   = arr;
+    TIM1->PSC   = psc;
+    TIM1->ARR   = arr - 1;
     TIM1->CCR1  = 0;
-
-    TIM1->DIER = TIM_DIER_UDE | TIM_DIER_CC1DE;
+    TIM1->DIER  = TIM_DIER_UDE | TIM_DIER_CC1DE;
 
     PWM_LaserLight_LinkHardware();
 
@@ -644,12 +655,14 @@ void Laser_Ready(void) {
 
 inline void SetLaserPWM(uint16_t val) {
     if (LASER_SAFETY_LOCK) val = 0;
-    if (val > 100) val = 100;
+    if (val > 1000) val = 1000;
+    uint32_t arr = TIM1->ARR;
+    uint32_t ccr = ((uint32_t)val * arr) / 1000;
 
-    dma_pwm_masks[0][0] = (val > 0)   ? raw_pin_masks[0]        : 0;
-    dma_pwm_masks[0][1] = (val < 100) ? (raw_pin_masks[0] << 16): 0;
+    dma_pwm_masks[0][0] = (val > 0)    ? raw_pin_masks[0]         : 0;
+    dma_pwm_masks[0][1] = (val < 1000) ? (raw_pin_masks[0] << 16) : 0;
+    TIM1->CCR1 = ccr;
 
-    TIM1->CCR1 = val;
     if (val == 0) F_RESET_PIN(&g_pins[PIN_PWM_LASER]);
 }
 
