@@ -152,7 +152,7 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>852</LineNumber>
+          <LineNumber>1530</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -161,14 +161,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>../Core/Src/main.c</Filename>
+          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>851</LineNumber>
+          <LineNumber>1529</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -177,14 +177,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>../Core/Src/main.c</Filename>
+          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>850</LineNumber>
+          <LineNumber>1532</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -193,14 +193,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>../Core/Src/main.c</Filename>
+          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>942</LineNumber>
+          <LineNumber>852</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -216,7 +216,7 @@
         <Bp>
           <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>943</LineNumber>
+          <LineNumber>851</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -232,7 +232,7 @@
         <Bp>
           <Number>5</Number>
           <Type>0</Type>
-          <LineNumber>941</LineNumber>
+          <LineNumber>850</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -248,7 +248,7 @@
         <Bp>
           <Number>6</Number>
           <Type>0</Type>
-          <LineNumber>1142</LineNumber>
+          <LineNumber>942</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -257,14 +257,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
+          <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>7</Number>
           <Type>0</Type>
-          <LineNumber>1140</LineNumber>
+          <LineNumber>943</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -273,14 +273,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
+          <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>8</Number>
           <Type>0</Type>
-          <LineNumber>1139</LineNumber>
+          <LineNumber>941</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -289,14 +289,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
+          <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>9</Number>
           <Type>0</Type>
-          <LineNumber>2019</LineNumber>
+          <LineNumber>1142</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -312,6 +312,54 @@
         <Bp>
           <Number>10</Number>
           <Type>0</Type>
+          <LineNumber>1140</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>11</Number>
+          <Type>0</Type>
+          <LineNumber>1139</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>12</Number>
+          <Type>0</Type>
+          <LineNumber>2019</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>13</Number>
+          <Type>0</Type>
           <LineNumber>2025</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134241314</Address>
@@ -326,7 +374,7 @@
           <Expression>\\LPP_STM32G431CBTx\../../LPP_SDK/lpp_sdk.c\2025</Expression>
         </Bp>
         <Bp>
-          <Number>11</Number>
+          <Number>14</Number>
           <Type>0</Type>
           <LineNumber>1393</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -342,7 +390,7 @@
           <Expression>\\LPP_STM32G431CBTx\../../LPP_SDK/lpp_sdk.c\1393</Expression>
         </Bp>
         <Bp>
-          <Number>12</Number>
+          <Number>15</Number>
           <Type>0</Type>
           <LineNumber>1389</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -358,7 +406,7 @@
           <Expression>\\LPP_STM32G431CBTx\../../LPP_SDK/lpp_sdk.c\1389</Expression>
         </Bp>
         <Bp>
-          <Number>13</Number>
+          <Number>16</Number>
           <Type>0</Type>
           <LineNumber>1386</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -374,7 +422,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>14</Number>
+          <Number>17</Number>
           <Type>0</Type>
           <LineNumber>1388</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -390,7 +438,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>15</Number>
+          <Number>18</Number>
           <Type>0</Type>
           <LineNumber>1390</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -406,7 +454,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>16</Number>
+          <Number>19</Number>
           <Type>0</Type>
           <LineNumber>2065</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -422,7 +470,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>17</Number>
+          <Number>20</Number>
           <Type>0</Type>
           <LineNumber>1391</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -438,7 +486,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>18</Number>
+          <Number>21</Number>
           <Type>0</Type>
           <LineNumber>1392</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -454,7 +502,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>19</Number>
+          <Number>22</Number>
           <Type>0</Type>
           <LineNumber>1396</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -470,7 +518,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>20</Number>
+          <Number>23</Number>
           <Type>0</Type>
           <LineNumber>2028</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -486,7 +534,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>21</Number>
+          <Number>24</Number>
           <Type>0</Type>
           <LineNumber>2068</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -502,7 +550,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>22</Number>
+          <Number>25</Number>
           <Type>0</Type>
           <LineNumber>1400</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -518,7 +566,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>23</Number>
+          <Number>26</Number>
           <Type>0</Type>
           <LineNumber>1402</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -534,7 +582,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>24</Number>
+          <Number>27</Number>
           <Type>0</Type>
           <LineNumber>1403</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -550,7 +598,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>25</Number>
+          <Number>28</Number>
           <Type>0</Type>
           <LineNumber>1404</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -566,7 +614,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>26</Number>
+          <Number>29</Number>
           <Type>0</Type>
           <LineNumber>1405</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -582,7 +630,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>27</Number>
+          <Number>30</Number>
           <Type>0</Type>
           <LineNumber>1406</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -598,7 +646,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>28</Number>
+          <Number>31</Number>
           <Type>0</Type>
           <LineNumber>1407</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -614,7 +662,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>29</Number>
+          <Number>32</Number>
           <Type>0</Type>
           <LineNumber>2034</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -630,7 +678,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>30</Number>
+          <Number>33</Number>
           <Type>0</Type>
           <LineNumber>2040</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -646,7 +694,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>31</Number>
+          <Number>34</Number>
           <Type>0</Type>
           <LineNumber>2043</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -662,7 +710,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>32</Number>
+          <Number>35</Number>
           <Type>0</Type>
           <LineNumber>2080</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -678,7 +726,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>33</Number>
+          <Number>36</Number>
           <Type>0</Type>
           <LineNumber>2083</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -694,7 +742,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>34</Number>
+          <Number>37</Number>
           <Type>0</Type>
           <LineNumber>1192</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -710,7 +758,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>35</Number>
+          <Number>38</Number>
           <Type>0</Type>
           <LineNumber>1193</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -726,7 +774,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>36</Number>
+          <Number>39</Number>
           <Type>0</Type>
           <LineNumber>1195</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -742,7 +790,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>37</Number>
+          <Number>40</Number>
           <Type>0</Type>
           <LineNumber>2197</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -758,7 +806,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>38</Number>
+          <Number>41</Number>
           <Type>0</Type>
           <LineNumber>2206</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -774,7 +822,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>39</Number>
+          <Number>42</Number>
           <Type>0</Type>
           <LineNumber>2212</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -790,7 +838,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>40</Number>
+          <Number>43</Number>
           <Type>0</Type>
           <LineNumber>2215</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -806,7 +854,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>41</Number>
+          <Number>44</Number>
           <Type>0</Type>
           <LineNumber>2252</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -822,153 +870,9 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>42</Number>
-          <Type>0</Type>
-          <LineNumber>2255</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>43</Number>
-          <Type>0</Type>
-          <LineNumber>1561</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>44</Number>
-          <Type>0</Type>
-          <LineNumber>1565</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
           <Number>45</Number>
           <Type>0</Type>
-          <LineNumber>1572</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>46</Number>
-          <Type>0</Type>
-          <LineNumber>1574</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>47</Number>
-          <Type>0</Type>
-          <LineNumber>1575</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>48</Number>
-          <Type>0</Type>
-          <LineNumber>1576</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>49</Number>
-          <Type>0</Type>
-          <LineNumber>1577</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>50</Number>
-          <Type>0</Type>
-          <LineNumber>1578</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\LPP_SDK\lpp_sdk.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>51</Number>
-          <Type>0</Type>
-          <LineNumber>1579</LineNumber>
+          <LineNumber>2255</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
