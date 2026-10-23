@@ -57,37 +57,6 @@
 
 ---
 
-## 🔖 USB-идентификаторы
-
-Устройство определяется как USB Custom HID. Идентификаторы зарегистрированы на [pid.codes](https://pid.codes/1209/573C/).
-
-| Параметр | Значение |
-|----------|----------|
-| VID | `0x1209` (pid.codes) |
-| PID | `0x573C` (LPP — Linear Path Platform) |
-| VID:PID | `1209:573C` |
-
-Проверка подключения:
-
-```bash
-# Linux / macOS
-lsusb | grep -i 1209:573c
-```
-
-```powershell
-# Windows, PowerShell
-Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -like '*VID_1209&PID_573C*' }
-```
-
-```bat
-:: Windows, командная строка
-pnputil /enum-devices /connected | findstr /i "VID_1209&PID_573C"
-```
-
-Вручную: «Диспетчер устройств» → свойства устройства → «ИД оборудования» → `USB\VID_1209&PID_573C`.
-
----
-
 ## 🛠️ SDK и исходники
 
 | Параметр | Значение |
